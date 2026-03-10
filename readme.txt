@@ -1,6 +1,6 @@
 === AI Provider for Infomaniak (Unofficial) ===
 Contributors: custom
-Tags: ai, infomaniak, llama, mistral, presets, image-generation, conversation-memory, markdown-commands, agent, function-calling
+Tags: ai, infomaniak, llama, mistral, presets, image-generation, conversation-memory, markdown-commands, agent, function-calling, wp-cli
 Requires at least: 6.9
 Tested up to: 7.0
 Stable tag: 1.0.0
@@ -32,6 +32,7 @@ This plugin provides Infomaniak AI integration for the PHP AI Client SDK. It ena
 * **AI Presets SDK** -- abstract class for building reusable AI commands with PHP templates, auto-registered as WordPress Abilities (REST API + MCP)
 * **Markdown Commands** -- create AI commands with simple markdown files, no PHP required
 * **Agent Orchestrator** -- function calling loop that lets models use tools autonomously
+* **WP-CLI Commands** -- `wp infomaniak-ai` commands for usage stats, model listing, cache management, and memory inspection
 
 Available models are dynamically discovered from the Infomaniak API, including text generation models (Llama, Mistral, Mixtral, DeepSeek, Qwen) and image generation models.
 
@@ -133,3 +134,4 @@ Yes. Extend `WordPress\InfomaniakAiProvider\Presets\BasePreset` from any plugin.
 * `Tool` and `ToolRegistry` classes for defining and managing tools
 * Automatic agent mode in presets via `tools()` override
 * `infomaniak_ai_agent_tool_called` and `infomaniak_ai_agent_step` hooks
+* WP-CLI commands: `wp infomaniak-ai usage`, `models`, `cache`, `commands`, `memory`, `memory-clear`

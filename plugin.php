@@ -446,3 +446,8 @@ add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\enqueue_connector_icon', 
 
 // Register markdown commands as WordPress Abilities.
 add_action('wp_abilities_api_init', [CommandLoader::class, 'registerAll']);
+
+// WP-CLI command registration.
+if (defined('WP_CLI') && WP_CLI) {
+    \WP_CLI::add_command('infomaniak-ai', CLI\Command::class);
+}

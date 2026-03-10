@@ -254,6 +254,20 @@ class MarkdownCommand extends BasePreset
     }
 
     /**
+     * Returns the raw frontmatter configuration array.
+     *
+     * Useful for CLI inspection and debugging.
+     *
+     * @since 1.0.0
+     *
+     * @return array<string, mixed>
+     */
+    public function getConfig(): array
+    {
+        return $this->config;
+    }
+
+    /**
      * Interpolates {{variable}} placeholders in a template string.
      *
      * @since 1.0.0

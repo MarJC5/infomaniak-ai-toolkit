@@ -443,6 +443,83 @@ Hooks:
 - `infomaniak_ai_memory_before_compact` (filter) -- return `false` to cancel compaction
 - `infomaniak_ai_memory_compacted` (action) -- fires after compaction completes
 
+## WP-CLI Commands
+
+The plugin registers commands under `wp infomaniak-ai` for debugging, ops, and maintenance.
+
+### Usage statistics
+
+```bash
+# Show last 25 usage records
+wp infomaniak-ai usage
+
+# Filter by user and date range
+wp infomaniak-ai usage --user=1 --from=2026-03-01
+
+# Show aggregate summary
+wp infomaniak-ai usage --summary
+
+# Export as JSON
+wp infomaniak-ai usage --format=json --limit=1000
+```
+
+Options: `--user=<id>`, `--model=<id>`, `--preset=<name>`, `--from=<date>`, `--to=<date>`, `--limit=<n>`, `--summary`, `--format=<table|json|csv|yaml|count>`
+
+### Models
+
+```bash
+# List all available models
+wp infomaniak-ai models
+
+# List only LLM models
+wp infomaniak-ai models --type=llm
+
+# Force refresh from Infomaniak API
+wp infomaniak-ai models --refresh
+```
+
+### Cache management
+
+```bash
+# Show cache status
+wp infomaniak-ai cache status
+
+# Clear all caches (models + commands)
+wp infomaniak-ai cache clear
+
+# Clear only the models cache
+wp infomaniak-ai cache clear --type=models
+```
+
+### Markdown commands
+
+```bash
+# List all discovered commands
+wp infomaniak-ai commands
+
+# Show full details (category, temperature, model, etc.)
+wp infomaniak-ai commands --verbose
+```
+
+### Conversation memory
+
+```bash
+# List recent memory records
+wp infomaniak-ai memory
+
+# View a specific conversation
+wp infomaniak-ai memory --conversation=abc-123
+
+# Show summary (message count + tokens)
+wp infomaniak-ai memory --summary
+
+# Clear old conversations
+wp infomaniak-ai memory-clear --before=2026-02-08
+
+# Clear a specific conversation (non-interactive)
+wp infomaniak-ai memory-clear --conversation=abc-123 --yes
+```
+
 ## Supported Models
 
 Available models are dynamically discovered from the Infomaniak API. The provider supports two model types:
