@@ -1,0 +1,807 @@
+/**
+ * Infomaniak AI — Admin Settings Styles
+ *
+ * Design tokens following Tailwind CSS 4 naming conventions.
+ * All styles scoped under .infomaniak-ai-settings to avoid
+ * conflicts with WordPress admin styles.
+ *
+ * @since 1.0.0
+ */
+
+/* ==========================================================================
+   Design Tokens
+   ========================================================================== */
+
+.infomaniak-ai-settings {
+	/* Brand */
+	--color-brand: #0098ff;
+	--color-brand-hover: #007acc;
+
+	/* Surfaces */
+	--color-surface: #ffffff;
+	--color-surface-muted: #f9fafb;
+	--color-input: #f5f7fa;
+
+	/* Borders */
+	--color-border: #e5e7eb;
+	--color-border-focus: var(--color-brand);
+
+	/* Text */
+	--color-text: #111827;
+	--color-text-secondary: #6b7280;
+	--color-text-inverse: #ffffff;
+
+	/* Radius */
+	--radius-sm: 6px;
+	--radius-md: 8px;
+	--radius-lg: 12px;
+
+	/* Shadows */
+	--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+	--shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07),
+		0 2px 4px -2px rgba(0, 0, 0, 0.05);
+
+	/* Spacing */
+	--spacing-xs: 4px;
+	--spacing-sm: 8px;
+	--spacing-md: 16px;
+	--spacing-lg: 24px;
+	--spacing-xl: 32px;
+
+	/* Typography */
+	--text-xs: 0.75rem;
+	--text-sm: 0.875rem;
+	--text-base: 1rem;
+	--text-lg: 1.125rem;
+	--text-xl: 1.5rem;
+	--font-weight-normal: 400;
+	--font-weight-medium: 500;
+	--font-weight-semibold: 600;
+
+	/* Transitions */
+	--transition-fast: 150ms ease;
+}
+
+/* ==========================================================================
+   WP Admin Reset — Override .wrap and native form element defaults
+   ========================================================================== */
+
+.infomaniak-ai-settings.wrap {
+	max-width: 100%;
+	margin: 0;
+	padding: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+		Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	color: var(--color-text);
+	min-height: calc(100vh - 32px);
+	box-sizing: border-box;
+}
+
+@media (max-width: 782px) {
+	.infomaniak-ai-settings.wrap {
+		min-height: calc(100vh - 46px);
+	}
+}
+
+/* Hide WP admin footer and remove bottom padding on our page */
+body.settings_page_infomaniak-ai #wpfooter {
+	display: none;
+}
+
+body.settings_page_infomaniak-ai #wpbody-content {
+	padding-bottom: 0;
+}
+
+body.settings_page_infomaniak-ai {
+	background: #ffffff;
+}
+
+/* Reset all native form elements inside our scope */
+.infomaniak-ai-settings input[type="text"],
+.infomaniak-ai-settings input[type="number"],
+.infomaniak-ai-settings input[type="email"],
+.infomaniak-ai-settings input[type="url"],
+.infomaniak-ai-settings input[type="password"] {
+	height: auto;
+	min-height: 0;
+	padding: 10px var(--spacing-md);
+	font-size: var(--text-sm);
+	font-family: inherit;
+	color: var(--color-text);
+	background: var(--color-input);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-md);
+	box-shadow: none;
+	box-sizing: border-box;
+	transition: border-color var(--transition-fast),
+		box-shadow var(--transition-fast);
+	-webkit-appearance: none;
+	appearance: none;
+	line-height: 1.5;
+}
+
+.infomaniak-ai-settings input[type="text"]:focus,
+.infomaniak-ai-settings input[type="number"]:focus,
+.infomaniak-ai-settings input[type="email"]:focus,
+.infomaniak-ai-settings input[type="url"]:focus,
+.infomaniak-ai-settings input[type="password"]:focus {
+	outline: none;
+	border-color: var(--color-border-focus);
+	box-shadow: 0 0 0 3px rgba(0, 152, 255, 0.12);
+}
+
+.infomaniak-ai-settings select {
+	height: auto;
+	min-height: 0;
+	padding: 10px var(--spacing-xl) 10px var(--spacing-md);
+	font-size: var(--text-sm);
+	font-family: inherit;
+	color: var(--color-text);
+	background-color: var(--color-input);
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M3 4.5L6 7.5L9 4.5'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 12px center;
+	background-size: 12px;
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-md);
+	box-shadow: none;
+	box-sizing: border-box;
+	cursor: pointer;
+	transition: border-color var(--transition-fast);
+	-webkit-appearance: none;
+	appearance: none;
+	line-height: 1.5;
+}
+
+.infomaniak-ai-settings select:focus {
+	outline: none;
+	border-color: var(--color-border-focus);
+	box-shadow: 0 0 0 3px rgba(0, 152, 255, 0.12);
+}
+
+.infomaniak-ai-settings input:disabled,
+.infomaniak-ai-settings select:disabled {
+	background-color: var(--color-surface-muted);
+	color: var(--color-text-secondary);
+	cursor: not-allowed;
+	opacity: 1;
+}
+
+/* ==========================================================================
+   Layout — Sidebar + Content (full height)
+   ========================================================================== */
+
+.ik-layout {
+	display: flex;
+	height: calc(100vh - 32px);
+}
+
+@media (max-width: 782px) {
+	.ik-layout {
+		flex-direction: column;
+		height: auto;
+	}
+}
+
+/* Sidebar */
+
+.ik-sidebar {
+	width: 240px;
+	flex-shrink: 0;
+	padding: var(--spacing-lg) var(--spacing-md) var(--spacing-lg) 0;
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-lg);
+	overflow-y: auto;
+}
+
+@media (max-width: 782px) {
+	.ik-sidebar {
+		width: 100%;
+		padding: var(--spacing-md);
+		gap: var(--spacing-md);
+		border-bottom: 1px solid var(--color-border);
+	}
+}
+
+.ik-sidebar__header {
+	padding: 0 var(--spacing-sm);
+}
+
+.ik-sidebar__title {
+	font-size: var(--text-xl);
+	font-weight: var(--font-weight-semibold);
+	color: var(--color-text);
+	margin: 0 0 var(--spacing-xs);
+	padding: 0;
+	line-height: 1.3;
+}
+
+.ik-sidebar__description {
+	font-size: var(--text-xs);
+	color: var(--color-text-secondary);
+	margin: 0;
+	line-height: 1.5;
+}
+
+.ik-nav {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+@media (max-width: 782px) {
+	.ik-nav {
+		flex-direction: row;
+		gap: var(--spacing-xs);
+	}
+}
+
+.ik-nav li {
+	margin: 0;
+}
+
+.ik-nav__item {
+	display: block;
+	padding: var(--spacing-sm) var(--spacing-md);
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-normal);
+	color: var(--color-text-secondary);
+	text-decoration: none;
+	border-radius: var(--radius-md);
+	transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.ik-nav__item:hover {
+	background: var(--color-surface-muted);
+	color: var(--color-text);
+	text-decoration: none;
+}
+
+.ik-nav__item:focus {
+	outline: 2px solid var(--color-brand);
+	outline-offset: -2px;
+	text-decoration: none;
+}
+
+.ik-nav__item--active,
+.ik-nav__item--active:hover {
+	background: var(--color-surface-muted);
+	color: var(--color-brand);
+	font-weight: var(--font-weight-medium);
+}
+
+/* Content */
+
+.ik-content {
+	flex: 1;
+	min-width: 0;
+	border-left: 1px solid var(--color-border);
+	padding: var(--spacing-xl);
+	background: var(--color-surface);
+	overflow-y: auto;
+}
+
+@media (max-width: 782px) {
+	.ik-content {
+		border-left: none;
+		padding: var(--spacing-md);
+	}
+}
+
+/* ==========================================================================
+   Sections
+   ========================================================================== */
+
+.ik-section {
+	margin-bottom: var(--spacing-lg);
+}
+
+.ik-section:last-child {
+	margin-bottom: 0;
+}
+
+.ik-section--split {
+	display: grid;
+	grid-template-columns: 260px 1fr;
+	gap: var(--spacing-xl);
+	align-items: start;
+}
+
+@media (max-width: 782px) {
+	.ik-section--split {
+		grid-template-columns: 1fr;
+		gap: var(--spacing-md);
+	}
+}
+
+.ik-section__aside {
+	position: sticky;
+	top: var(--spacing-xl);
+}
+
+@media (max-width: 782px) {
+	.ik-section__aside {
+		position: static;
+	}
+}
+
+.ik-section__header {
+	font-size: var(--text-lg);
+	font-weight: var(--font-weight-semibold);
+	color: var(--color-text);
+	margin: 0 0 var(--spacing-xs);
+	line-height: 1.4;
+}
+
+.ik-section__description {
+	font-size: var(--text-sm);
+	color: var(--color-text-secondary);
+	margin: 0 0 var(--spacing-lg);
+	line-height: 1.5;
+}
+
+.ik-section--split .ik-section__description {
+	margin-bottom: 0;
+}
+
+/* ==========================================================================
+   Form Fields
+   ========================================================================== */
+
+.ik-field {
+	margin-bottom: var(--spacing-lg);
+}
+
+.ik-field:last-child {
+	margin-bottom: 0;
+}
+
+.ik-field__label {
+	display: block;
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-medium);
+	color: var(--color-text);
+	margin-bottom: var(--spacing-sm);
+}
+
+.ik-field__hint {
+	display: block;
+	font-size: var(--text-xs);
+	color: var(--color-text-secondary);
+	margin-top: var(--spacing-sm);
+	line-height: 1.5;
+}
+
+.ik-input {
+	display: block;
+	width: 100%;
+	max-width: 400px;
+}
+
+.ik-input--small {
+	width: 80px;
+	text-align: center;
+}
+
+/* ==========================================================================
+   Badge
+   ========================================================================== */
+
+.ik-badge {
+	display: inline-block;
+	padding: 2px var(--spacing-sm);
+	font-size: var(--text-xs);
+	font-weight: var(--font-weight-medium);
+	color: var(--color-brand);
+	background: rgba(0, 152, 255, 0.08);
+	border-radius: var(--radius-sm);
+	vertical-align: middle;
+	margin-left: var(--spacing-sm);
+}
+
+/* ==========================================================================
+   Table (Rate Limits)
+   ========================================================================== */
+
+.ik-table-wrap {
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+.ik-table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+	font-size: var(--text-sm);
+}
+
+.ik-table th {
+	text-align: left;
+	font-weight: var(--font-weight-medium);
+	color: var(--color-text-secondary);
+	font-size: var(--text-xs);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	padding: var(--spacing-sm) var(--spacing-md);
+	padding-top: 0;
+}
+
+.ik-table td {
+	padding: var(--spacing-sm) var(--spacing-md);
+	vertical-align: middle;
+	border-top: 1px solid var(--color-border);
+}
+
+.ik-table .ik-input {
+	width: 80px;
+}
+
+.ik-table input[type="number"] {
+	padding: var(--spacing-sm) var(--spacing-sm);
+	text-align: center;
+}
+
+.ik-table select {
+	padding: var(--spacing-sm) var(--spacing-xl) var(--spacing-sm) var(--spacing-sm);
+}
+
+/* ==========================================================================
+   Button
+   ========================================================================== */
+
+.ik-btn {
+	display: inline-flex;
+	align-items: center;
+	padding: 10px var(--spacing-lg);
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-medium);
+	color: var(--color-text-inverse);
+	background: var(--color-brand);
+	border: none;
+	border-radius: var(--radius-md);
+	cursor: pointer;
+	transition: background var(--transition-fast);
+	line-height: 1.5;
+	text-decoration: none;
+}
+
+.ik-btn:hover {
+	background: var(--color-brand-hover);
+	color: var(--color-text-inverse);
+}
+
+.ik-btn:focus {
+	outline: 2px solid var(--color-brand);
+	outline-offset: 2px;
+}
+
+.ik-btn--outline {
+	background: transparent;
+	color: var(--color-brand);
+	border: 1px solid var(--color-brand);
+}
+
+.ik-btn--outline:hover {
+	background: rgba(0, 152, 255, 0.06);
+	color: var(--color-brand);
+}
+
+.ik-btn--outline:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+/* ==========================================================================
+   Feedback
+   ========================================================================== */
+
+.ik-feedback {
+	display: inline-block;
+	font-size: var(--text-sm);
+	margin-left: var(--spacing-md);
+	vertical-align: middle;
+	transition: opacity var(--transition-fast);
+}
+
+.ik-feedback--success {
+	color: #059669;
+}
+
+.ik-feedback--error {
+	color: #dc2626;
+}
+
+/* ==========================================================================
+   Usage Dashboard — Card Grid
+   ========================================================================== */
+
+.ik-card-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: var(--spacing-md);
+	margin-bottom: var(--spacing-xl);
+}
+
+@media (max-width: 960px) {
+	.ik-card-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 600px) {
+	.ik-card-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+.ik-card {
+	background: var(--color-surface);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-lg);
+	padding: var(--spacing-lg);
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-xs);
+}
+
+.ik-card__label {
+	font-size: var(--text-xs);
+	font-weight: var(--font-weight-medium);
+	color: var(--color-text-secondary);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.ik-card__row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--spacing-md);
+}
+
+.ik-card__value {
+	font-size: var(--text-xl);
+	font-weight: var(--font-weight-semibold);
+	color: var(--color-text);
+	line-height: 1.2;
+}
+
+.ik-card__sparkline {
+	flex-shrink: 0;
+}
+
+.ik-card__sparkline svg {
+	display: block;
+	overflow: visible;
+}
+
+/* Sparkline draw animation */
+.ik-sparkline__line {
+	animation: ik-sparkline-draw 1s ease-out forwards;
+}
+
+.ik-sparkline__fill {
+	opacity: 0;
+	animation: ik-sparkline-fade 0.4s ease-out 0.6s forwards;
+}
+
+@keyframes ik-sparkline-draw {
+	to {
+		stroke-dashoffset: 0;
+	}
+}
+
+@keyframes ik-sparkline-fade {
+	to {
+		opacity: 1;
+	}
+}
+
+.ik-card__subtitle {
+	font-size: var(--text-xs);
+	color: var(--color-text-secondary);
+}
+
+/* ==========================================================================
+   Usage Dashboard — Empty State
+   ========================================================================== */
+
+.ik-empty-state {
+	text-align: center;
+	padding: var(--spacing-xl) var(--spacing-md);
+}
+
+.ik-empty-state__icon {
+	margin: 0 auto var(--spacing-md);
+	width: 48px;
+	height: 48px;
+	color: var(--color-text-secondary);
+	opacity: 0.4;
+}
+
+.ik-empty-state__icon svg {
+	width: 100%;
+	height: 100%;
+}
+
+.ik-empty-state__title {
+	font-size: var(--text-lg);
+	font-weight: var(--font-weight-semibold);
+	color: var(--color-text);
+	margin: 0 0 var(--spacing-sm);
+}
+
+.ik-empty-state__description {
+	font-size: var(--text-sm);
+	color: var(--color-text-secondary);
+	margin: 0 auto;
+	max-width: 400px;
+	line-height: 1.5;
+}
+
+/* ==========================================================================
+   Commands Tab — Editor Textarea
+   ========================================================================== */
+
+.ik-editor {
+	display: block;
+	width: 100%;
+	min-height: 200px;
+	padding: var(--spacing-md);
+	font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+	font-size: var(--text-sm);
+	line-height: 1.6;
+	color: var(--color-text);
+	background: var(--color-input);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-md);
+	resize: vertical;
+	box-sizing: border-box;
+	tab-size: 4;
+	transition: border-color var(--transition-fast),
+		box-shadow var(--transition-fast);
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+.ik-editor:focus {
+	outline: none;
+	border-color: var(--color-border-focus);
+	box-shadow: 0 0 0 3px rgba(0, 152, 255, 0.12);
+}
+
+.ik-editor--small {
+	min-height: 100px;
+}
+
+/* ==========================================================================
+   Commands Tab — Preview Panel
+   ========================================================================== */
+
+.ik-preview {
+	background: var(--color-surface-muted);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-md);
+	padding: var(--spacing-md);
+}
+
+.ik-preview__label {
+	display: block;
+	font-size: var(--text-xs);
+	font-weight: var(--font-weight-medium);
+	color: var(--color-text-secondary);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	margin-bottom: var(--spacing-sm);
+}
+
+.ik-preview__content {
+	font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+	font-size: var(--text-xs);
+	line-height: 1.6;
+	color: var(--color-text);
+	white-space: pre-wrap;
+	word-break: break-word;
+	max-height: 200px;
+	overflow-y: auto;
+}
+
+/* ==========================================================================
+   Commands Tab — Badge Variants
+   ========================================================================== */
+
+.ik-badge--custom {
+	color: #059669;
+	background: rgba(5, 150, 105, 0.08);
+}
+
+.ik-badge--file {
+	color: var(--color-text-secondary);
+	background: var(--color-surface-muted);
+}
+
+/* ==========================================================================
+   Commands Tab — Actions & Header
+   ========================================================================== */
+
+.ik-section__header-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: var(--spacing-xs);
+}
+
+.ik-section__header-row .ik-section__header {
+	margin-bottom: 0;
+}
+
+.ik-cmd-actions {
+	display: flex;
+	gap: var(--spacing-sm);
+	align-items: center;
+}
+
+.ik-cmd-actions a {
+	font-size: var(--text-sm);
+	color: var(--color-brand);
+	text-decoration: none;
+}
+
+.ik-cmd-actions a:hover {
+	text-decoration: underline;
+}
+
+.ik-cmd-delete {
+	font-size: var(--text-sm);
+	color: #dc2626;
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+}
+
+.ik-cmd-delete:hover {
+	text-decoration: underline;
+}
+
+.ik-cmd-delete:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+/* ==========================================================================
+   Commands Tab — Settings Grid
+   ========================================================================== */
+
+.ik-field-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: var(--spacing-md);
+}
+
+@media (max-width: 600px) {
+	.ik-field-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+.ik-field-grid .ik-field {
+	margin-bottom: 0;
+}
+
+/* Checkbox field */
+.ik-checkbox {
+	display: flex;
+	align-items: center;
+	gap: var(--spacing-sm);
+}
+
+.ik-checkbox input[type="checkbox"] {
+	width: 16px;
+	height: 16px;
+	margin: 0;
+}

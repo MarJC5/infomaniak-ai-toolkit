@@ -1,16 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: AI Provider for Infomaniak 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ai-provider-for-"
-"infomaniak\n"
-"POT-Creation-Date: 2026-03-10T07:08:33+00:00\n"
-"PO-Revision-Date: 2026-03-09 15:25+0000\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ai-provider-for-infomaniak\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
-"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-03-10T07:08:33+00:00\n"
+"PO-Revision-Date: 2026-03-10 08:00+0000\n"
+"Language: fr_FR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: ai-provider-for-infomaniak\n"
@@ -27,66 +26,39 @@ msgstr "https://www.infomaniak.com/fr/hebergement/ai-services"
 
 #. Description of the plugin
 #: plugin.php
-msgid ""
-"AI Provider for Infomaniak for the WordPress AI Client. Provides access to "
-"open-source models (Llama, Mistral, DeepSeek, Qwen) hosted in Switzerland."
-msgstr ""
-"Fournisseur IA pour Infomaniak pour le client IA WordPress. Fournit l'accès "
-"à des modèles open source (Llama, Mistral, DeepSeek, Qwen) hébergés en "
-"Suisse."
+msgid "AI Provider for Infomaniak for the WordPress AI Client. Provides access to open-source models (Llama, Mistral, DeepSeek, Qwen) hosted in Switzerland."
+msgstr "Fournisseur IA pour Infomaniak pour le client IA WordPress. Fournit l'accès à des modèles open source (Llama, Mistral, DeepSeek, Qwen) hébergés en Suisse."
 
 #. Author of the plugin
 #: plugin.php
+#: src/Admin/views/tabs/commands/list.php:80
 msgid "Custom"
-msgstr "Custom"
+msgstr "Personnalisé"
 
-#: plugin.php:120
-msgid "Infomaniak AI Configuration"
-msgstr "Configuration Infomaniak AI"
-
-#: plugin.php:123
-msgid ""
-"Configure your Infomaniak AI product settings. Your API token is managed via "
-"Settings > Connectors."
-msgstr ""
-"Configurez les paramètres de votre produit Infomaniak AI. Votre jeton API "
-"est géré via Réglages > Connecteurs."
-
-#: plugin.php:134
+#: src/Admin/views/tabs/general.php:24
+#: src/Admin/views/tabs/general.php:39
 msgid "Product ID"
 msgstr "ID du produit"
 
-#: plugin.php:144
+#: src/Admin/views/tabs/general.php:51
 msgid "Currently set via the INFOMANIAK_AI_PRODUCT_ID constant."
 msgstr "Actuellement défini via la constante INFOMANIAK_AI_PRODUCT_ID."
 
-#: plugin.php:149
+#: src/Admin/views/tabs/general.php:53
 msgid "Currently set via the infomaniak_ai_product_id filter."
 msgstr "Actuellement défini via le filtre infomaniak_ai_product_id."
 
-#: plugin.php:154
-msgid ""
-"Your Infomaniak AI product ID. Find it in your Infomaniak manager at AI "
-"Tools."
-msgstr ""
-"Votre ID de produit Infomaniak AI. Retrouvez-le dans votre manager "
-"Infomaniak sous AI Tools."
-
-#: plugin.php:176 plugin.php:177
+#: src/Admin/SettingsPage.php:76
+#: src/Admin/SettingsPage.php:77
+#: src/Admin/views/settings-page.php:21
 msgid "Infomaniak AI"
 msgstr "Infomaniak AI"
 
 #: src/Models/InfomaniakImageGenerationModel.php:42
 #: src/Models/InfomaniakTextGenerationModel.php:42
 #: src/Operations/InfomaniakOperationsHandler.php:177
-msgid ""
-"Infomaniak AI product ID is not configured. Set it via Settings > Infomaniak "
-"AI, the INFOMANIAK_AI_PRODUCT_ID constant, or the infomaniak_ai_product_id "
-"filter."
-msgstr ""
-"L'ID de produit Infomaniak AI n'est pas configuré. Définissez-le via "
-"Réglages > Infomaniak AI, la constante INFOMANIAK_AI_PRODUCT_ID ou le filtre "
-"infomaniak_ai_product_id."
+msgid "Infomaniak AI product ID is not configured. Set it via Settings > Infomaniak AI, the INFOMANIAK_AI_PRODUCT_ID constant, or the infomaniak_ai_product_id filter."
+msgstr "L'ID de produit Infomaniak AI n'est pas configuré. Définissez-le via Réglages > Infomaniak AI, la constante INFOMANIAK_AI_PRODUCT_ID ou le filtre infomaniak_ai_product_id."
 
 #. translators: %s: batch ID
 #: src/Operations/InfomaniakOperationsHandler.php:82
@@ -104,15 +76,13 @@ msgstr "Le lot « %s » a retourné une réponse invalide."
 #: src/Operations/InfomaniakOperationsHandler.php:130
 #, php-format
 msgid "Batch \"%s\" not found or result not yet available."
-msgstr ""
-"Le lot « %s » est introuvable ou le résultat n'est pas encore disponible."
+msgstr "Le lot « %s » est introuvable ou le résultat n'est pas encore disponible."
 
 #. translators: 1: batch ID, 2: HTTP status code
 #: src/Operations/InfomaniakOperationsHandler.php:140
 #, php-format
 msgid "Failed to download batch \"%1$s\" result. HTTP status: %2$d."
-msgstr ""
-"Échec du téléchargement du résultat du lot « %1$s ». Statut HTTP : %2$d."
+msgstr "Échec du téléchargement du résultat du lot « %1$s ». Statut HTTP : %2$d."
 
 #. translators: %s: batch ID
 #: src/Operations/InfomaniakOperationsHandler.php:153
@@ -120,19 +90,19 @@ msgstr ""
 msgid "Batch \"%s\" download returned empty content."
 msgstr "Le téléchargement du lot « %s » a retourné un contenu vide."
 
-#: src/Presets/BasePreset.php:180
+#: src/Presets/BasePreset.php:185
 msgid "The generated text."
 msgstr "Le texte généré."
 
-#: src/Presets/BasePreset.php:296
+#: src/Presets/BasePreset.php:301
 msgid "Conversation identifier. Auto-generated if omitted."
 msgstr "Identifiant de conversation. Généré automatiquement si omis."
 
-#: src/Presets/BasePreset.php:448
+#: src/Presets/BasePreset.php:526
 msgid "AI Client is not available."
 msgstr "Le client IA n'est pas disponible."
 
-#: src/Presets/BasePreset.php:476
+#: src/Presets/BasePreset.php:557
 msgid "Failed to render prompt template."
 msgstr "Échec du rendu du modèle de prompt."
 
@@ -143,9 +113,549 @@ msgid "Unsupported model capabilities: %s"
 msgstr "Capacités de modèle non prises en charge : %s"
 
 #: src/Provider/InfomaniakProvider.php:151
+msgid "Text and image generation with open-source models. Supports async batch operations."
+msgstr "Génération de texte et d'images avec des modèles open source. Prend en charge les opérations asynchrones par lots."
+
+#: src/Admin/SettingsPage.php:178
+#: src/Admin/SettingsPage.php:406
+#: src/Admin/SettingsPage.php:467
+msgid "Insufficient permissions."
+msgstr "Permissions insuffisantes."
+
+#: src/Admin/SettingsPage.php:190
+msgid "API key not configured. Set it in Settings > Connectors."
+msgstr "Clé API non configurée. Définissez-la dans Réglages > Connecteurs."
+
+#: src/Admin/SettingsPage.php:195
+msgid "Product ID not configured."
+msgstr "ID du produit non configuré."
+
+#. translators: %d: HTTP status code
+#: src/Admin/SettingsPage.php:214
+#, php-format
+msgid "API returned HTTP %d."
+msgstr "L'API a retourné HTTP %d."
+
+#: src/Admin/SettingsPage.php:220
+msgid "Unexpected API response."
+msgstr "Réponse inattendue de l'API."
+
+#. translators: %d: number of available models
+#: src/Admin/SettingsPage.php:232
+#, php-format
+msgid "Connection successful. %d models available."
+msgstr "Connexion réussie. %d modèles disponibles."
+
+#: src/Admin/SettingsPage.php:246
+msgid "General"
+msgstr "Général"
+
+#: src/Admin/SettingsPage.php:247
+#: src/Admin/views/tabs/commands/list.php:21
+msgid "Commands"
+msgstr "Commandes"
+
+#: src/Admin/SettingsPage.php:248
+#: src/Admin/views/tabs/rate-limits.php:25
+msgid "Rate Limits"
+msgstr "Limites de débit"
+
+#: src/Admin/SettingsPage.php:249
+msgid "Usage"
+msgstr "Utilisation"
+
+#: src/Admin/SettingsPage.php:341
+msgid "Hour"
+msgstr "Heure"
+
+#: src/Admin/SettingsPage.php:342
+msgid "Day"
+msgstr "Jour"
+
+#: src/Admin/SettingsPage.php:343
+msgid "Month"
+msgstr "Mois"
+
+#: src/Admin/SettingsPage.php:413
+msgid "Command name is required."
+msgstr "Le nom de la commande est requis."
+
+#: src/Admin/SettingsPage.php:419
+msgid "Description is required."
+msgstr "La description est requise."
+
+#: src/Admin/SettingsPage.php:423
+msgid "Prompt template is required."
+msgstr "Le modèle de prompt est requis."
+
+#. translators: %s: command slug
+#: src/Admin/SettingsPage.php:432
+#, php-format
+msgid "A file-based command with the name \"%s\" already exists."
+msgstr "Une commande basée sur un fichier avec le nom « %s » existe déjà."
+
+#. translators: %s: command slug
+#: src/Admin/SettingsPage.php:439
+#, php-format
+msgid "A command with the name \"%s\" already exists."
+msgstr "Une commande avec le nom « %s » existe déjà."
+
+#: src/Admin/SettingsPage.php:447
+msgid "Failed to save command."
+msgstr "Échec de l'enregistrement de la commande."
+
+#: src/Admin/SettingsPage.php:473
+msgid "Command slug is required."
+msgstr "Le slug de la commande est requis."
+
+#: src/Admin/SettingsPage.php:479
+msgid "Failed to delete command."
+msgstr "Échec de la suppression de la commande."
+
+#: src/Admin/views/settings-page.php:23
+msgid "Configure your AI provider settings."
+msgstr "Configurez les paramètres de votre fournisseur IA."
+
+#: src/Admin/views/settings-page.php:56
+msgid "Save Changes"
+msgstr "Enregistrer les modifications"
+
+#: src/Admin/views/tabs/commands/form.php:43
+#: src/Admin/views/tabs/commands/list.php:24
+msgid "New Command"
+msgstr "Nouvelle commande"
+
+#: src/Admin/views/tabs/commands/form.php:44
+msgid "Edit Command"
+msgstr "Modifier la commande"
+
+#: src/Admin/views/tabs/commands/form.php:48
+msgid "Back to list"
+msgstr "Retour à la liste"
+
+#: src/Admin/views/tabs/commands/form.php:53
+msgid "Create a new AI command. Use {{variable}} placeholders in the prompt template."
+msgstr "Créez une nouvelle commande IA. Utilisez des marqueurs {{variable}} dans le modèle de prompt."
+
+#: src/Admin/views/tabs/commands/form.php:54
+msgid "Edit your AI command. Changes take effect immediately."
+msgstr "Modifiez votre commande IA. Les changements prennent effet immédiatement."
+
+#: src/Admin/views/tabs/commands/form.php:63
+msgid "Identity"
+msgstr "Identité"
+
+#: src/Admin/views/tabs/commands/form.php:68
+msgid "Name (slug)"
+msgstr "Nom (slug)"
+
+#: src/Admin/views/tabs/commands/form.php:80
+msgid "Lowercase letters, numbers, and hyphens only."
+msgstr "Lettres minuscules, chiffres et tirets uniquement."
+
+#: src/Admin/views/tabs/commands/form.php:86
+msgid "Label"
+msgstr "Libellé"
+
+#: src/Admin/views/tabs/commands/form.php:96
+msgid "Optional display name. Auto-generated from slug if empty."
+msgstr "Nom d'affichage optionnel. Généré automatiquement depuis le slug si vide."
+
+#: src/Admin/views/tabs/commands/form.php:103
+#: src/Admin/views/tabs/commands/list.php:54
+msgid "Description"
+msgstr "Description"
+
+#: src/Admin/views/tabs/commands/form.php:111
+msgid "Briefly describe what this command does."
+msgstr "Décrivez brièvement ce que fait cette commande."
+
+#: src/Admin/views/tabs/commands/form.php:119
+msgid "Prompt"
+msgstr "Prompt"
+
+#: src/Admin/views/tabs/commands/form.php:123
+msgid "Prompt Template"
+msgstr "Modèle de prompt"
+
+#: src/Admin/views/tabs/commands/form.php:129
 msgid ""
-"Text and image generation with open-source models. Supports async batch "
-"operations."
+"Summarize the following content:\n"
+"\n"
+"{{content}}"
 msgstr ""
-"Génération de texte et d'images avec des modèles open source. Prend en "
-"charge les opérations asynchrones par lots."
+"Résumez le contenu suivant :\n"
+"\n"
+"{{content}}"
+
+#: src/Admin/views/tabs/commands/form.php:133
+msgid "Use {{variable}} for dynamic placeholders. They become required input fields."
+msgstr "Utilisez {{variable}} pour les marqueurs dynamiques. Ils deviennent des champs de saisie obligatoires."
+
+#: src/Admin/views/tabs/commands/form.php:139
+msgid "System Prompt"
+msgstr "Prompt système"
+
+#: src/Admin/views/tabs/commands/form.php:145
+msgid "Optional. Sets the AI behavior and persona."
+msgstr "Optionnel. Définit le comportement et le persona de l'IA."
+
+#: src/Admin/views/tabs/commands/form.php:152
+msgid "Settings"
+msgstr "Paramètres"
+
+#: src/Admin/views/tabs/commands/form.php:157
+msgid "Temperature"
+msgstr "Température"
+
+#: src/Admin/views/tabs/commands/form.php:172
+msgid "Max Tokens"
+msgstr "Tokens maximum"
+
+#: src/Admin/views/tabs/commands/form.php:187
+msgid "Category"
+msgstr "Catégorie"
+
+#: src/Admin/views/tabs/commands/form.php:190
+msgid "Content"
+msgstr "Contenu"
+
+#: src/Admin/views/tabs/commands/form.php:191
+msgid "Analysis"
+msgstr "Analyse"
+
+#: src/Admin/views/tabs/commands/form.php:192
+msgid "Translation"
+msgstr "Traduction"
+
+#: src/Admin/views/tabs/commands/form.php:193
+msgid "Coding"
+msgstr "Code"
+
+#: src/Admin/views/tabs/commands/form.php:194
+#: src/Admin/views/tabs/commands/form.php:215
+msgid "Image"
+msgstr "Image"
+
+#: src/Admin/views/tabs/commands/form.php:200
+msgid "Permission"
+msgstr "Permission"
+
+#: src/Admin/views/tabs/commands/form.php:203
+msgid "edit_posts"
+msgstr "edit_posts"
+
+#: src/Admin/views/tabs/commands/form.php:204
+msgid "publish_posts"
+msgstr "publish_posts"
+
+#: src/Admin/views/tabs/commands/form.php:205
+msgid "manage_options"
+msgstr "manage_options"
+
+#: src/Admin/views/tabs/commands/form.php:211
+msgid "Model Type"
+msgstr "Type de modèle"
+
+#: src/Admin/views/tabs/commands/form.php:214
+msgid "LLM (Text)"
+msgstr "LLM (Texte)"
+
+#: src/Admin/views/tabs/commands/form.php:221
+#: src/Admin/views/tabs/usage.php:112
+msgid "Model"
+msgstr "Modèle"
+
+#: src/Admin/views/tabs/commands/form.php:224
+msgid "Default"
+msgstr "Par défaut"
+
+#: src/Admin/views/tabs/commands/form.php:241
+msgid "Conversational (multi-turn)"
+msgstr "Conversationnel (multi-tours)"
+
+#: src/Admin/views/tabs/commands/form.php:248
+msgid "Preview"
+msgstr "Aperçu"
+
+#: src/Admin/views/tabs/commands/form.php:252
+msgid "Detected Variables"
+msgstr "Variables détectées"
+
+#: src/Admin/views/tabs/commands/form.php:254
+msgid "Type in the prompt template to detect variables..."
+msgstr "Saisissez le modèle de prompt pour détecter les variables..."
+
+#: src/Admin/views/tabs/commands/form.php:259
+msgid "Generated Input Schema"
+msgstr "Schéma d'entrée généré"
+
+#: src/Admin/views/tabs/commands/form.php:261
+msgid "Schema will appear here..."
+msgstr "Le schéma apparaîtra ici..."
+
+#: src/Admin/views/tabs/commands/form.php:270
+msgid "Saving..."
+msgstr "Enregistrement..."
+
+#: src/Admin/views/tabs/commands/form.php:272
+msgid "Create Command"
+msgstr "Créer la commande"
+
+#: src/Admin/views/tabs/commands/form.php:273
+msgid "Save Command"
+msgstr "Enregistrer la commande"
+
+#: src/Admin/views/tabs/commands/list.php:28
+msgid "Manage AI commands. File-based commands are read-only; custom commands can be edited and deleted."
+msgstr "Gérez les commandes IA. Les commandes basées sur des fichiers sont en lecture seule ; les commandes personnalisées peuvent être modifiées et supprimées."
+
+#: src/Admin/views/tabs/commands/list.php:42
+msgid "No commands yet"
+msgstr "Aucune commande"
+
+#: src/Admin/views/tabs/commands/list.php:45
+msgid "Create your first AI command or place .md files in an ai-commands/ directory within your plugin or theme."
+msgstr "Créez votre première commande IA ou placez des fichiers .md dans un répertoire ai-commands/ de votre plugin ou thème."
+
+#: src/Admin/views/tabs/commands/list.php:53
+msgid "Name"
+msgstr "Nom"
+
+#: src/Admin/views/tabs/commands/list.php:55
+msgid "Source"
+msgstr "Source"
+
+#: src/Admin/views/tabs/commands/list.php:56
+msgid "Variables"
+msgstr "Variables"
+
+#: src/Admin/views/tabs/commands/list.php:57
+msgid "Actions"
+msgstr "Actions"
+
+#: src/Admin/views/tabs/commands/list.php:78
+msgid "File"
+msgstr "Fichier"
+
+#: src/Admin/views/tabs/commands/list.php:94
+msgid "Edit"
+msgstr "Modifier"
+
+#: src/Admin/views/tabs/commands/list.php:99
+msgid "Delete"
+msgstr "Supprimer"
+
+#: src/Admin/views/tabs/commands/list.php:103
+msgid "Read-only"
+msgstr "Lecture seule"
+
+#: src/Admin/views/tabs/general.php:26
+msgid "Constant"
+msgstr "Constante"
+
+#: src/Admin/views/tabs/general.php:28
+msgid "Filter"
+msgstr "Filtre"
+
+#: src/Admin/views/tabs/general.php:32
+msgid "Your Infomaniak AI product identifier. Required to connect to the AI API."
+msgstr "Votre identifiant de produit Infomaniak AI. Requis pour se connecter à l'API IA."
+
+#: src/Admin/views/tabs/general.php:55
+msgid "Find it in your Infomaniak Manager under AI Tools."
+msgstr "Retrouvez-le dans votre Manager Infomaniak sous Outils IA."
+
+#: src/Admin/views/tabs/general.php:63
+#: src/Admin/views/tabs/general.php:65
+msgid "Test Connection"
+msgstr "Tester la connexion"
+
+#: src/Admin/views/tabs/general.php:64
+msgid "Testing..."
+msgstr "Test en cours..."
+
+#: src/Admin/views/tabs/rate-limits.php:28
+msgid "Configure the maximum number of AI requests per role within a time window. Set to 0 for unlimited."
+msgstr "Configurez le nombre maximum de requêtes IA par rôle dans une fenêtre de temps. Mettez 0 pour illimité."
+
+#: src/Admin/views/tabs/rate-limits.php:35
+msgid "Role"
+msgstr "Rôle"
+
+#: src/Admin/views/tabs/rate-limits.php:36
+msgid "Limit"
+msgstr "Limite"
+
+#: src/Admin/views/tabs/rate-limits.php:37
+msgid "Window"
+msgstr "Fenêtre"
+
+#: src/Admin/views/tabs/rate-limits.php:74
+msgid "Limits are enforced per user based on their primary role. Guest users are rate-limited by IP."
+msgstr "Les limites sont appliquées par utilisateur selon leur rôle principal. Les visiteurs sont limités par IP."
+
+#: src/Admin/views/tabs/usage.php:38
+msgid "No usage data yet"
+msgstr "Aucune donnée d'utilisation"
+
+#: src/Admin/views/tabs/usage.php:41
+msgid "Usage statistics will appear here once AI requests are made through the plugin."
+msgstr "Les statistiques d'utilisation apparaîtront ici une fois que des requêtes IA auront été effectuées via le plugin."
+
+#: src/Admin/views/tabs/usage.php:49
+msgid "Overview"
+msgstr "Vue d'ensemble"
+
+#: src/Admin/views/tabs/usage.php:52
+msgid "AI usage for the last 30 days."
+msgstr "Utilisation de l'IA sur les 30 derniers jours."
+
+#: src/Admin/views/tabs/usage.php:57
+msgid "Total Tokens"
+msgstr "Tokens totaux"
+
+#: src/Admin/views/tabs/usage.php:67
+#: src/Admin/views/tabs/usage.php:81
+msgid "Last 30 days"
+msgstr "30 derniers jours"
+
+#: src/Admin/views/tabs/usage.php:71
+#: src/Admin/views/tabs/usage.php:114
+#: src/Admin/views/tabs/usage.php:143
+msgid "Requests"
+msgstr "Requêtes"
+
+#: src/Admin/views/tabs/usage.php:85
+msgid "Tokens Today"
+msgstr "Tokens aujourd'hui"
+
+#. translators: %s: number of requests
+#: src/Admin/views/tabs/usage.php:93
+#, php-format
+msgid "%s request"
+msgid_plural "%s requests"
+msgstr[0] "%s requête"
+msgstr[1] "%s requêtes"
+
+#: src/Admin/views/tabs/usage.php:105
+msgid "Top Models"
+msgstr "Modèles principaux"
+
+#: src/Admin/views/tabs/usage.php:113
+#: src/Admin/views/tabs/usage.php:142
+msgid "Tokens"
+msgstr "Tokens"
+
+#: src/Admin/views/tabs/usage.php:134
+msgid "Top Presets"
+msgstr "Presets principaux"
+
+#: src/Admin/views/tabs/usage.php:141
+msgid "Preset"
+msgstr "Preset"
+
+#: src/CLI/Command.php:131
+msgid "No usage records found."
+msgstr "Aucun enregistrement d'utilisation trouvé."
+
+#: src/CLI/Command.php:195
+msgid "Refreshing models from Infomaniak API..."
+msgstr "Actualisation des modèles depuis l'API Infomaniak..."
+
+#: src/CLI/Command.php:201
+msgid "No models available. Check your API key and product ID configuration."
+msgstr "Aucun modèle disponible. Vérifiez la configuration de votre clé API et de l'ID du produit."
+
+#: src/CLI/Command.php:213
+msgid "No models match the given filters."
+msgstr "Aucun modèle ne correspond aux filtres donnés."
+
+#: src/CLI/Command.php:221
+msgid "Showing cached data. Use --refresh to fetch from API."
+msgstr "Affichage des données en cache. Utilisez --refresh pour récupérer depuis l'API."
+
+#. translators: %s: comma-separated list of cleared caches
+#: src/CLI/Command.php:286
+#, php-format
+msgid "Cleared caches: %s."
+msgstr "Caches vidés : %s."
+
+#: src/CLI/Command.php:330
+msgid "No markdown commands found."
+msgstr "Aucune commande markdown trouvée."
+
+#: src/CLI/Command.php:334
+msgid "No command directories exist. Expected locations:"
+msgstr "Aucun répertoire de commandes n'existe. Emplacements attendus :"
+
+#: src/CLI/Command.php:338
+msgid "Scanned directories:"
+msgstr "Répertoires analysés :"
+
+#: src/CLI/Command.php:378
+msgid "Command directories:"
+msgstr "Répertoires de commandes :"
+
+#: src/CLI/Command.php:481
+msgid "No memory records found."
+msgstr "Aucun enregistrement de mémoire trouvé."
+
+#: src/CLI/Command.php:543
+msgid "You must specify at least one of: --conversation, --user, or --before."
+msgstr "Vous devez spécifier au moins un paramètre parmi : --conversation, --user ou --before."
+
+#: src/CLI/Command.php:561
+msgid "No matching records found."
+msgstr "Aucun enregistrement correspondant trouvé."
+
+#. translators: %d: number of records
+#: src/CLI/Command.php:568
+#, php-format
+msgid "Found %d records to delete."
+msgstr "%d enregistrements trouvés à supprimer."
+
+#: src/CLI/Command.php:574
+msgid "Are you sure you want to delete these records?"
+msgstr "Êtes-vous sûr de vouloir supprimer ces enregistrements ?"
+
+#. translators: %d: number of deleted records
+#: src/CLI/Command.php:582
+#, php-format
+msgid "Deleted %d memory records."
+msgstr "%d enregistrements de mémoire supprimés."
+
+#: src/CLI/Command.php:623
+msgid "unlimited"
+msgstr "illimité"
+
+#. translators: %d: number of cached models
+#: src/CLI/Command.php:644
+#, php-format
+msgid "cached (%d models)"
+msgstr "en cache (%d modèles)"
+
+#: src/CLI/Command.php:648
+msgid "empty"
+msgstr "vide"
+
+#. translators: %d: number of commands
+#: src/CLI/Command.php:655
+#, php-format
+msgid "%d commands loaded"
+msgstr "%d commandes chargées"
+
+#: src/CLI/Command.php:663
+msgid "12 hours"
+msgstr "12 heures"
+
+#: src/CLI/Command.php:668
+msgid "per-request"
+msgstr "par requête"
+
+#. translators: 1: limit number, 2: time window
+#: src/RateLimit/RateLimiter.php:90
+#: src/RateLimit/RateLimiter.php:222
+#, php-format
+msgid "Rate limit exceeded. You are allowed %1$d requests per %2$s."
+msgstr "Limite de débit dépassée. Vous êtes autorisé à %1$d requêtes par %2$s."

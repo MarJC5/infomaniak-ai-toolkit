@@ -268,6 +268,18 @@ class MarkdownCommand extends BasePreset
     }
 
     /**
+     * Returns the raw prompt template string.
+     *
+     * @since 1.2.0
+     *
+     * @return string
+     */
+    public function getPromptTemplate(): string
+    {
+        return $this->promptTemplate;
+    }
+
+    /**
      * Interpolates {{variable}} placeholders in a template string.
      *
      * @since 1.0.0

@@ -21,9 +21,9 @@ namespace WordPress\InfomaniakAiProvider;
 
 use WordPress\AiClient\AiClient;
 use WordPress\InfomaniakAiProvider\Commands\CommandLoader;
+use WordPress\InfomaniakAiProvider\Commands\CommandSchema;
 use WordPress\InfomaniakAiProvider\Provider\InfomaniakProvider;
 use WordPress\InfomaniakAiProvider\Memory\MemorySchema;
-use WordPress\InfomaniakAiProvider\RateLimit\RateLimitConfig;
 use WordPress\InfomaniakAiProvider\Usage\UsageSchema;
 use WordPress\InfomaniakAiProvider\Usage\UsageTracker;
 
@@ -31,11 +31,14 @@ if (!defined('ABSPATH')) {
     return;
 }
 
+define('INFOMANIAK_AI_PLUGIN_FILE', __FILE__);
+
 require_once __DIR__ . '/src/autoload.php';
 
 // Create database tables on plugin activation.
 register_activation_hook(__FILE__, [UsageSchema::class, 'install']);
 register_activation_hook(__FILE__, [MemorySchema::class, 'install']);
+register_activation_hook(__FILE__, [CommandSchema::class, 'install']);
 
 /**
  * Upgrades the usage table schema if needed and starts usage tracking.
@@ -61,6 +64,18 @@ function init_memory(): void
 }
 
 add_action('init', __NAMESPACE__ . '\\init_memory');
+
+/**
+ * Upgrades the commands table schema if needed.
+ *
+ * @since 1.2.0
+ */
+function init_commands(): void
+{
+    CommandSchema::maybeUpgrade();
+}
+
+add_action('init', __NAMESPACE__ . '\\init_commands');
 
 /**
  * Loads the plugin text domain for translations.
@@ -102,227 +117,10 @@ function register_provider(): void
 
 add_action('init', __NAMESPACE__ . '\\register_provider', 5);
 
-/**
- * Registers the plugin settings.
- *
- * @since 1.0.0
- *
- * @return void
- */
-function register_settings(): void
-{
-    register_setting('infomaniak_ai', 'infomaniak_ai_product_id', [
-        'type' => 'string',
-        'sanitize_callback' => 'sanitize_text_field',
-        'default' => '',
-    ]);
-
-    add_settings_section(
-        'infomaniak_ai_settings',
-        __('Infomaniak AI Configuration', 'ai-provider-for-infomaniak'),
-        function () {
-            echo '<p>';
-            echo esc_html__(
-                'Configure your Infomaniak AI product settings. Your API token is managed via Settings > Connectors.',
-                'ai-provider-for-infomaniak'
-            );
-            echo '</p>';
-        },
-        'infomaniak-ai'
-    );
-
-    add_settings_field(
-        'infomaniak_ai_product_id',
-        __('Product ID', 'ai-provider-for-infomaniak'),
-        function () {
-            $value = InfomaniakProvider::getProductId();
-            $isFromOption = !has_filter('infomaniak_ai_product_id')
-                && !defined('INFOMANIAK_AI_PRODUCT_ID');
-            echo '<input type="text" name="infomaniak_ai_product_id" value="'
-                . esc_attr($value) . '" class="regular-text"'
-                . ($isFromOption ? '' : ' disabled') . ' />';
-            echo '<p class="description">';
-            if (defined('INFOMANIAK_AI_PRODUCT_ID')) {
-                echo esc_html__(
-                    'Currently set via the INFOMANIAK_AI_PRODUCT_ID constant.',
-                    'ai-provider-for-infomaniak'
-                );
-            } elseif (has_filter('infomaniak_ai_product_id')) {
-                echo esc_html__(
-                    'Currently set via the infomaniak_ai_product_id filter.',
-                    'ai-provider-for-infomaniak'
-                );
-            } else {
-                echo esc_html__(
-                    'Your Infomaniak AI product ID. Find it in your Infomaniak manager at AI Tools.',
-                    'ai-provider-for-infomaniak'
-                );
-            }
-            echo '</p>';
-        },
-        'infomaniak-ai',
-        'infomaniak_ai_settings'
-    );
-
-    // Rate limits settings.
-    register_setting('infomaniak_ai', RateLimitConfig::optionName(), [
-        'type'              => 'array',
-        'sanitize_callback' => __NAMESPACE__ . '\\sanitize_rate_limits',
-        'default'           => [],
-    ]);
-
-    add_settings_section(
-        'infomaniak_ai_rate_limits',
-        __('Rate Limits', 'ai-provider-for-infomaniak'),
-        function () {
-            echo '<p>';
-            echo esc_html__(
-                'Configure the maximum number of AI requests per role within a time window. Set to 0 for unlimited.',
-                'ai-provider-for-infomaniak'
-            );
-            echo '</p>';
-        },
-        'infomaniak-ai'
-    );
-
-    add_settings_field(
-        'infomaniak_ai_rate_limits_field',
-        __('Per-role limits', 'ai-provider-for-infomaniak'),
-        __NAMESPACE__ . '\\render_rate_limits_field',
-        'infomaniak-ai',
-        'infomaniak_ai_rate_limits'
-    );
+// Admin settings page.
+if (is_admin()) {
+    Admin\SettingsPage::init();
 }
-
-/**
- * Renders the rate limits settings field as an HTML table.
- *
- * @since 1.0.0
- */
-function render_rate_limits_field(): void
-{
-    $limits  = RateLimitConfig::getAll();
-    $windows = RateLimitConfig::validWindows();
-    $labels  = [
-        'hour'  => __('Hour', 'ai-provider-for-infomaniak'),
-        'day'   => __('Day', 'ai-provider-for-infomaniak'),
-        'month' => __('Month', 'ai-provider-for-infomaniak'),
-    ];
-    $optionName = RateLimitConfig::optionName();
-    ?>
-    <table class="widefat fixed" style="max-width: 500px;">
-        <thead>
-            <tr>
-                <th><?php esc_html_e('Role', 'ai-provider-for-infomaniak'); ?></th>
-                <th><?php esc_html_e('Limit', 'ai-provider-for-infomaniak'); ?></th>
-                <th><?php esc_html_e('Window', 'ai-provider-for-infomaniak'); ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($limits as $role => $config) : ?>
-                <tr>
-                    <td><?php echo esc_html(ucfirst($role)); ?></td>
-                    <td>
-                        <input
-                            type="number"
-                            name="<?php echo esc_attr("{$optionName}[{$role}][limit]"); ?>"
-                            value="<?php echo esc_attr((string) $config['limit']); ?>"
-                            min="0"
-                            step="1"
-                            class="small-text"
-                        />
-                    </td>
-                    <td>
-                        <select name="<?php echo esc_attr("{$optionName}[{$role}][window]"); ?>">
-                            <?php foreach ($windows as $w) : ?>
-                                <option
-                                    value="<?php echo esc_attr($w); ?>"
-                                    <?php selected($config['window'], $w); ?>
-                                ><?php echo esc_html($labels[$w] ?? $w); ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <p class="description">
-        <?php esc_html_e('0 = unlimited. Limits are enforced per user based on their primary role.', 'ai-provider-for-infomaniak'); ?>
-    </p>
-    <?php
-}
-
-/**
- * Sanitizes the rate limits input from the settings form.
- *
- * @since 1.0.0
- *
- * @param mixed $input Raw input from the form.
- * @return array Sanitized rate limits.
- */
-function sanitize_rate_limits($input): array
-{
-    if (!is_array($input)) {
-        return [];
-    }
-
-    $sanitized = [];
-    foreach ($input as $role => $config) {
-        if (!is_array($config)) {
-            continue;
-        }
-        $sanitized[sanitize_key($role)] = [
-            'limit'  => max(0, (int) ($config['limit'] ?? 0)),
-            'window' => RateLimitConfig::sanitizeWindow($config['window'] ?? 'hour'),
-        ];
-    }
-
-    return $sanitized;
-}
-
-/**
- * Adds the settings page under the Settings menu.
- *
- * @since 1.0.0
- *
- * @return void
- */
-function add_settings_page(): void
-{
-    add_options_page(
-        __('Infomaniak AI', 'ai-provider-for-infomaniak'),
-        __('Infomaniak AI', 'ai-provider-for-infomaniak'),
-        'manage_options',
-        'infomaniak-ai',
-        __NAMESPACE__ . '\\render_settings_page'
-    );
-}
-
-/**
- * Renders the settings page.
- *
- * @since 1.0.0
- *
- * @return void
- */
-function render_settings_page(): void
-{
-    ?>
-    <div class="wrap">
-        <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
-        <form action="options.php" method="post">
-            <?php
-            settings_fields('infomaniak_ai');
-            do_settings_sections('infomaniak-ai');
-            submit_button();
-            ?>
-        </form>
-    </div>
-    <?php
-}
-
-add_action('admin_init', __NAMESPACE__ . '\\register_settings');
-add_action('admin_menu', __NAMESPACE__ . '\\add_settings_page');
 
 /**
  * Fetches and caches the list of available models from Infomaniak.

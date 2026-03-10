@@ -86,6 +86,35 @@ class CommandLoader
             }
         }
 
+        // Merge database-stored commands (file-based commands take priority).
+        $dbCommands = CommandStore::getAll();
+        foreach ($dbCommands as $slug => $row) {
+            if (isset($commands[$slug])) {
+                continue;
+            }
+
+            if (empty($row['description']) || empty($row['prompt_template'])) {
+                continue;
+            }
+
+            $config = [
+                'name'           => $slug,
+                'label'          => $row['label'],
+                'description'    => $row['description'],
+                'temperature'    => (float) $row['temperature'],
+                'max_tokens'     => (int) $row['max_tokens'],
+                'model'          => $row['model'] ?: null,
+                'model_type'     => $row['model_type'],
+                'system'         => $row['system_prompt'] ?: null,
+                'category'       => $row['category'],
+                'permission'     => $row['permission'],
+                'conversational' => (bool) $row['conversational'],
+                'provider'       => $row['provider'],
+            ];
+
+            $commands[$slug] = new MarkdownCommand($config, $row['prompt_template']);
+        }
+
         self::$cache = $commands;
 
         return $commands;
@@ -130,6 +159,90 @@ class CommandLoader
 
         // Only return directories that exist.
         return array_values(array_filter($dirs, 'is_dir'));
+    }
+
+    /**
+     * Discovers all commands annotated with their source.
+     *
+     * Used by the admin UI to display source badges and enable/disable actions.
+     * File-based commands are read-only; database commands are editable.
+     *
+     * @since 1.2.0
+     *
+     * @return array<string, array{command: MarkdownCommand, source: 'file'|'db'}>
+     */
+    public static function discoverWithSource(): array
+    {
+        $result = [];
+        $dirs = self::getCommandDirs();
+
+        // File-based commands.
+        foreach ($dirs as $dir) {
+            $files = glob($dir . '/*.md');
+            if ($files === false) {
+                continue;
+            }
+
+            foreach ($files as $file) {
+                $name = basename($file, '.md');
+                $name = preg_replace('/[^a-z0-9-]/', '-', strtolower($name));
+                $name = trim($name, '-');
+
+                if ($name === '' || isset($result[$name])) {
+                    continue;
+                }
+
+                $content = file_get_contents($file);
+                if ($content === false || trim($content) === '') {
+                    continue;
+                }
+
+                [$config, $body] = FrontmatterParser::parse($content);
+                if (empty($config['description']) || trim($body) === '') {
+                    continue;
+                }
+
+                $config['name'] = $name;
+                $result[$name] = [
+                    'command' => new MarkdownCommand($config, $body),
+                    'source'  => 'file',
+                ];
+            }
+        }
+
+        // Database commands.
+        $dbCommands = CommandStore::getAll();
+        foreach ($dbCommands as $slug => $row) {
+            if (isset($result[$slug])) {
+                continue;
+            }
+
+            if (empty($row['description']) || empty($row['prompt_template'])) {
+                continue;
+            }
+
+            $config = [
+                'name'           => $slug,
+                'label'          => $row['label'],
+                'description'    => $row['description'],
+                'temperature'    => (float) $row['temperature'],
+                'max_tokens'     => (int) $row['max_tokens'],
+                'model'          => $row['model'] ?: null,
+                'model_type'     => $row['model_type'],
+                'system'         => $row['system_prompt'] ?: null,
+                'category'       => $row['category'],
+                'permission'     => $row['permission'],
+                'conversational' => (bool) $row['conversational'],
+                'provider'       => $row['provider'],
+            ];
+
+            $result[$slug] = [
+                'command' => new MarkdownCommand($config, $row['prompt_template']),
+                'source'  => 'db',
+            ];
+        }
+
+        return $result;
     }
 
     /**

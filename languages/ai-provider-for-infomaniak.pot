@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-10T07:08:33+00:00\n"
+"POT-Creation-Date: 2026-03-10T14:56:19+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: ai-provider-for-infomaniak\n"
@@ -31,36 +31,561 @@ msgstr ""
 
 #. Author of the plugin
 #: plugin.php
+#: src/Admin/views/tabs/commands/list.php:80
 msgid "Custom"
 msgstr ""
 
-#: plugin.php:120
-msgid "Infomaniak AI Configuration"
+#: src/Admin/SettingsPage.php:76
+#: src/Admin/SettingsPage.php:77
+#: src/Admin/views/settings-page.php:21
+msgid "Infomaniak AI"
 msgstr ""
 
-#: plugin.php:123
-msgid "Configure your Infomaniak AI product settings. Your API token is managed via Settings > Connectors."
+#: src/Admin/SettingsPage.php:178
+#: src/Admin/SettingsPage.php:406
+#: src/Admin/SettingsPage.php:467
+msgid "Insufficient permissions."
 msgstr ""
 
-#: plugin.php:134
+#: src/Admin/SettingsPage.php:190
+msgid "API key not configured. Set it in Settings > Connectors."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:195
+msgid "Product ID not configured."
+msgstr ""
+
+#. translators: %d: HTTP status code
+#: src/Admin/SettingsPage.php:214
+#, php-format
+msgid "API returned HTTP %d."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:220
+msgid "Unexpected API response."
+msgstr ""
+
+#. translators: %d: number of available models
+#: src/Admin/SettingsPage.php:232
+#, php-format
+msgid "Connection successful. %d models available."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:246
+msgid "General"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:247
+#: src/Admin/views/tabs/commands/list.php:21
+msgid "Commands"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:248
+#: src/Admin/views/tabs/rate-limits.php:25
+msgid "Rate Limits"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:249
+msgid "Usage"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:341
+msgid "Hour"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:342
+msgid "Day"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:343
+msgid "Month"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:413
+msgid "Command name is required."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:419
+msgid "Description is required."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:423
+msgid "Prompt template is required."
+msgstr ""
+
+#. translators: %s: command slug
+#: src/Admin/SettingsPage.php:432
+#, php-format
+msgid "A file-based command with the name \"%s\" already exists."
+msgstr ""
+
+#. translators: %s: command slug
+#: src/Admin/SettingsPage.php:439
+#, php-format
+msgid "A command with the name \"%s\" already exists."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:447
+msgid "Failed to save command."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:473
+msgid "Command slug is required."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:479
+msgid "Failed to delete command."
+msgstr ""
+
+#: src/Admin/views/settings-page.php:23
+msgid "Configure your AI provider settings."
+msgstr ""
+
+#: src/Admin/views/settings-page.php:56
+msgid "Save Changes"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:43
+#: src/Admin/views/tabs/commands/list.php:24
+msgid "New Command"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:44
+msgid "Edit Command"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:48
+msgid "Back to list"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:53
+msgid "Create a new AI command. Use {{variable}} placeholders in the prompt template."
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:54
+msgid "Edit your AI command. Changes take effect immediately."
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:63
+msgid "Identity"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:68
+msgid "Name (slug)"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:80
+msgid "Lowercase letters, numbers, and hyphens only."
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:86
+msgid "Label"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:96
+msgid "Optional display name. Auto-generated from slug if empty."
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:103
+#: src/Admin/views/tabs/commands/list.php:54
+msgid "Description"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:111
+msgid "Briefly describe what this command does."
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:119
+msgid "Prompt"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:123
+msgid "Prompt Template"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:129
+msgid ""
+"Summarize the following content:\n"
+"\n"
+"{{content}}"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:133
+msgid "Use {{variable}} for dynamic placeholders. They become required input fields."
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:139
+msgid "System Prompt"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:145
+msgid "Optional. Sets the AI behavior and persona."
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:152
+msgid "Settings"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:157
+msgid "Temperature"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:172
+msgid "Max Tokens"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:187
+msgid "Category"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:190
+msgid "Content"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:191
+msgid "Analysis"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:192
+msgid "Translation"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:193
+msgid "Coding"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:194
+#: src/Admin/views/tabs/commands/form.php:215
+msgid "Image"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:200
+msgid "Permission"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:203
+msgid "edit_posts"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:204
+msgid "publish_posts"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:205
+msgid "manage_options"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:211
+msgid "Model Type"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:214
+msgid "LLM (Text)"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:221
+#: src/Admin/views/tabs/usage.php:112
+msgid "Model"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:224
+msgid "Default"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:241
+msgid "Conversational (multi-turn)"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:248
+msgid "Preview"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:252
+msgid "Detected Variables"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:254
+msgid "Type in the prompt template to detect variables..."
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:259
+msgid "Generated Input Schema"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:261
+msgid "Schema will appear here..."
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:270
+msgid "Saving..."
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:272
+msgid "Create Command"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/form.php:273
+msgid "Save Command"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/list.php:28
+msgid "Manage AI commands. File-based commands are read-only; custom commands can be edited and deleted."
+msgstr ""
+
+#: src/Admin/views/tabs/commands/list.php:42
+msgid "No commands yet"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/list.php:45
+msgid "Create your first AI command or place .md files in an ai-commands/ directory within your plugin or theme."
+msgstr ""
+
+#: src/Admin/views/tabs/commands/list.php:53
+msgid "Name"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/list.php:55
+msgid "Source"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/list.php:56
+msgid "Variables"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/list.php:57
+msgid "Actions"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/list.php:78
+msgid "File"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/list.php:94
+msgid "Edit"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/list.php:99
+msgid "Delete"
+msgstr ""
+
+#: src/Admin/views/tabs/commands/list.php:103
+msgid "Read-only"
+msgstr ""
+
+#: src/Admin/views/tabs/general.php:24
+#: src/Admin/views/tabs/general.php:39
 msgid "Product ID"
 msgstr ""
 
-#: plugin.php:144
+#: src/Admin/views/tabs/general.php:26
+msgid "Constant"
+msgstr ""
+
+#: src/Admin/views/tabs/general.php:28
+msgid "Filter"
+msgstr ""
+
+#: src/Admin/views/tabs/general.php:32
+msgid "Your Infomaniak AI product identifier. Required to connect to the AI API."
+msgstr ""
+
+#: src/Admin/views/tabs/general.php:51
 msgid "Currently set via the INFOMANIAK_AI_PRODUCT_ID constant."
 msgstr ""
 
-#: plugin.php:149
+#: src/Admin/views/tabs/general.php:53
 msgid "Currently set via the infomaniak_ai_product_id filter."
 msgstr ""
 
-#: plugin.php:154
-msgid "Your Infomaniak AI product ID. Find it in your Infomaniak manager at AI Tools."
+#: src/Admin/views/tabs/general.php:55
+msgid "Find it in your Infomaniak Manager under AI Tools."
 msgstr ""
 
-#: plugin.php:176
-#: plugin.php:177
-msgid "Infomaniak AI"
+#: src/Admin/views/tabs/general.php:63
+#: src/Admin/views/tabs/general.php:65
+msgid "Test Connection"
+msgstr ""
+
+#: src/Admin/views/tabs/general.php:64
+msgid "Testing..."
+msgstr ""
+
+#: src/Admin/views/tabs/rate-limits.php:28
+msgid "Configure the maximum number of AI requests per role within a time window. Set to 0 for unlimited."
+msgstr ""
+
+#: src/Admin/views/tabs/rate-limits.php:35
+msgid "Role"
+msgstr ""
+
+#: src/Admin/views/tabs/rate-limits.php:36
+msgid "Limit"
+msgstr ""
+
+#: src/Admin/views/tabs/rate-limits.php:37
+msgid "Window"
+msgstr ""
+
+#: src/Admin/views/tabs/rate-limits.php:74
+msgid "Limits are enforced per user based on their primary role. Guest users are rate-limited by IP."
+msgstr ""
+
+#: src/Admin/views/tabs/usage.php:38
+msgid "No usage data yet"
+msgstr ""
+
+#: src/Admin/views/tabs/usage.php:41
+msgid "Usage statistics will appear here once AI requests are made through the plugin."
+msgstr ""
+
+#: src/Admin/views/tabs/usage.php:49
+msgid "Overview"
+msgstr ""
+
+#: src/Admin/views/tabs/usage.php:52
+msgid "AI usage for the last 30 days."
+msgstr ""
+
+#: src/Admin/views/tabs/usage.php:57
+msgid "Total Tokens"
+msgstr ""
+
+#: src/Admin/views/tabs/usage.php:67
+#: src/Admin/views/tabs/usage.php:81
+msgid "Last 30 days"
+msgstr ""
+
+#: src/Admin/views/tabs/usage.php:71
+#: src/Admin/views/tabs/usage.php:114
+#: src/Admin/views/tabs/usage.php:143
+msgid "Requests"
+msgstr ""
+
+#: src/Admin/views/tabs/usage.php:85
+msgid "Tokens Today"
+msgstr ""
+
+#. translators: %s: number of requests
+#: src/Admin/views/tabs/usage.php:93
+#, php-format
+msgid "%s request"
+msgid_plural "%s requests"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Admin/views/tabs/usage.php:105
+msgid "Top Models"
+msgstr ""
+
+#: src/Admin/views/tabs/usage.php:113
+#: src/Admin/views/tabs/usage.php:142
+msgid "Tokens"
+msgstr ""
+
+#: src/Admin/views/tabs/usage.php:134
+msgid "Top Presets"
+msgstr ""
+
+#: src/Admin/views/tabs/usage.php:141
+msgid "Preset"
+msgstr ""
+
+#: src/CLI/Command.php:131
+msgid "No usage records found."
+msgstr ""
+
+#: src/CLI/Command.php:195
+msgid "Refreshing models from Infomaniak API..."
+msgstr ""
+
+#: src/CLI/Command.php:201
+msgid "No models available. Check your API key and product ID configuration."
+msgstr ""
+
+#: src/CLI/Command.php:213
+msgid "No models match the given filters."
+msgstr ""
+
+#: src/CLI/Command.php:221
+msgid "Showing cached data. Use --refresh to fetch from API."
+msgstr ""
+
+#. translators: %s: comma-separated list of cleared caches
+#: src/CLI/Command.php:286
+#, php-format
+msgid "Cleared caches: %s."
+msgstr ""
+
+#: src/CLI/Command.php:330
+msgid "No markdown commands found."
+msgstr ""
+
+#: src/CLI/Command.php:334
+msgid "No command directories exist. Expected locations:"
+msgstr ""
+
+#: src/CLI/Command.php:338
+msgid "Scanned directories:"
+msgstr ""
+
+#: src/CLI/Command.php:378
+msgid "Command directories:"
+msgstr ""
+
+#: src/CLI/Command.php:481
+msgid "No memory records found."
+msgstr ""
+
+#: src/CLI/Command.php:543
+msgid "You must specify at least one of: --conversation, --user, or --before."
+msgstr ""
+
+#: src/CLI/Command.php:561
+msgid "No matching records found."
+msgstr ""
+
+#. translators: %d: number of records
+#: src/CLI/Command.php:568
+#, php-format
+msgid "Found %d records to delete."
+msgstr ""
+
+#: src/CLI/Command.php:574
+msgid "Are you sure you want to delete these records?"
+msgstr ""
+
+#. translators: %d: number of deleted records
+#: src/CLI/Command.php:582
+#, php-format
+msgid "Deleted %d memory records."
+msgstr ""
+
+#: src/CLI/Command.php:623
+msgid "unlimited"
+msgstr ""
+
+#. translators: %d: number of cached models
+#: src/CLI/Command.php:644
+#, php-format
+msgid "cached (%d models)"
+msgstr ""
+
+#: src/CLI/Command.php:648
+msgid "empty"
+msgstr ""
+
+#. translators: %d: number of commands
+#: src/CLI/Command.php:655
+#, php-format
+msgid "%d commands loaded"
+msgstr ""
+
+#: src/CLI/Command.php:663
+msgid "12 hours"
+msgstr ""
+
+#: src/CLI/Command.php:668
+msgid "per-request"
 msgstr ""
 
 #: src/Models/InfomaniakImageGenerationModel.php:42
@@ -99,19 +624,19 @@ msgstr ""
 msgid "Batch \"%s\" download returned empty content."
 msgstr ""
 
-#: src/Presets/BasePreset.php:180
+#: src/Presets/BasePreset.php:185
 msgid "The generated text."
 msgstr ""
 
-#: src/Presets/BasePreset.php:296
+#: src/Presets/BasePreset.php:301
 msgid "Conversation identifier. Auto-generated if omitted."
 msgstr ""
 
-#: src/Presets/BasePreset.php:448
+#: src/Presets/BasePreset.php:526
 msgid "AI Client is not available."
 msgstr ""
 
-#: src/Presets/BasePreset.php:476
+#: src/Presets/BasePreset.php:557
 msgid "Failed to render prompt template."
 msgstr ""
 
@@ -123,4 +648,11 @@ msgstr ""
 
 #: src/Provider/InfomaniakProvider.php:151
 msgid "Text and image generation with open-source models. Supports async batch operations."
+msgstr ""
+
+#. translators: 1: limit number, 2: time window
+#: src/RateLimit/RateLimiter.php:90
+#: src/RateLimit/RateLimiter.php:222
+#, php-format
+msgid "Rate limit exceeded. You are allowed %1$d requests per %2$s."
 msgstr ""
