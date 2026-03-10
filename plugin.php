@@ -23,6 +23,7 @@ use WordPress\AiClient\AiClient;
 use WordPress\InfomaniakAiProvider\Commands\CommandLoader;
 use WordPress\InfomaniakAiProvider\Provider\InfomaniakProvider;
 use WordPress\InfomaniakAiProvider\Memory\MemorySchema;
+use WordPress\InfomaniakAiProvider\RateLimit\RateLimitConfig;
 use WordPress\InfomaniakAiProvider\Usage\UsageSchema;
 use WordPress\InfomaniakAiProvider\Usage\UsageTracker;
 
@@ -162,6 +163,121 @@ function register_settings(): void
         'infomaniak-ai',
         'infomaniak_ai_settings'
     );
+
+    // Rate limits settings.
+    register_setting('infomaniak_ai', RateLimitConfig::optionName(), [
+        'type'              => 'array',
+        'sanitize_callback' => __NAMESPACE__ . '\\sanitize_rate_limits',
+        'default'           => [],
+    ]);
+
+    add_settings_section(
+        'infomaniak_ai_rate_limits',
+        __('Rate Limits', 'ai-provider-for-infomaniak'),
+        function () {
+            echo '<p>';
+            echo esc_html__(
+                'Configure the maximum number of AI requests per role within a time window. Set to 0 for unlimited.',
+                'ai-provider-for-infomaniak'
+            );
+            echo '</p>';
+        },
+        'infomaniak-ai'
+    );
+
+    add_settings_field(
+        'infomaniak_ai_rate_limits_field',
+        __('Per-role limits', 'ai-provider-for-infomaniak'),
+        __NAMESPACE__ . '\\render_rate_limits_field',
+        'infomaniak-ai',
+        'infomaniak_ai_rate_limits'
+    );
+}
+
+/**
+ * Renders the rate limits settings field as an HTML table.
+ *
+ * @since 1.0.0
+ */
+function render_rate_limits_field(): void
+{
+    $limits  = RateLimitConfig::getAll();
+    $windows = RateLimitConfig::validWindows();
+    $labels  = [
+        'hour'  => __('Hour', 'ai-provider-for-infomaniak'),
+        'day'   => __('Day', 'ai-provider-for-infomaniak'),
+        'month' => __('Month', 'ai-provider-for-infomaniak'),
+    ];
+    $optionName = RateLimitConfig::optionName();
+    ?>
+    <table class="widefat fixed" style="max-width: 500px;">
+        <thead>
+            <tr>
+                <th><?php esc_html_e('Role', 'ai-provider-for-infomaniak'); ?></th>
+                <th><?php esc_html_e('Limit', 'ai-provider-for-infomaniak'); ?></th>
+                <th><?php esc_html_e('Window', 'ai-provider-for-infomaniak'); ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($limits as $role => $config) : ?>
+                <tr>
+                    <td><?php echo esc_html(ucfirst($role)); ?></td>
+                    <td>
+                        <input
+                            type="number"
+                            name="<?php echo esc_attr("{$optionName}[{$role}][limit]"); ?>"
+                            value="<?php echo esc_attr((string) $config['limit']); ?>"
+                            min="0"
+                            step="1"
+                            class="small-text"
+                        />
+                    </td>
+                    <td>
+                        <select name="<?php echo esc_attr("{$optionName}[{$role}][window]"); ?>">
+                            <?php foreach ($windows as $w) : ?>
+                                <option
+                                    value="<?php echo esc_attr($w); ?>"
+                                    <?php selected($config['window'], $w); ?>
+                                ><?php echo esc_html($labels[$w] ?? $w); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <p class="description">
+        <?php esc_html_e('0 = unlimited. Limits are enforced per user based on their primary role.', 'ai-provider-for-infomaniak'); ?>
+    </p>
+    <?php
+}
+
+/**
+ * Sanitizes the rate limits input from the settings form.
+ *
+ * @since 1.0.0
+ *
+ * @param mixed $input Raw input from the form.
+ * @return array Sanitized rate limits.
+ */
+function sanitize_rate_limits($input): array
+{
+    if (!is_array($input)) {
+        return [];
+    }
+
+    $sanitized = [];
+    foreach ($input as $role => $config) {
+        if (!is_array($config)) {
+            continue;
+        }
+        $sanitized[sanitize_key($role)] = [
+            'limit'  => max(0, (int) ($config['limit'] ?? 0)),
+            'window' => RateLimitConfig::sanitizeWindow($config['window'] ?? 'hour'),
+        ];
+    }
+
+    return $sanitized;
 }
 
 /**

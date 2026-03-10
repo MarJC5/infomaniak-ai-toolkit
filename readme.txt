@@ -1,6 +1,6 @@
 === AI Provider for Infomaniak (Unofficial) ===
 Contributors: custom
-Tags: ai, infomaniak, llama, mistral, presets, image-generation, conversation-memory, markdown-commands, agent, function-calling, wp-cli
+Tags: ai, infomaniak, llama, mistral, presets, image-generation, conversation-memory, markdown-commands, agent, function-calling, wp-cli, rate-limiting
 Requires at least: 6.9
 Tested up to: 7.0
 Stable tag: 1.0.0
@@ -32,7 +32,8 @@ This plugin provides Infomaniak AI integration for the PHP AI Client SDK. It ena
 * **AI Presets SDK** -- abstract class for building reusable AI commands with PHP templates, auto-registered as WordPress Abilities (REST API + MCP)
 * **Markdown Commands** -- create AI commands with simple markdown files, no PHP required
 * **Agent Orchestrator** -- function calling loop that lets models use tools autonomously
-* **WP-CLI Commands** -- `wp infomaniak-ai` commands for usage stats, model listing, cache management, and memory inspection
+* **Rate Limiting** -- configurable per-role rate limits with time windows (hour/day/month), extensible via filter
+* **WP-CLI Commands** -- `wp infomaniak-ai` commands for usage stats, model listing, cache management, rate limits, and memory inspection
 
 Available models are dynamically discovered from the Infomaniak API, including text generation models (Llama, Mistral, Mixtral, DeepSeek, Qwen) and image generation models.
 
@@ -97,6 +98,10 @@ Markdown commands are AI commands defined as simple `.md` files. Each file has a
 
 Presets are reusable AI commands built on the `BasePreset` abstract class. Instead of writing prompt strings, configuring the AI client, and registering REST endpoints manually for each AI feature, you extend `BasePreset`, create a PHP template, and the framework handles execution and ability registration. Each preset becomes a WordPress Ability, discoverable via REST API and MCP.
 
+= How do rate limits work? =
+
+Rate limits are enforced per user based on their primary WordPress role. Administrators are unlimited by default. Other roles have configurable limits per time window (hour, day, or month). Guest (unauthenticated) users are rate-limited by IP using a pseudonymized HMAC hash stored in an auto-expiring transient -- no plain IP is ever persisted. Configure limits via **Settings > Infomaniak AI** or use the `infomaniak_ai_rate_limit_check` filter for custom logic.
+
 = Can I create my own presets in another plugin? =
 
 Yes. Extend `WordPress\InfomaniakAiProvider\Presets\BasePreset` from any plugin. The base class auto-detects your plugin's directory to find templates. Place your PHP templates in `your-plugin/templates/presets/` and system prompts in `your-plugin/templates/presets/system/`. Use the `infomaniak_ai_presets` filter to register them.
@@ -134,4 +139,7 @@ Yes. Extend `WordPress\InfomaniakAiProvider\Presets\BasePreset` from any plugin.
 * `Tool` and `ToolRegistry` classes for defining and managing tools
 * Automatic agent mode in presets via `tools()` override
 * `infomaniak_ai_agent_tool_called` and `infomaniak_ai_agent_step` hooks
-* WP-CLI commands: `wp infomaniak-ai usage`, `models`, `cache`, `commands`, `memory`, `memory-clear`
+* WP-CLI commands: `wp infomaniak-ai usage`, `models`, `cache`, `commands`, `rate-limits`, `memory`, `memory-clear`
+* Rate limiting: per-role configurable limits with time windows (hour/day/month)
+* Admin settings UI for rate limit configuration
+* `infomaniak_ai_rate_limit_check` filter for custom rate limiting logic

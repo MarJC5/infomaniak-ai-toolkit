@@ -501,6 +501,16 @@ wp infomaniak-ai commands
 wp infomaniak-ai commands --verbose
 ```
 
+### Rate limits
+
+```bash
+# Show rate limit configuration per role
+wp infomaniak-ai rate-limits
+
+# Output as JSON
+wp infomaniak-ai rate-limits --format=json
+```
+
 ### Conversation memory
 
 ```bash
@@ -518,6 +528,77 @@ wp infomaniak-ai memory-clear --before=2026-02-08
 
 # Clear a specific conversation (non-interactive)
 wp infomaniak-ai memory-clear --conversation=abc-123 --yes
+```
+
+## Rate Limiting
+
+The plugin enforces per-role rate limits on all AI preset executions (PHP presets and markdown commands). Limits are configurable via **Settings > Infomaniak AI** or programmatically.
+
+### Default limits
+
+| Role | Limit | Window |
+|---|---|---|
+| Administrator | Unlimited | — |
+| Editor | 100 | Hour |
+| Author | 50 | Hour |
+| Contributor | 20 | Hour |
+| Subscriber | 10 | Hour |
+| Guest | 5 | Hour |
+
+Guest (unauthenticated) users are rate-limited by IP address using WordPress transients. This enables frontend usage without requiring authentication while preventing abuse.
+
+**Privacy:** Guest IP addresses are never stored in plain text. The plugin uses HMAC-SHA256 with the site's secret salt (`AUTH_SALT`) to produce a pseudonymized hash. The hash is stored in a WordPress transient that expires automatically at the end of the time window (1 hour, 1 day, or 30 days). No persistent data is retained for guests.
+
+### Configuration
+
+Limits are stored in the `infomaniak_ai_rate_limits` WordPress option. Configure them via the admin UI or directly:
+
+```php
+use WordPress\InfomaniakAiProvider\RateLimit\RateLimitConfig;
+
+RateLimitConfig::save([
+    'editor'     => ['limit' => 200, 'window' => 'day'],
+    'subscriber' => ['limit' => 5,   'window' => 'hour'],
+]);
+```
+
+Available windows: `hour`, `day`, `month`. Set `limit` to `0` for unlimited.
+
+### Hook
+
+Use the `infomaniak_ai_rate_limit_check` filter to customize rate limiting behavior:
+
+```php
+// Allow specific users to bypass rate limits
+add_filter('infomaniak_ai_rate_limit_check', function ($result, $userId, $presetName, $context) {
+    // VIP users bypass all limits
+    if (get_user_meta($userId, 'vip_user', true)) {
+        return null; // Allow
+    }
+    return $result;
+}, 10, 4);
+```
+
+Parameters:
+- `$result` — `null` (allowed) or `WP_Error` (blocked)
+- `$userId` — WordPress user ID
+- `$presetName` — The preset being executed
+- `$context` — `['role', 'limit', 'window', 'count']`
+
+### Programmatic check
+
+```php
+use WordPress\InfomaniakAiProvider\RateLimit\RateLimiter;
+
+// Check if current user can make a request
+$error = RateLimiter::check('my-preset');
+if ($error !== null) {
+    // User is rate-limited, $error is a WP_Error with code 429
+}
+
+// Get remaining requests for current user
+$remaining = RateLimiter::getRemainingForCurrentUser();
+// ['limit' => 100, 'remaining' => 42, 'window' => 'hour', 'reset' => 3600]
 ```
 
 ## Supported Models

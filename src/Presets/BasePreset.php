@@ -11,6 +11,7 @@ use WordPress\InfomaniakAiProvider\Memory\CompactingStrategy;
 use WordPress\InfomaniakAiProvider\Memory\MemoryStore;
 use WordPress\InfomaniakAiProvider\Memory\MemoryStrategy;
 use WordPress\InfomaniakAiProvider\Memory\SlidingWindowStrategy;
+use WordPress\InfomaniakAiProvider\RateLimit\RateLimiter;
 use WordPress\InfomaniakAiProvider\Usage\UsageTracker;
 
 /**
@@ -524,6 +525,12 @@ abstract class BasePreset
                 'ai_unavailable',
                 __('AI Client is not available.', 'ai-provider-for-infomaniak')
             );
+        }
+
+        // Rate limit check — block before any processing.
+        $rateLimitError = RateLimiter::check($this->name());
+        if ($rateLimitError !== null) {
+            return $rateLimitError;
         }
 
         $this->setTrackingContext();

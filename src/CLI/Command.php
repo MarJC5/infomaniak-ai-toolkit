@@ -10,6 +10,7 @@ use WordPress\InfomaniakAiProvider\Commands\CommandLoader;
 use WordPress\InfomaniakAiProvider\Commands\MarkdownCommand;
 use WordPress\InfomaniakAiProvider\Memory\MemoryRecord;
 use WordPress\InfomaniakAiProvider\Memory\MemoryStore;
+use WordPress\InfomaniakAiProvider\RateLimit\RateLimitConfig;
 use WordPress\InfomaniakAiProvider\Usage\UsageRecord;
 use WordPress\InfomaniakAiProvider\Usage\UsageTracker;
 use function WordPress\InfomaniakAiProvider\get_available_models;
@@ -582,6 +583,51 @@ class Command extends WP_CLI_Command
                 $deleted
             )
         );
+    }
+
+    /**
+     * Displays the current rate limit configuration per role.
+     *
+     * ## OPTIONS
+     *
+     * [--format=<format>]
+     * : Output format.
+     * ---
+     * default: table
+     * options:
+     *   - table
+     *   - json
+     *   - csv
+     *   - yaml
+     * ---
+     *
+     * ## EXAMPLES
+     *
+     *     # Show rate limits for all roles
+     *     wp infomaniak-ai rate-limits
+     *
+     *     # Output as JSON
+     *     wp infomaniak-ai rate-limits --format=json
+     *
+     * @subcommand rate-limits
+     */
+    public function rate_limits($args, $assoc_args): void
+    {
+        $limits = RateLimitConfig::getAll();
+
+        $items = [];
+        foreach ($limits as $role => $config) {
+            $items[] = [
+                'role'   => $role,
+                'limit'  => $config['limit'] === 0
+                    ? __('unlimited', 'ai-provider-for-infomaniak')
+                    : $config['limit'],
+                'window' => $config['window'],
+            ];
+        }
+
+        $format = $assoc_args['format'] ?? 'table';
+        \WP_CLI\Utils\format_items($format, $items, ['role', 'limit', 'window']);
     }
 
     /**
