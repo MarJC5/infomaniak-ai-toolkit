@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider\Commands;
+namespace WordPress\InfomaniakAiToolkit\Commands;
 
 /**
  * CRUD operations for admin-created commands stored in the database.

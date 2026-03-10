@@ -7,14 +7,14 @@
  * Uses outputSchema() to enforce a JSON Schema on the AI response
  * and automatically decodes the result into a PHP array.
  *
- * @package WordPress\InfomaniakAiProvider\Examples
+ * @package WordPress\InfomaniakAiToolkit\Examples
  */
 
 declare(strict_types=1);
 
 namespace YourPlugin\Presets;
 
-use WordPress\InfomaniakAiProvider\Presets\BasePreset;
+use WordPress\InfomaniakAiToolkit\Presets\BasePreset;
 
 /**
  * Generates SEO metadata from content as a structured JSON object.

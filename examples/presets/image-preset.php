@@ -18,7 +18,7 @@
  *       └── presets/
  *           └── image-generate.php        <-- prompt template
  *
- * @package WordPress\InfomaniakAiProvider\Examples
+ * @package WordPress\InfomaniakAiToolkit\Examples
  */
 
 declare(strict_types=1);
@@ -28,7 +28,7 @@ namespace YourPlugin\Presets;
 use WordPress\AiClient\AiClient;
 use WordPress\AiClient\Files\Enums\MediaOrientationEnum;
 use WordPress\AiClient\Providers\Models\DTO\ModelConfig;
-use WordPress\InfomaniakAiProvider\Presets\BasePreset;
+use WordPress\InfomaniakAiToolkit\Presets\BasePreset;
 
 /**
  * Generates an image from a text description.
@@ -211,7 +211,7 @@ class ImageGeneratePreset extends BasePreset
  * --------------------------------------------------------------------------
  *
  * add_action('wp_abilities_api_init', function() {
- *     if (!class_exists(\WordPress\InfomaniakAiProvider\Presets\BasePreset::class)) {
+ *     if (!class_exists(\WordPress\InfomaniakAiToolkit\Presets\BasePreset::class)) {
  *         return;
  *     }
  *     $preset = new \YourPlugin\Presets\ImageGeneratePreset();

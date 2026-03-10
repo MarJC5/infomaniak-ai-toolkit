@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider\RateLimit;
+namespace WordPress\InfomaniakAiToolkit\RateLimit;
 
 /**
  * Manages rate limit configuration stored in the WordPress options table.

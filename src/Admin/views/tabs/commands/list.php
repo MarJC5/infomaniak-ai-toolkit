@@ -7,7 +7,7 @@
  *
  * @since 1.2.0
  *
- * @package WordPress\InfomaniakAiProvider
+ * @package WordPress\InfomaniakAiToolkit
  */
 
 defined('ABSPATH') || exit;
@@ -18,14 +18,14 @@ $baseUrl  = admin_url('options-general.php?page=infomaniak-ai&tab=commands');
 <div class="ik-section">
 	<div class="ik-section__header-row">
 		<h2 class="ik-section__header">
-			<?php esc_html_e('Commands', 'ai-provider-for-infomaniak'); ?>
+			<?php esc_html_e('Commands', 'infomaniak-ai-toolkit'); ?>
 		</h2>
 		<a href="<?php echo esc_url($baseUrl . '&action=new'); ?>" class="ik-btn ik-btn--outline">
-			<?php esc_html_e('New Command', 'ai-provider-for-infomaniak'); ?>
+			<?php esc_html_e('New Command', 'infomaniak-ai-toolkit'); ?>
 		</a>
 	</div>
 	<p class="ik-section__description">
-		<?php esc_html_e('Manage AI commands. File-based commands are read-only; custom commands can be edited and deleted.', 'ai-provider-for-infomaniak'); ?>
+		<?php esc_html_e('Manage AI commands. File-based commands are read-only; custom commands can be edited and deleted.', 'infomaniak-ai-toolkit'); ?>
 	</p>
 
 	<?php if (empty($commands)) : ?>
@@ -39,10 +39,10 @@ $baseUrl  = admin_url('options-general.php?page=infomaniak-ai&tab=commands');
 				</svg>
 			</div>
 			<h3 class="ik-empty-state__title">
-				<?php esc_html_e('No commands yet', 'ai-provider-for-infomaniak'); ?>
+				<?php esc_html_e('No commands yet', 'infomaniak-ai-toolkit'); ?>
 			</h3>
 			<p class="ik-empty-state__description">
-				<?php esc_html_e('Create your first AI command or place .md files in an ai-commands/ directory within your plugin or theme.', 'ai-provider-for-infomaniak'); ?>
+				<?php esc_html_e('Create your first AI command or place .md files in an ai-commands/ directory within your plugin or theme.', 'infomaniak-ai-toolkit'); ?>
 			</p>
 		</div>
 	<?php else : ?>
@@ -50,11 +50,11 @@ $baseUrl  = admin_url('options-general.php?page=infomaniak-ai&tab=commands');
 			<table class="ik-table">
 				<thead>
 					<tr>
-						<th><?php esc_html_e('Name', 'ai-provider-for-infomaniak'); ?></th>
-						<th><?php esc_html_e('Description', 'ai-provider-for-infomaniak'); ?></th>
-						<th><?php esc_html_e('Source', 'ai-provider-for-infomaniak'); ?></th>
-						<th><?php esc_html_e('Variables', 'ai-provider-for-infomaniak'); ?></th>
-						<th><?php esc_html_e('Actions', 'ai-provider-for-infomaniak'); ?></th>
+						<th><?php esc_html_e('Name', 'infomaniak-ai-toolkit'); ?></th>
+						<th><?php esc_html_e('Description', 'infomaniak-ai-toolkit'); ?></th>
+						<th><?php esc_html_e('Source', 'infomaniak-ai-toolkit'); ?></th>
+						<th><?php esc_html_e('Variables', 'infomaniak-ai-toolkit'); ?></th>
+						<th><?php esc_html_e('Actions', 'infomaniak-ai-toolkit'); ?></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -75,9 +75,9 @@ $baseUrl  = admin_url('options-general.php?page=infomaniak-ai&tab=commands');
 							</td>
 							<td>
 								<?php if ($source === 'file') : ?>
-									<span class="ik-badge ik-badge--file"><?php esc_html_e('File', 'ai-provider-for-infomaniak'); ?></span>
+									<span class="ik-badge ik-badge--file"><?php esc_html_e('File', 'infomaniak-ai-toolkit'); ?></span>
 								<?php else : ?>
-									<span class="ik-badge ik-badge--custom"><?php esc_html_e('Custom', 'ai-provider-for-infomaniak'); ?></span>
+									<span class="ik-badge ik-badge--custom"><?php esc_html_e('Custom', 'infomaniak-ai-toolkit'); ?></span>
 								<?php endif; ?>
 							</td>
 							<td>
@@ -91,16 +91,16 @@ $baseUrl  = admin_url('options-general.php?page=infomaniak-ai&tab=commands');
 								<div class="ik-cmd-actions">
 									<?php if ($source === 'db') : ?>
 										<a href="<?php echo esc_url($baseUrl . '&action=edit&command=' . urlencode($slug)); ?>">
-											<?php esc_html_e('Edit', 'ai-provider-for-infomaniak'); ?>
+											<?php esc_html_e('Edit', 'infomaniak-ai-toolkit'); ?>
 										</a>
 										<button type="button"
 											class="ik-cmd-delete"
 											data-slug="<?php echo esc_attr($slug); ?>">
-											<?php esc_html_e('Delete', 'ai-provider-for-infomaniak'); ?>
+											<?php esc_html_e('Delete', 'infomaniak-ai-toolkit'); ?>
 										</button>
 									<?php else : ?>
 										<span style="color: var(--color-text-secondary); font-size: var(--text-xs);">
-											<?php esc_html_e('Read-only', 'ai-provider-for-infomaniak'); ?>
+											<?php esc_html_e('Read-only', 'infomaniak-ai-toolkit'); ?>
 										</span>
 									<?php endif; ?>
 								</div>

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider\Admin;
+namespace WordPress\InfomaniakAiToolkit\Admin;
 
-use WordPress\InfomaniakAiProvider\Commands\CommandLoader;
-use WordPress\InfomaniakAiProvider\Commands\CommandStore;
-use WordPress\InfomaniakAiProvider\Provider\InfomaniakProvider;
-use WordPress\InfomaniakAiProvider\RateLimit\RateLimitConfig;
-use WordPress\InfomaniakAiProvider\Usage\UsageStats;
+use WordPress\InfomaniakAiToolkit\Commands\CommandLoader;
+use WordPress\InfomaniakAiToolkit\Commands\CommandStore;
+use WordPress\InfomaniakAiToolkit\Provider\InfomaniakProvider;
+use WordPress\InfomaniakAiToolkit\RateLimit\RateLimitConfig;
+use WordPress\InfomaniakAiToolkit\Usage\UsageStats;
 
 /**
  * Manages the plugin settings page with tabbed navigation.
@@ -73,8 +73,8 @@ class SettingsPage
     public static function addPage(): void
     {
         add_options_page(
-            __('Infomaniak AI', 'ai-provider-for-infomaniak'),
-            __('Infomaniak AI', 'ai-provider-for-infomaniak'),
+            __('Infomaniak AI', 'infomaniak-ai-toolkit'),
+            __('Infomaniak AI', 'infomaniak-ai-toolkit'),
             'manage_options',
             'infomaniak-ai',
             [self::class, 'render']
@@ -175,7 +175,7 @@ class SettingsPage
         check_ajax_referer('infomaniak_ai_test_connection');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(__('Insufficient permissions.', 'ai-provider-for-infomaniak'));
+            wp_send_json_error(__('Insufficient permissions.', 'infomaniak-ai-toolkit'));
         }
 
         // Retrieve the unmasked API key.
@@ -187,12 +187,12 @@ class SettingsPage
         }
 
         if (empty($apiKey)) {
-            wp_send_json_error(__('API key not configured. Set it in Settings > Connectors.', 'ai-provider-for-infomaniak'));
+            wp_send_json_error(__('API key not configured. Set it in Settings > Connectors.', 'infomaniak-ai-toolkit'));
         }
 
         $productId = InfomaniakProvider::getProductId();
         if (empty($productId)) {
-            wp_send_json_error(__('Product ID not configured.', 'ai-provider-for-infomaniak'));
+            wp_send_json_error(__('Product ID not configured.', 'infomaniak-ai-toolkit'));
         }
 
         $response = wp_remote_get('https://api.infomaniak.com/1/ai/models', [
@@ -211,13 +211,13 @@ class SettingsPage
         if ($code !== 200) {
             wp_send_json_error(
                 /* translators: %d: HTTP status code */
-                sprintf(__('API returned HTTP %d.', 'ai-provider-for-infomaniak'), $code)
+                sprintf(__('API returned HTTP %d.', 'infomaniak-ai-toolkit'), $code)
             );
         }
 
         $body = json_decode(wp_remote_retrieve_body($response), true);
         if (!isset($body['data']) || !is_array($body['data'])) {
-            wp_send_json_error(__('Unexpected API response.', 'ai-provider-for-infomaniak'));
+            wp_send_json_error(__('Unexpected API response.', 'infomaniak-ai-toolkit'));
         }
 
         $readyCount = 0;
@@ -229,7 +229,7 @@ class SettingsPage
 
         wp_send_json_success(
             /* translators: %d: number of available models */
-            sprintf(__('Connection successful. %d models available.', 'ai-provider-for-infomaniak'), $readyCount)
+            sprintf(__('Connection successful. %d models available.', 'infomaniak-ai-toolkit'), $readyCount)
         );
     }
 
@@ -243,10 +243,10 @@ class SettingsPage
     private static function tabLabels(): array
     {
         return [
-            'general'     => __('General', 'ai-provider-for-infomaniak'),
-            'commands'    => __('Commands', 'ai-provider-for-infomaniak'),
-            'rate-limits' => __('Rate Limits', 'ai-provider-for-infomaniak'),
-            'usage'       => __('Usage', 'ai-provider-for-infomaniak'),
+            'general'     => __('General', 'infomaniak-ai-toolkit'),
+            'commands'    => __('Commands', 'infomaniak-ai-toolkit'),
+            'rate-limits' => __('Rate Limits', 'infomaniak-ai-toolkit'),
+            'usage'       => __('Usage', 'infomaniak-ai-toolkit'),
         ];
     }
 
@@ -338,9 +338,9 @@ class SettingsPage
             'limits'       => RateLimitConfig::getAll(),
             'windows'      => RateLimitConfig::validWindows(),
             'windowLabels' => [
-                'hour'  => __('Hour', 'ai-provider-for-infomaniak'),
-                'day'   => __('Day', 'ai-provider-for-infomaniak'),
-                'month' => __('Month', 'ai-provider-for-infomaniak'),
+                'hour'  => __('Hour', 'infomaniak-ai-toolkit'),
+                'day'   => __('Day', 'infomaniak-ai-toolkit'),
+                'month' => __('Month', 'infomaniak-ai-toolkit'),
             ],
             'optionName'   => RateLimitConfig::optionName(),
         ];
@@ -365,7 +365,7 @@ class SettingsPage
         if ($action === 'new') {
             return [
                 'view'   => 'new',
-                'models' => \WordPress\InfomaniakAiProvider\get_available_models(),
+                'models' => \WordPress\InfomaniakAiToolkit\get_available_models(),
             ];
         }
 
@@ -383,7 +383,7 @@ class SettingsPage
                 'view'    => 'edit',
                 'slug'    => $slug,
                 'command' => $command,
-                'models'  => \WordPress\InfomaniakAiProvider\get_available_models(),
+                'models'  => \WordPress\InfomaniakAiToolkit\get_available_models(),
             ];
         }
 
@@ -403,24 +403,24 @@ class SettingsPage
         check_ajax_referer('infomaniak_ai_commands');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(__('Insufficient permissions.', 'ai-provider-for-infomaniak'));
+            wp_send_json_error(__('Insufficient permissions.', 'infomaniak-ai-toolkit'));
         }
 
         $isNew = !empty($_POST['is_new']);
         $slug  = CommandStore::sanitizeSlug($_POST['slug'] ?? '');
 
         if ($slug === '') {
-            wp_send_json_error(__('Command name is required.', 'ai-provider-for-infomaniak'));
+            wp_send_json_error(__('Command name is required.', 'infomaniak-ai-toolkit'));
         }
 
         $data = CommandStore::sanitizeCommand($_POST);
 
         if (empty($data['description'])) {
-            wp_send_json_error(__('Description is required.', 'ai-provider-for-infomaniak'));
+            wp_send_json_error(__('Description is required.', 'infomaniak-ai-toolkit'));
         }
 
         if (empty($data['prompt_template'])) {
-            wp_send_json_error(__('Prompt template is required.', 'ai-provider-for-infomaniak'));
+            wp_send_json_error(__('Prompt template is required.', 'infomaniak-ai-toolkit'));
         }
 
         // When creating, check for conflict with file-based commands.
@@ -429,14 +429,14 @@ class SettingsPage
             if (isset($allCommands[$slug]) && $allCommands[$slug]['source'] === 'file') {
                 wp_send_json_error(
                     /* translators: %s: command slug */
-                    sprintf(__('A file-based command with the name "%s" already exists.', 'ai-provider-for-infomaniak'), $slug)
+                    sprintf(__('A file-based command with the name "%s" already exists.', 'infomaniak-ai-toolkit'), $slug)
                 );
             }
 
             if (CommandStore::exists($slug)) {
                 wp_send_json_error(
                     /* translators: %s: command slug */
-                    sprintf(__('A command with the name "%s" already exists.', 'ai-provider-for-infomaniak'), $slug)
+                    sprintf(__('A command with the name "%s" already exists.', 'infomaniak-ai-toolkit'), $slug)
                 );
             }
         }
@@ -444,7 +444,7 @@ class SettingsPage
         $saved = CommandStore::save($slug, $data);
 
         if (!$saved) {
-            wp_send_json_error(__('Failed to save command.', 'ai-provider-for-infomaniak'));
+            wp_send_json_error(__('Failed to save command.', 'infomaniak-ai-toolkit'));
         }
 
         CommandLoader::clearCache();
@@ -464,19 +464,19 @@ class SettingsPage
         check_ajax_referer('infomaniak_ai_commands');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(__('Insufficient permissions.', 'ai-provider-for-infomaniak'));
+            wp_send_json_error(__('Insufficient permissions.', 'infomaniak-ai-toolkit'));
         }
 
         $slug = CommandStore::sanitizeSlug($_POST['slug'] ?? '');
 
         if ($slug === '') {
-            wp_send_json_error(__('Command slug is required.', 'ai-provider-for-infomaniak'));
+            wp_send_json_error(__('Command slug is required.', 'infomaniak-ai-toolkit'));
         }
 
         $deleted = CommandStore::delete($slug);
 
         if (!$deleted) {
-            wp_send_json_error(__('Failed to delete command.', 'ai-provider-for-infomaniak'));
+            wp_send_json_error(__('Failed to delete command.', 'infomaniak-ai-toolkit'));
         }
 
         CommandLoader::clearCache();

@@ -1,31 +1,31 @@
 <?php
 
 /**
- * Plugin Name: AI Provider for Infomaniak
+ * Plugin Name: Infomaniak AI Toolkit
  * Plugin URI: https://www.infomaniak.com/en/hosting/ai-tools
- * Description: AI Provider for Infomaniak for the WordPress AI Client. Provides access to open-source models (Llama, Mistral, DeepSeek, Qwen) hosted in Switzerland.
+ * Description: AI toolkit for WordPress powered by Infomaniak. Provides access to open-source models (Llama, Mistral, DeepSeek, Qwen) hosted in Switzerland.
  * Requires at least: 6.9
  * Requires PHP: 8.0
  * Version: 1.0.0
  * Author: Custom
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: ai-provider-for-infomaniak
+ * Text Domain: infomaniak-ai-toolkit
  *
- * @package WordPress\InfomaniakAiProvider
+ * @package WordPress\InfomaniakAiToolkit
  */
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider;
+namespace WordPress\InfomaniakAiToolkit;
 
 use WordPress\AiClient\AiClient;
-use WordPress\InfomaniakAiProvider\Commands\CommandLoader;
-use WordPress\InfomaniakAiProvider\Commands\CommandSchema;
-use WordPress\InfomaniakAiProvider\Provider\InfomaniakProvider;
-use WordPress\InfomaniakAiProvider\Memory\MemorySchema;
-use WordPress\InfomaniakAiProvider\Usage\UsageSchema;
-use WordPress\InfomaniakAiProvider\Usage\UsageTracker;
+use WordPress\InfomaniakAiToolkit\Commands\CommandLoader;
+use WordPress\InfomaniakAiToolkit\Commands\CommandSchema;
+use WordPress\InfomaniakAiToolkit\Provider\InfomaniakProvider;
+use WordPress\InfomaniakAiToolkit\Memory\MemorySchema;
+use WordPress\InfomaniakAiToolkit\Usage\UsageSchema;
+use WordPress\InfomaniakAiToolkit\Usage\UsageTracker;
 
 if (!defined('ABSPATH')) {
     return;
@@ -85,7 +85,7 @@ add_action('init', __NAMESPACE__ . '\\init_commands');
 function load_textdomain(): void
 {
     load_plugin_textdomain(
-        'ai-provider-for-infomaniak',
+        'infomaniak-ai-toolkit',
         false,
         dirname(plugin_basename(__FILE__)) . '/languages'
     );
@@ -94,7 +94,7 @@ function load_textdomain(): void
 add_action('init', __NAMESPACE__ . '\\load_textdomain');
 
 /**
- * Registers the AI Provider for Infomaniak with the AI Client.
+ * Registers the Infomaniak AI Toolkit with the AI Client.
  *
  * @since 1.0.0
  *
@@ -278,7 +278,7 @@ function add_connector_plugin_data(array $data): array
         if (!isset($data['connectors']['infomaniak']['plugin'])) {
             $data['connectors']['infomaniak']['plugin'] = [];
         }
-        $data['connectors']['infomaniak']['plugin']['slug'] = 'ai-provider-for-infomaniak';
+        $data['connectors']['infomaniak']['plugin']['slug'] = 'infomaniak-ai-toolkit';
     }
     return $data;
 }
@@ -328,7 +328,7 @@ function print_connector_icon_script(): void
     <script>
     (function() {
         var svg = <?php echo wp_json_encode( $svg ); ?>;
-        var selector = '.connector-item--ai-provider-for-infomaniak';
+        var selector = '.connector-item--infomaniak-ai-toolkit';
 
         function injectIcon() {
             var item = document.querySelector(selector);

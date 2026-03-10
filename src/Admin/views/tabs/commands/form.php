@@ -10,7 +10,7 @@
  *
  * @since 1.2.0
  *
- * @package WordPress\InfomaniakAiProvider
+ * @package WordPress\InfomaniakAiToolkit
  */
 
 defined('ABSPATH') || exit;
@@ -40,18 +40,18 @@ $provider       = $command['provider'] ?? 'infomaniak';
 		<div class="ik-section__header-row">
 			<h2 class="ik-section__header">
 				<?php $isNew
-					? esc_html_e('New Command', 'ai-provider-for-infomaniak')
-					: esc_html_e('Edit Command', 'ai-provider-for-infomaniak');
+					? esc_html_e('New Command', 'infomaniak-ai-toolkit')
+					: esc_html_e('Edit Command', 'infomaniak-ai-toolkit');
 				?>
 			</h2>
 			<a href="<?php echo esc_url($baseUrl); ?>" class="ik-btn ik-btn--outline">
-				<?php esc_html_e('Back to list', 'ai-provider-for-infomaniak'); ?>
+				<?php esc_html_e('Back to list', 'infomaniak-ai-toolkit'); ?>
 			</a>
 		</div>
 		<p class="ik-section__description">
 			<?php $isNew
-				? esc_html_e('Create a new AI command. Use {{variable}} placeholders in the prompt template.', 'ai-provider-for-infomaniak')
-				: esc_html_e('Edit your AI command. Changes take effect immediately.', 'ai-provider-for-infomaniak');
+				? esc_html_e('Create a new AI command. Use {{variable}} placeholders in the prompt template.', 'infomaniak-ai-toolkit')
+				: esc_html_e('Edit your AI command. Changes take effect immediately.', 'infomaniak-ai-toolkit');
 			?>
 		</p>
 	</div>
@@ -60,12 +60,12 @@ $provider       = $command['provider'] ?? 'infomaniak';
 
 	<!-- Section 1: Identity -->
 	<div class="ik-section">
-		<h3 class="ik-section__header"><?php esc_html_e('Identity', 'ai-provider-for-infomaniak'); ?></h3>
+		<h3 class="ik-section__header"><?php esc_html_e('Identity', 'infomaniak-ai-toolkit'); ?></h3>
 
 		<div class="ik-field-grid">
 			<div class="ik-field">
 				<label class="ik-field__label" for="ik-cmd-slug">
-					<?php esc_html_e('Name (slug)', 'ai-provider-for-infomaniak'); ?>
+					<?php esc_html_e('Name (slug)', 'infomaniak-ai-toolkit'); ?>
 				</label>
 				<input
 					type="text"
@@ -77,13 +77,13 @@ $provider       = $command['provider'] ?? 'infomaniak';
 					<?php echo !$isNew ? 'disabled' : ''; ?>
 				/>
 				<span class="ik-field__hint">
-					<?php esc_html_e('Lowercase letters, numbers, and hyphens only.', 'ai-provider-for-infomaniak'); ?>
+					<?php esc_html_e('Lowercase letters, numbers, and hyphens only.', 'infomaniak-ai-toolkit'); ?>
 				</span>
 			</div>
 
 			<div class="ik-field">
 				<label class="ik-field__label" for="ik-cmd-label">
-					<?php esc_html_e('Label', 'ai-provider-for-infomaniak'); ?>
+					<?php esc_html_e('Label', 'infomaniak-ai-toolkit'); ?>
 				</label>
 				<input
 					type="text"
@@ -93,14 +93,14 @@ $provider       = $command['provider'] ?? 'infomaniak';
 					placeholder="My Command"
 				/>
 				<span class="ik-field__hint">
-					<?php esc_html_e('Optional display name. Auto-generated from slug if empty.', 'ai-provider-for-infomaniak'); ?>
+					<?php esc_html_e('Optional display name. Auto-generated from slug if empty.', 'infomaniak-ai-toolkit'); ?>
 				</span>
 			</div>
 		</div>
 
 		<div class="ik-field" style="margin-top: var(--spacing-md);">
 			<label class="ik-field__label" for="ik-cmd-description">
-				<?php esc_html_e('Description', 'ai-provider-for-infomaniak'); ?>
+				<?php esc_html_e('Description', 'infomaniak-ai-toolkit'); ?>
 			</label>
 			<input
 				type="text"
@@ -108,7 +108,7 @@ $provider       = $command['provider'] ?? 'infomaniak';
 				class="ik-input"
 				style="max-width: 100%;"
 				value="<?php echo esc_attr($description); ?>"
-				placeholder="<?php esc_attr_e('Briefly describe what this command does.', 'ai-provider-for-infomaniak'); ?>"
+				placeholder="<?php esc_attr_e('Briefly describe what this command does.', 'infomaniak-ai-toolkit'); ?>"
 				required
 			/>
 		</div>
@@ -116,45 +116,45 @@ $provider       = $command['provider'] ?? 'infomaniak';
 
 	<!-- Section 2: Prompt -->
 	<div class="ik-section">
-		<h3 class="ik-section__header"><?php esc_html_e('Prompt', 'ai-provider-for-infomaniak'); ?></h3>
+		<h3 class="ik-section__header"><?php esc_html_e('Prompt', 'infomaniak-ai-toolkit'); ?></h3>
 
 		<div class="ik-field">
 			<label class="ik-field__label" for="ik-cmd-prompt">
-				<?php esc_html_e('Prompt Template', 'ai-provider-for-infomaniak'); ?>
+				<?php esc_html_e('Prompt Template', 'infomaniak-ai-toolkit'); ?>
 			</label>
 			<textarea
 				id="ik-cmd-prompt"
 				class="ik-editor"
 				rows="12"
-				placeholder="<?php esc_attr_e("Summarize the following content:\n\n{{content}}", 'ai-provider-for-infomaniak'); ?>"
+				placeholder="<?php esc_attr_e("Summarize the following content:\n\n{{content}}", 'infomaniak-ai-toolkit'); ?>"
 				required
 			><?php echo esc_textarea($promptTemplate); ?></textarea>
 			<span class="ik-field__hint">
-				<?php esc_html_e('Use {{variable}} for dynamic placeholders. They become required input fields.', 'ai-provider-for-infomaniak'); ?>
+				<?php esc_html_e('Use {{variable}} for dynamic placeholders. They become required input fields.', 'infomaniak-ai-toolkit'); ?>
 			</span>
 		</div>
 
 		<div class="ik-field">
 			<label class="ik-field__label" for="ik-cmd-system">
-				<?php esc_html_e('System Prompt', 'ai-provider-for-infomaniak'); ?>
+				<?php esc_html_e('System Prompt', 'infomaniak-ai-toolkit'); ?>
 			</label>
 			<textarea
 				id="ik-cmd-system"
 				class="ik-editor ik-editor--small"
 				rows="4"
-				placeholder="<?php esc_attr_e('Optional. Sets the AI behavior and persona.', 'ai-provider-for-infomaniak'); ?>"
+				placeholder="<?php esc_attr_e('Optional. Sets the AI behavior and persona.', 'infomaniak-ai-toolkit'); ?>"
 			><?php echo esc_textarea($systemPrompt); ?></textarea>
 		</div>
 	</div>
 
 	<!-- Section 3: Settings -->
 	<div class="ik-section">
-		<h3 class="ik-section__header"><?php esc_html_e('Settings', 'ai-provider-for-infomaniak'); ?></h3>
+		<h3 class="ik-section__header"><?php esc_html_e('Settings', 'infomaniak-ai-toolkit'); ?></h3>
 
 		<div class="ik-field-grid">
 			<div class="ik-field">
 				<label class="ik-field__label" for="ik-cmd-temperature">
-					<?php esc_html_e('Temperature', 'ai-provider-for-infomaniak'); ?>
+					<?php esc_html_e('Temperature', 'infomaniak-ai-toolkit'); ?>
 				</label>
 				<input
 					type="number"
@@ -169,7 +169,7 @@ $provider       = $command['provider'] ?? 'infomaniak';
 
 			<div class="ik-field">
 				<label class="ik-field__label" for="ik-cmd-max-tokens">
-					<?php esc_html_e('Max Tokens', 'ai-provider-for-infomaniak'); ?>
+					<?php esc_html_e('Max Tokens', 'infomaniak-ai-toolkit'); ?>
 				</label>
 				<input
 					type="number"
@@ -184,44 +184,44 @@ $provider       = $command['provider'] ?? 'infomaniak';
 
 			<div class="ik-field">
 				<label class="ik-field__label" for="ik-cmd-category">
-					<?php esc_html_e('Category', 'ai-provider-for-infomaniak'); ?>
+					<?php esc_html_e('Category', 'infomaniak-ai-toolkit'); ?>
 				</label>
 				<select id="ik-cmd-category" class="ik-input">
-					<option value="content" <?php selected($category, 'content'); ?>><?php esc_html_e('Content', 'ai-provider-for-infomaniak'); ?></option>
-					<option value="analysis" <?php selected($category, 'analysis'); ?>><?php esc_html_e('Analysis', 'ai-provider-for-infomaniak'); ?></option>
-					<option value="translation" <?php selected($category, 'translation'); ?>><?php esc_html_e('Translation', 'ai-provider-for-infomaniak'); ?></option>
-					<option value="coding" <?php selected($category, 'coding'); ?>><?php esc_html_e('Coding', 'ai-provider-for-infomaniak'); ?></option>
-					<option value="image" <?php selected($category, 'image'); ?>><?php esc_html_e('Image', 'ai-provider-for-infomaniak'); ?></option>
+					<option value="content" <?php selected($category, 'content'); ?>><?php esc_html_e('Content', 'infomaniak-ai-toolkit'); ?></option>
+					<option value="analysis" <?php selected($category, 'analysis'); ?>><?php esc_html_e('Analysis', 'infomaniak-ai-toolkit'); ?></option>
+					<option value="translation" <?php selected($category, 'translation'); ?>><?php esc_html_e('Translation', 'infomaniak-ai-toolkit'); ?></option>
+					<option value="coding" <?php selected($category, 'coding'); ?>><?php esc_html_e('Coding', 'infomaniak-ai-toolkit'); ?></option>
+					<option value="image" <?php selected($category, 'image'); ?>><?php esc_html_e('Image', 'infomaniak-ai-toolkit'); ?></option>
 				</select>
 			</div>
 
 			<div class="ik-field">
 				<label class="ik-field__label" for="ik-cmd-permission">
-					<?php esc_html_e('Permission', 'ai-provider-for-infomaniak'); ?>
+					<?php esc_html_e('Permission', 'infomaniak-ai-toolkit'); ?>
 				</label>
 				<select id="ik-cmd-permission" class="ik-input">
-					<option value="edit_posts" <?php selected($permission, 'edit_posts'); ?>><?php esc_html_e('edit_posts', 'ai-provider-for-infomaniak'); ?></option>
-					<option value="publish_posts" <?php selected($permission, 'publish_posts'); ?>><?php esc_html_e('publish_posts', 'ai-provider-for-infomaniak'); ?></option>
-					<option value="manage_options" <?php selected($permission, 'manage_options'); ?>><?php esc_html_e('manage_options', 'ai-provider-for-infomaniak'); ?></option>
+					<option value="edit_posts" <?php selected($permission, 'edit_posts'); ?>><?php esc_html_e('edit_posts', 'infomaniak-ai-toolkit'); ?></option>
+					<option value="publish_posts" <?php selected($permission, 'publish_posts'); ?>><?php esc_html_e('publish_posts', 'infomaniak-ai-toolkit'); ?></option>
+					<option value="manage_options" <?php selected($permission, 'manage_options'); ?>><?php esc_html_e('manage_options', 'infomaniak-ai-toolkit'); ?></option>
 				</select>
 			</div>
 
 			<div class="ik-field">
 				<label class="ik-field__label" for="ik-cmd-model-type">
-					<?php esc_html_e('Model Type', 'ai-provider-for-infomaniak'); ?>
+					<?php esc_html_e('Model Type', 'infomaniak-ai-toolkit'); ?>
 				</label>
 				<select id="ik-cmd-model-type" class="ik-input">
-					<option value="llm" <?php selected($modelType, 'llm'); ?>><?php esc_html_e('LLM (Text)', 'ai-provider-for-infomaniak'); ?></option>
-					<option value="image" <?php selected($modelType, 'image'); ?>><?php esc_html_e('Image', 'ai-provider-for-infomaniak'); ?></option>
+					<option value="llm" <?php selected($modelType, 'llm'); ?>><?php esc_html_e('LLM (Text)', 'infomaniak-ai-toolkit'); ?></option>
+					<option value="image" <?php selected($modelType, 'image'); ?>><?php esc_html_e('Image', 'infomaniak-ai-toolkit'); ?></option>
 				</select>
 			</div>
 
 			<div class="ik-field">
 				<label class="ik-field__label" for="ik-cmd-model">
-					<?php esc_html_e('Model', 'ai-provider-for-infomaniak'); ?>
+					<?php esc_html_e('Model', 'infomaniak-ai-toolkit'); ?>
 				</label>
 				<select id="ik-cmd-model" class="ik-input">
-					<option value=""><?php esc_html_e('Default', 'ai-provider-for-infomaniak'); ?></option>
+					<option value=""><?php esc_html_e('Default', 'infomaniak-ai-toolkit'); ?></option>
 					<?php foreach ($models as $m) : ?>
 						<option value="<?php echo esc_attr($m['id']); ?>" <?php selected($model, $m['id']); ?>>
 							<?php echo esc_html($m['name']); ?>
@@ -238,27 +238,27 @@ $provider       = $command['provider'] ?? 'infomaniak';
 					id="ik-cmd-conversational"
 					<?php checked($conversational); ?>
 				/>
-				<?php esc_html_e('Conversational (multi-turn)', 'ai-provider-for-infomaniak'); ?>
+				<?php esc_html_e('Conversational (multi-turn)', 'infomaniak-ai-toolkit'); ?>
 			</label>
 		</div>
 	</div>
 
 	<!-- Section 4: Preview -->
 	<div class="ik-section">
-		<h3 class="ik-section__header"><?php esc_html_e('Preview', 'ai-provider-for-infomaniak'); ?></h3>
+		<h3 class="ik-section__header"><?php esc_html_e('Preview', 'infomaniak-ai-toolkit'); ?></h3>
 
 		<div class="ik-field-grid">
 			<div class="ik-preview">
-				<span class="ik-preview__label"><?php esc_html_e('Detected Variables', 'ai-provider-for-infomaniak'); ?></span>
+				<span class="ik-preview__label"><?php esc_html_e('Detected Variables', 'infomaniak-ai-toolkit'); ?></span>
 				<div class="ik-preview__content" id="ik-preview-vars">
-					<?php esc_html_e('Type in the prompt template to detect variables...', 'ai-provider-for-infomaniak'); ?>
+					<?php esc_html_e('Type in the prompt template to detect variables...', 'infomaniak-ai-toolkit'); ?>
 				</div>
 			</div>
 
 			<div class="ik-preview">
-				<span class="ik-preview__label"><?php esc_html_e('Generated Input Schema', 'ai-provider-for-infomaniak'); ?></span>
+				<span class="ik-preview__label"><?php esc_html_e('Generated Input Schema', 'infomaniak-ai-toolkit'); ?></span>
 				<div class="ik-preview__content" id="ik-preview-schema">
-					<?php esc_html_e('Schema will appear here...', 'ai-provider-for-infomaniak'); ?>
+					<?php esc_html_e('Schema will appear here...', 'infomaniak-ai-toolkit'); ?>
 				</div>
 			</div>
 		</div>
@@ -267,10 +267,10 @@ $provider       = $command['provider'] ?? 'infomaniak';
 	<!-- Actions -->
 	<div class="ik-section">
 		<button type="button" id="ik-cmd-save" class="ik-btn"
-			data-saving="<?php esc_attr_e('Saving...', 'ai-provider-for-infomaniak'); ?>">
+			data-saving="<?php esc_attr_e('Saving...', 'infomaniak-ai-toolkit'); ?>">
 			<?php $isNew
-				? esc_html_e('Create Command', 'ai-provider-for-infomaniak')
-				: esc_html_e('Save Command', 'ai-provider-for-infomaniak');
+				? esc_html_e('Create Command', 'infomaniak-ai-toolkit')
+				: esc_html_e('Save Command', 'infomaniak-ai-toolkit');
 			?>
 		</button>
 		<span id="ik-cmd-feedback" class="ik-feedback"></span>

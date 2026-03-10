@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider\Operations;
+namespace WordPress\InfomaniakAiToolkit\Operations;
 
 use WordPress\AiClient\Common\Exception\InvalidArgumentException;
 use WordPress\AiClient\Common\Exception\RuntimeException;
@@ -16,7 +16,7 @@ use WordPress\AiClient\Providers\Http\DTO\Response;
 use WordPress\AiClient\Providers\Http\Enums\HttpMethodEnum;
 use WordPress\AiClient\Providers\Http\Traits\WithHttpTransporterTrait;
 use WordPress\AiClient\Providers\Http\Traits\WithRequestAuthenticationTrait;
-use WordPress\InfomaniakAiProvider\Provider\InfomaniakProvider;
+use WordPress\InfomaniakAiToolkit\Provider\InfomaniakProvider;
 
 /**
  * Handles async batch operations for Infomaniak AI.
@@ -79,7 +79,7 @@ class InfomaniakOperationsHandler implements
             throw new InvalidArgumentException(
                 sprintf(
                     /* translators: %s: batch ID */
-                    __('Batch "%s" not found.', 'ai-provider-for-infomaniak'),
+                    __('Batch "%s" not found.', 'infomaniak-ai-toolkit'),
                     $batchId
                 )
             );
@@ -91,7 +91,7 @@ class InfomaniakOperationsHandler implements
             throw new InvalidArgumentException(
                 sprintf(
                     /* translators: %s: batch ID */
-                    __('Batch "%s" returned an invalid response.', 'ai-provider-for-infomaniak'),
+                    __('Batch "%s" returned an invalid response.', 'infomaniak-ai-toolkit'),
                     $batchId
                 )
             );
@@ -127,7 +127,7 @@ class InfomaniakOperationsHandler implements
             throw new InvalidArgumentException(
                 sprintf(
                     /* translators: %s: batch ID */
-                    __('Batch "%s" not found or result not yet available.', 'ai-provider-for-infomaniak'),
+                    __('Batch "%s" not found or result not yet available.', 'infomaniak-ai-toolkit'),
                     $batchId
                 )
             );
@@ -137,7 +137,7 @@ class InfomaniakOperationsHandler implements
             throw new RuntimeException(
                 sprintf(
                     /* translators: 1: batch ID, 2: HTTP status code */
-                    __('Failed to download batch "%1$s" result. HTTP status: %2$d.', 'ai-provider-for-infomaniak'),
+                    __('Failed to download batch "%1$s" result. HTTP status: %2$d.', 'infomaniak-ai-toolkit'),
                     $batchId,
                     $response->getStatusCode()
                 )
@@ -150,7 +150,7 @@ class InfomaniakOperationsHandler implements
             throw new RuntimeException(
                 sprintf(
                     /* translators: %s: batch ID */
-                    __('Batch "%s" download returned empty content.', 'ai-provider-for-infomaniak'),
+                    __('Batch "%s" download returned empty content.', 'infomaniak-ai-toolkit'),
                     $batchId
                 )
             );
@@ -176,7 +176,7 @@ class InfomaniakOperationsHandler implements
             throw new InvalidArgumentException(
                 __(
                     'Infomaniak AI product ID is not configured. Set it via Settings > Infomaniak AI, the INFOMANIAK_AI_PRODUCT_ID constant, or the infomaniak_ai_product_id filter.',
-                    'ai-provider-for-infomaniak'
+                    'infomaniak-ai-toolkit'
                 )
             );
         }

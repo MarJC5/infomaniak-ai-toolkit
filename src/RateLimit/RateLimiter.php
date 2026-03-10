@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider\RateLimit;
+namespace WordPress\InfomaniakAiToolkit\RateLimit;
 
-use WordPress\InfomaniakAiProvider\Usage\UsageTracker;
+use WordPress\InfomaniakAiToolkit\Usage\UsageTracker;
 
 /**
  * Enforces per-role rate limits on AI preset execution.
@@ -87,7 +87,7 @@ class RateLimiter
                 'rate_limit_exceeded',
                 sprintf(
                     /* translators: 1: limit number, 2: time window */
-                    __('Rate limit exceeded. You are allowed %1$d requests per %2$s.', 'ai-provider-for-infomaniak'),
+                    __('Rate limit exceeded. You are allowed %1$d requests per %2$s.', 'infomaniak-ai-toolkit'),
                     $limit,
                     $window
                 ),
@@ -219,7 +219,7 @@ class RateLimiter
                 'rate_limit_exceeded',
                 sprintf(
                     /* translators: 1: limit number, 2: time window */
-                    __('Rate limit exceeded. You are allowed %1$d requests per %2$s.', 'ai-provider-for-infomaniak'),
+                    __('Rate limit exceeded. You are allowed %1$d requests per %2$s.', 'infomaniak-ai-toolkit'),
                     $limit,
                     $window
                 ),

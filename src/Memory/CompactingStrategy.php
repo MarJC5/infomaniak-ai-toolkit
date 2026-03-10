@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider\Memory;
+namespace WordPress\InfomaniakAiToolkit\Memory;
 
 use WordPress\AiClient\AiClient;
 use WordPress\AiClient\Builders\MessageBuilder;
 use WordPress\AiClient\Messages\DTO\Message;
-use WordPress\InfomaniakAiProvider\Usage\UsageTracker;
+use WordPress\InfomaniakAiToolkit\Usage\UsageTracker;
 
 /**
  * Memory strategy that summarizes old messages when the token budget is exceeded.

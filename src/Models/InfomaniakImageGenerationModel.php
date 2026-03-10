@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider\Models;
+namespace WordPress\InfomaniakAiToolkit\Models;
 
 use WordPress\AiClient\Common\Exception\RuntimeException;
 use WordPress\AiClient\Providers\Http\DTO\Request;
 use WordPress\AiClient\Providers\Http\Enums\HttpMethodEnum;
 use WordPress\AiClient\Providers\OpenAiCompatibleImplementation\AbstractOpenAiCompatibleImageGenerationModel;
-use WordPress\InfomaniakAiProvider\Provider\InfomaniakProvider;
+use WordPress\InfomaniakAiToolkit\Provider\InfomaniakProvider;
 
 /**
  * Class for an Infomaniak image generation model using the OpenAI-compatible Images API.
@@ -41,7 +41,7 @@ class InfomaniakImageGenerationModel extends AbstractOpenAiCompatibleImageGenera
             throw new RuntimeException(
                 __(
                     'Infomaniak AI product ID is not configured. Set it via Settings > Infomaniak AI, the INFOMANIAK_AI_PRODUCT_ID constant, or the infomaniak_ai_product_id filter.',
-                    'ai-provider-for-infomaniak'
+                    'infomaniak-ai-toolkit'
                 )
             );
         }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider\Commands;
+namespace WordPress\InfomaniakAiToolkit\Commands;
 
 /**
  * Minimal YAML-like frontmatter parser for markdown command files.

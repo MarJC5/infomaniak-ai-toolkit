@@ -9,7 +9,7 @@
  *
  * @since 1.0.0
  *
- * @package WordPress\InfomaniakAiProvider
+ * @package WordPress\InfomaniakAiToolkit
  */
 
 defined('ABSPATH') || exit;
@@ -18,9 +18,9 @@ defined('ABSPATH') || exit;
 	<div class="ik-layout">
 		<nav class="ik-sidebar">
 			<div class="ik-sidebar__header">
-				<h1 class="ik-sidebar__title"><?php esc_html_e('Infomaniak AI', 'ai-provider-for-infomaniak'); ?></h1>
+				<h1 class="ik-sidebar__title"><?php esc_html_e('Infomaniak AI', 'infomaniak-ai-toolkit'); ?></h1>
 				<p class="ik-sidebar__description">
-					<?php esc_html_e('Configure your AI provider settings.', 'ai-provider-for-infomaniak'); ?>
+					<?php esc_html_e('Configure your AI provider settings.', 'infomaniak-ai-toolkit'); ?>
 				</p>
 			</div>
 
@@ -53,7 +53,7 @@ defined('ABSPATH') || exit;
 					}
 					?>
 					<button type="submit" class="ik-btn">
-						<?php esc_html_e('Save Changes', 'ai-provider-for-infomaniak'); ?>
+						<?php esc_html_e('Save Changes', 'infomaniak-ai-toolkit'); ?>
 					</button>
 				</form>
 			<?php endif; ?>

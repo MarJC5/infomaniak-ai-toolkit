@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider\Provider;
+namespace WordPress\InfomaniakAiToolkit\Provider;
 
 use WordPress\AiClient\AiClient;
 use WordPress\AiClient\Common\Exception\RuntimeException;
@@ -17,13 +17,13 @@ use WordPress\AiClient\Providers\Enums\ProviderTypeEnum;
 use WordPress\AiClient\Providers\Http\Enums\RequestAuthenticationMethod;
 use WordPress\AiClient\Providers\Models\Contracts\ModelInterface;
 use WordPress\AiClient\Providers\Models\DTO\ModelMetadata;
-use WordPress\InfomaniakAiProvider\Metadata\InfomaniakModelMetadataDirectory;
-use WordPress\InfomaniakAiProvider\Models\InfomaniakImageGenerationModel;
-use WordPress\InfomaniakAiProvider\Models\InfomaniakTextGenerationModel;
-use WordPress\InfomaniakAiProvider\Operations\InfomaniakOperationsHandler;
+use WordPress\InfomaniakAiToolkit\Metadata\InfomaniakModelMetadataDirectory;
+use WordPress\InfomaniakAiToolkit\Models\InfomaniakImageGenerationModel;
+use WordPress\InfomaniakAiToolkit\Models\InfomaniakTextGenerationModel;
+use WordPress\InfomaniakAiToolkit\Operations\InfomaniakOperationsHandler;
 
 /**
- * Class for the AI Provider for Infomaniak.
+ * Class for the Infomaniak AI Toolkit.
  *
  * Provides access to Infomaniak's AI services which offer open-source models
  * (Llama, Mistral, DeepSeek, Qwen) via an OpenAI-compatible API hosted in Switzerland.
@@ -125,7 +125,7 @@ class InfomaniakProvider extends AbstractApiProvider implements ProviderWithOper
         throw new RuntimeException(
             sprintf(
                 /* translators: %s: comma-separated list of capability names */
-                __('Unsupported model capabilities: %s', 'ai-provider-for-infomaniak'),
+                __('Unsupported model capabilities: %s', 'infomaniak-ai-toolkit'),
                 implode(', ', array_map('strval', $capabilities))
             )
         );
@@ -150,7 +150,7 @@ class InfomaniakProvider extends AbstractApiProvider implements ProviderWithOper
             if (function_exists('__')) {
                 $providerMetadataArgs[] = __(
                     'Text and image generation with open-source models. Supports async batch operations.',
-                    'ai-provider-for-infomaniak'
+                    'infomaniak-ai-toolkit'
                 );
             } else {
                 $providerMetadataArgs[] = 'Text and image generation with open-source models. Supports async batch operations.';

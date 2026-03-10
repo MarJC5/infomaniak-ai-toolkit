@@ -1,4 +1,4 @@
-=== AI Provider for Infomaniak (Unofficial) ===
+=== Infomaniak AI Toolkit (Unofficial) ===
 Contributors: custom
 Tags: ai, infomaniak, llama, mistral, presets, image-generation, conversation-memory, markdown-commands, agent, function-calling, wp-cli, rate-limiting
 Requires at least: 6.9
@@ -8,7 +8,7 @@ Requires PHP: 8.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Unofficial AI Provider for Infomaniak AI Tools for the PHP AI Client SDK.
+Unofficial Infomaniak AI Toolkit AI Tools for the PHP AI Client SDK.
 
 == Description ==
 
@@ -47,7 +47,7 @@ This plugin includes `BasePreset`, an abstract class that lets any plugin create
 
 Create a preset by extending `BasePreset` in your plugin, add a PHP template for the prompt, and call `registerAsAbility()`. No need to manually build prompts, configure the AI client, or register REST endpoints -- the framework handles it all.
 
-See the [GitHub README](https://github.com/MarJC5/ai-provider-for-infomaniak) for a full guide with code examples.
+See the [GitHub README](https://github.com/MarJC5/infomaniak-ai-toolkit) for a full guide with code examples.
 
 **Agent Orchestrator:**
 
@@ -63,7 +63,7 @@ The `AgentLoop` class provides a function calling loop for agentic AI behavior. 
 
 == Installation ==
 
-1. Upload the plugin files to `/wp-content/plugins/ai-provider-for-infomaniak/`
+1. Upload the plugin files to `/wp-content/plugins/infomaniak-ai-toolkit/`
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Configure your Infomaniak API key via **Settings > Connectors**
 4. Configure your Product ID via **Settings > Infomaniak AI**
@@ -104,7 +104,7 @@ Rate limits are enforced per user based on their primary WordPress role. Adminis
 
 = Can I create my own presets in another plugin? =
 
-Yes. Extend `WordPress\InfomaniakAiProvider\Presets\BasePreset` from any plugin. The base class auto-detects your plugin's directory to find templates. Place your PHP templates in `your-plugin/templates/presets/` and system prompts in `your-plugin/templates/presets/system/`. Use the `infomaniak_ai_presets` filter to register them.
+Yes. Extend `WordPress\InfomaniakAiToolkit\Presets\BasePreset` from any plugin. The base class auto-detects your plugin's directory to find templates. Place your PHP templates in `your-plugin/templates/presets/` and system prompts in `your-plugin/templates/presets/system/`. Use the `infomaniak_ai_presets` filter to register them.
 
 == Changelog ==
 

@@ -20,14 +20,14 @@
  *           └── system/
  *               └── chat-assistant.php  <-- system prompt (optional)
  *
- * @package WordPress\InfomaniakAiProvider\Examples
+ * @package WordPress\InfomaniakAiToolkit\Examples
  */
 
 declare(strict_types=1);
 
 namespace YourPlugin\Presets;
 
-use WordPress\InfomaniakAiProvider\Presets\BasePreset;
+use WordPress\InfomaniakAiToolkit\Presets\BasePreset;
 
 /**
  * A conversational preset that maintains chat history across turns.
@@ -131,7 +131,7 @@ class ChatPreset extends BasePreset
  * --------------------------------------------------------------------------
  *
  * add_action('wp_abilities_api_init', function() {
- *     if (!class_exists(\WordPress\InfomaniakAiProvider\Presets\BasePreset::class)) {
+ *     if (!class_exists(\WordPress\InfomaniakAiToolkit\Presets\BasePreset::class)) {
  *         return;
  *     }
  *     $preset = new \YourPlugin\Presets\ChatPreset();
@@ -156,7 +156,7 @@ class ChatPreset extends BasePreset
  * // The AI now has context from the first turn.
  *
  * // Clear conversation when done:
- * \WordPress\InfomaniakAiProvider\Memory\MemoryStore::clearConversation(
+ * \WordPress\InfomaniakAiToolkit\Memory\MemoryStore::clearConversation(
  *     $result['conversation_id']
  * );
  *
@@ -182,7 +182,7 @@ class ChatPreset extends BasePreset
  * Querying conversation history:
  * --------------------------------------------------------------------------
  *
- * use WordPress\InfomaniakAiProvider\Memory\MemoryStore;
+ * use WordPress\InfomaniakAiToolkit\Memory\MemoryStore;
  *
  * // Get all messages for a conversation:
  * $records = MemoryStore::query()
@@ -207,8 +207,8 @@ class ChatPreset extends BasePreset
  * usage exceeds a threshold. Compaction runs in the background via the
  * shutdown hook — zero latency for the user.
  *
- * use WordPress\InfomaniakAiProvider\Memory\CompactingStrategy;
- * use WordPress\InfomaniakAiProvider\Memory\MemoryStrategy;
+ * use WordPress\InfomaniakAiToolkit\Memory\CompactingStrategy;
+ * use WordPress\InfomaniakAiToolkit\Memory\MemoryStrategy;
  *
  * class ChatWithCompaction extends BasePreset
  * {
@@ -240,7 +240,7 @@ class ChatPreset extends BasePreset
  *
  * You can implement a custom MemoryStrategy to change how history is loaded:
  *
- * use WordPress\InfomaniakAiProvider\Memory\MemoryStrategy;
+ * use WordPress\InfomaniakAiToolkit\Memory\MemoryStrategy;
  *
  * class MyCustomStrategy implements MemoryStrategy
  * {

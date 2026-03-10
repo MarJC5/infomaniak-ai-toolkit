@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider\Commands;
+namespace WordPress\InfomaniakAiToolkit\Commands;
 
 /**
  * Handles database table creation and schema versioning for custom commands.

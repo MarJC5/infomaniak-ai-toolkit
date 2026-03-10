@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider\Commands;
+namespace WordPress\InfomaniakAiToolkit\Commands;
 
 /**
  * Discovers and registers markdown command files as WordPress Abilities.

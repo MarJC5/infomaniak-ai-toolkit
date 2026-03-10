@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider\Usage;
+namespace WordPress\InfomaniakAiToolkit\Usage;
 
 /**
  * Value object representing a single usage log entry.

@@ -19,13 +19,13 @@
  *   // Via PHP:
  *   // $result = $preset->execute(['topic' => 'sustainable energy']);
  *
- * @package WordPress\InfomaniakAiProvider\Examples
+ * @package WordPress\InfomaniakAiToolkit\Examples
  */
 
 namespace MyPlugin\Presets;
 
-use WordPress\InfomaniakAiProvider\Agent\Tool;
-use WordPress\InfomaniakAiProvider\Presets\BasePreset;
+use WordPress\InfomaniakAiToolkit\Agent\Tool;
+use WordPress\InfomaniakAiToolkit\Presets\BasePreset;
 
 class ResearchPreset extends BasePreset
 {

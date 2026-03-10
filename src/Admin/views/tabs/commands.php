@@ -11,7 +11,7 @@
  *
  * @since 1.2.0
  *
- * @package WordPress\InfomaniakAiProvider
+ * @package WordPress\InfomaniakAiToolkit
  */
 
 defined('ABSPATH') || exit;

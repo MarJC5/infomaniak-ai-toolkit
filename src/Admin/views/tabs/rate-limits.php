@@ -10,7 +10,7 @@
  *
  * @since 1.0.0
  *
- * @package WordPress\InfomaniakAiProvider
+ * @package WordPress\InfomaniakAiToolkit
  */
 
 defined('ABSPATH') || exit;
@@ -22,19 +22,19 @@ $optionName   = $data['optionName'] ?? '';
 ?>
 <div class="ik-section">
 	<h2 class="ik-section__header">
-		<?php esc_html_e('Rate Limits', 'ai-provider-for-infomaniak'); ?>
+		<?php esc_html_e('Rate Limits', 'infomaniak-ai-toolkit'); ?>
 	</h2>
 	<p class="ik-section__description">
-		<?php esc_html_e('Configure the maximum number of AI requests per role within a time window. Set to 0 for unlimited.', 'ai-provider-for-infomaniak'); ?>
+		<?php esc_html_e('Configure the maximum number of AI requests per role within a time window. Set to 0 for unlimited.', 'infomaniak-ai-toolkit'); ?>
 	</p>
 
 	<div class="ik-table-wrap">
 	<table class="ik-table">
 		<thead>
 			<tr>
-				<th><?php esc_html_e('Role', 'ai-provider-for-infomaniak'); ?></th>
-				<th><?php esc_html_e('Limit', 'ai-provider-for-infomaniak'); ?></th>
-				<th><?php esc_html_e('Window', 'ai-provider-for-infomaniak'); ?></th>
+				<th><?php esc_html_e('Role', 'infomaniak-ai-toolkit'); ?></th>
+				<th><?php esc_html_e('Limit', 'infomaniak-ai-toolkit'); ?></th>
+				<th><?php esc_html_e('Window', 'infomaniak-ai-toolkit'); ?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -71,6 +71,6 @@ $optionName   = $data['optionName'] ?? '';
 	</div>
 
 	<p class="ik-field__hint" style="margin-top: var(--spacing-md);">
-		<?php esc_html_e('Limits are enforced per user based on their primary role. Guest users are rate-limited by IP.', 'ai-provider-for-infomaniak'); ?>
+		<?php esc_html_e('Limits are enforced per user based on their primary role. Guest users are rate-limited by IP.', 'infomaniak-ai-toolkit'); ?>
 	</p>
 </div>

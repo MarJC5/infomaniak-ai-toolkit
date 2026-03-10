@@ -1,17 +1,17 @@
 <?php
 
 /**
- * PSR-4 autoloader for the AI Provider for Infomaniak package.
+ * PSR-4 autoloader for the Infomaniak AI Toolkit package.
  *
  * @since 1.0.0
  *
- * @package WordPress\InfomaniakAiProvider
+ * @package WordPress\InfomaniakAiToolkit
  */
 
 declare(strict_types=1);
 
 spl_autoload_register(static function (string $class): void {
-    $prefix = 'WordPress\\InfomaniakAiProvider\\';
+    $prefix = 'WordPress\\InfomaniakAiToolkit\\';
     $baseDir = __DIR__ . '/';
 
     $len = strlen($prefix);

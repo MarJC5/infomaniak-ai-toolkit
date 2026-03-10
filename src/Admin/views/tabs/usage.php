@@ -15,12 +15,12 @@
  *
  * @since 1.1.0
  *
- * @package WordPress\InfomaniakAiProvider
+ * @package WordPress\InfomaniakAiToolkit
  */
 
 defined('ABSPATH') || exit;
 
-use WordPress\InfomaniakAiProvider\Admin\SvgSparkline;
+use WordPress\InfomaniakAiToolkit\Admin\SvgSparkline;
 
 // Empty state.
 if (empty($data['hasData'])) : ?>
@@ -35,10 +35,10 @@ if (empty($data['hasData'])) : ?>
 			</svg>
 		</div>
 		<h3 class="ik-empty-state__title">
-			<?php esc_html_e('No usage data yet', 'ai-provider-for-infomaniak'); ?>
+			<?php esc_html_e('No usage data yet', 'infomaniak-ai-toolkit'); ?>
 		</h3>
 		<p class="ik-empty-state__description">
-			<?php esc_html_e('Usage statistics will appear here once AI requests are made through the plugin.', 'ai-provider-for-infomaniak'); ?>
+			<?php esc_html_e('Usage statistics will appear here once AI requests are made through the plugin.', 'infomaniak-ai-toolkit'); ?>
 		</p>
 	</div>
 </div>
@@ -46,15 +46,15 @@ if (empty($data['hasData'])) : ?>
 
 <div class="ik-section">
 	<h2 class="ik-section__header">
-		<?php esc_html_e('Overview', 'ai-provider-for-infomaniak'); ?>
+		<?php esc_html_e('Overview', 'infomaniak-ai-toolkit'); ?>
 	</h2>
 	<p class="ik-section__description">
-		<?php esc_html_e('AI usage for the last 30 days.', 'ai-provider-for-infomaniak'); ?>
+		<?php esc_html_e('AI usage for the last 30 days.', 'infomaniak-ai-toolkit'); ?>
 	</p>
 
 	<div class="ik-card-grid">
 		<div class="ik-card">
-			<span class="ik-card__label"><?php esc_html_e('Total Tokens', 'ai-provider-for-infomaniak'); ?></span>
+			<span class="ik-card__label"><?php esc_html_e('Total Tokens', 'infomaniak-ai-toolkit'); ?></span>
 			<div class="ik-card__row">
 				<span class="ik-card__value"><?php echo esc_html(number_format_i18n($data['totalTokens'])); ?></span>
 				<div class="ik-card__sparkline">
@@ -64,11 +64,11 @@ if (empty($data['hasData'])) : ?>
 					?>
 				</div>
 			</div>
-			<span class="ik-card__subtitle"><?php esc_html_e('Last 30 days', 'ai-provider-for-infomaniak'); ?></span>
+			<span class="ik-card__subtitle"><?php esc_html_e('Last 30 days', 'infomaniak-ai-toolkit'); ?></span>
 		</div>
 
 		<div class="ik-card">
-			<span class="ik-card__label"><?php esc_html_e('Requests', 'ai-provider-for-infomaniak'); ?></span>
+			<span class="ik-card__label"><?php esc_html_e('Requests', 'infomaniak-ai-toolkit'); ?></span>
 			<div class="ik-card__row">
 				<span class="ik-card__value"><?php echo esc_html(number_format_i18n($data['totalRequests'])); ?></span>
 				<div class="ik-card__sparkline">
@@ -78,11 +78,11 @@ if (empty($data['hasData'])) : ?>
 					?>
 				</div>
 			</div>
-			<span class="ik-card__subtitle"><?php esc_html_e('Last 30 days', 'ai-provider-for-infomaniak'); ?></span>
+			<span class="ik-card__subtitle"><?php esc_html_e('Last 30 days', 'infomaniak-ai-toolkit'); ?></span>
 		</div>
 
 		<div class="ik-card">
-			<span class="ik-card__label"><?php esc_html_e('Tokens Today', 'ai-provider-for-infomaniak'); ?></span>
+			<span class="ik-card__label"><?php esc_html_e('Tokens Today', 'infomaniak-ai-toolkit'); ?></span>
 			<div class="ik-card__row">
 				<span class="ik-card__value"><?php echo esc_html(number_format_i18n($data['tokensToday'])); ?></span>
 			</div>
@@ -90,7 +90,7 @@ if (empty($data['hasData'])) : ?>
 				<?php
 				echo esc_html(sprintf(
 					/* translators: %s: number of requests */
-					_n('%s request', '%s requests', $data['requestsToday'], 'ai-provider-for-infomaniak'),
+					_n('%s request', '%s requests', $data['requestsToday'], 'infomaniak-ai-toolkit'),
 					number_format_i18n($data['requestsToday'])
 				));
 				?>
@@ -102,16 +102,16 @@ if (empty($data['hasData'])) : ?>
 <?php if (!empty($data['topModels'])) : ?>
 <div class="ik-section">
 	<h2 class="ik-section__header">
-		<?php esc_html_e('Top Models', 'ai-provider-for-infomaniak'); ?>
+		<?php esc_html_e('Top Models', 'infomaniak-ai-toolkit'); ?>
 	</h2>
 
 	<div class="ik-table-wrap">
 	<table class="ik-table">
 		<thead>
 			<tr>
-				<th><?php esc_html_e('Model', 'ai-provider-for-infomaniak'); ?></th>
-				<th><?php esc_html_e('Tokens', 'ai-provider-for-infomaniak'); ?></th>
-				<th><?php esc_html_e('Requests', 'ai-provider-for-infomaniak'); ?></th>
+				<th><?php esc_html_e('Model', 'infomaniak-ai-toolkit'); ?></th>
+				<th><?php esc_html_e('Tokens', 'infomaniak-ai-toolkit'); ?></th>
+				<th><?php esc_html_e('Requests', 'infomaniak-ai-toolkit'); ?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -131,16 +131,16 @@ if (empty($data['hasData'])) : ?>
 <?php if (!empty($data['topPresets'])) : ?>
 <div class="ik-section">
 	<h2 class="ik-section__header">
-		<?php esc_html_e('Top Presets', 'ai-provider-for-infomaniak'); ?>
+		<?php esc_html_e('Top Presets', 'infomaniak-ai-toolkit'); ?>
 	</h2>
 
 	<div class="ik-table-wrap">
 	<table class="ik-table">
 		<thead>
 			<tr>
-				<th><?php esc_html_e('Preset', 'ai-provider-for-infomaniak'); ?></th>
-				<th><?php esc_html_e('Tokens', 'ai-provider-for-infomaniak'); ?></th>
-				<th><?php esc_html_e('Requests', 'ai-provider-for-infomaniak'); ?></th>
+				<th><?php esc_html_e('Preset', 'infomaniak-ai-toolkit'); ?></th>
+				<th><?php esc_html_e('Tokens', 'infomaniak-ai-toolkit'); ?></th>
+				<th><?php esc_html_e('Requests', 'infomaniak-ai-toolkit'); ?></th>
 			</tr>
 		</thead>
 		<tbody>

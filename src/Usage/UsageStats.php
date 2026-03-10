@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider\Usage;
+namespace WordPress\InfomaniakAiToolkit\Usage;
 
 /**
  * Aggregated usage statistics for the admin dashboard.

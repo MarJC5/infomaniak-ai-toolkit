@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider\Memory;
+namespace WordPress\InfomaniakAiToolkit\Memory;
 
 use WordPress\AiClient\Builders\MessageBuilder;
 use WordPress\AiClient\Messages\DTO\Message;

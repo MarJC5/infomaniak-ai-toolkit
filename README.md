@@ -1,4 +1,4 @@
-# AI Provider for Infomaniak (Unofficial)
+# Infomaniak AI Toolkit (Unofficial)
 
 An unofficial AI Provider for [Infomaniak AI Tools](https://www.infomaniak.com/en/hosting/ai-tools) for the [PHP AI Client](https://github.com/WordPress/php-ai-client) SDK.
 
@@ -19,7 +19,7 @@ Provides access to open-source models hosted in Switzerland via Infomaniak's Ope
 ### As a WordPress Plugin
 
 1. Download the plugin files
-2. Upload to `/wp-content/plugins/ai-provider-for-infomaniak/`
+2. Upload to `/wp-content/plugins/infomaniak-ai-toolkit/`
 3. Activate the plugin through the WordPress admin
 4. Configure your API key in **Settings > Connectors**
 5. Configure your Product ID in **Settings > Infomaniak AI**
@@ -187,7 +187,7 @@ This plugin provides `BasePreset`, an abstract class for building reusable AI co
 ```php
 namespace MyPlugin\Presets;
 
-use WordPress\InfomaniakAiProvider\Presets\BasePreset;
+use WordPress\InfomaniakAiToolkit\Presets\BasePreset;
 
 class SummarizePreset extends BasePreset
 {
@@ -288,8 +288,8 @@ The `AgentLoop` class provides a function calling loop that lets AI models use t
 Override `tools()` in your preset to enable agent mode automatically:
 
 ```php
-use WordPress\InfomaniakAiProvider\Agent\Tool;
-use WordPress\InfomaniakAiProvider\Presets\BasePreset;
+use WordPress\InfomaniakAiToolkit\Agent\Tool;
+use WordPress\InfomaniakAiToolkit\Presets\BasePreset;
 
 class ResearchPreset extends BasePreset
 {
@@ -328,9 +328,9 @@ When `tools()` returns tools, `execute()` uses `AgentLoop` instead of a single A
 ### Standalone usage
 
 ```php
-use WordPress\InfomaniakAiProvider\Agent\AgentLoop;
-use WordPress\InfomaniakAiProvider\Agent\Tool;
-use WordPress\InfomaniakAiProvider\Agent\ToolRegistry;
+use WordPress\InfomaniakAiToolkit\Agent\AgentLoop;
+use WordPress\InfomaniakAiToolkit\Agent\Tool;
+use WordPress\InfomaniakAiToolkit\Agent\ToolRegistry;
 
 $registry = new ToolRegistry();
 $registry->register(new Tool(
@@ -413,8 +413,8 @@ The preset returns `['conversation_id' => '...', 'result' => '...']`. Pass the `
 For long conversations, the `CompactingStrategy` automatically summarizes old messages when token usage exceeds a threshold. Compaction runs in the background via the `shutdown` hook -- zero latency for the user.
 
 ```php
-use WordPress\InfomaniakAiProvider\Memory\CompactingStrategy;
-use WordPress\InfomaniakAiProvider\Memory\MemoryStrategy;
+use WordPress\InfomaniakAiToolkit\Memory\CompactingStrategy;
+use WordPress\InfomaniakAiToolkit\Memory\MemoryStrategy;
 
 class ChatPreset extends BasePreset
 {
@@ -554,7 +554,7 @@ Guest (unauthenticated) users are rate-limited by IP address using WordPress tra
 Limits are stored in the `infomaniak_ai_rate_limits` WordPress option. Configure them via the admin UI or directly:
 
 ```php
-use WordPress\InfomaniakAiProvider\RateLimit\RateLimitConfig;
+use WordPress\InfomaniakAiToolkit\RateLimit\RateLimitConfig;
 
 RateLimitConfig::save([
     'editor'     => ['limit' => 200, 'window' => 'day'],
@@ -588,7 +588,7 @@ Parameters:
 ### Programmatic check
 
 ```php
-use WordPress\InfomaniakAiProvider\RateLimit\RateLimiter;
+use WordPress\InfomaniakAiToolkit\RateLimit\RateLimiter;
 
 // Check if current user can make a request
 $error = RateLimiter::check('my-preset');

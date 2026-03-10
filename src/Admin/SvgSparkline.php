@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider\Admin;
+namespace WordPress\InfomaniakAiToolkit\Admin;
 
 /**
  * Server-side SVG sparkline renderer.

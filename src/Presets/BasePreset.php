@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider\Presets;
+namespace WordPress\InfomaniakAiToolkit\Presets;
 
 use WordPress\AiClient\AiClient;
-use WordPress\InfomaniakAiProvider\Agent\AgentLoop;
-use WordPress\InfomaniakAiProvider\Agent\ToolRegistry;
-use WordPress\InfomaniakAiProvider\Memory\CompactingStrategy;
-use WordPress\InfomaniakAiProvider\Memory\MemoryStore;
-use WordPress\InfomaniakAiProvider\Memory\MemoryStrategy;
-use WordPress\InfomaniakAiProvider\Memory\SlidingWindowStrategy;
-use WordPress\InfomaniakAiProvider\RateLimit\RateLimiter;
-use WordPress\InfomaniakAiProvider\Usage\UsageTracker;
+use WordPress\InfomaniakAiToolkit\Agent\AgentLoop;
+use WordPress\InfomaniakAiToolkit\Agent\ToolRegistry;
+use WordPress\InfomaniakAiToolkit\Memory\CompactingStrategy;
+use WordPress\InfomaniakAiToolkit\Memory\MemoryStore;
+use WordPress\InfomaniakAiToolkit\Memory\MemoryStrategy;
+use WordPress\InfomaniakAiToolkit\Memory\SlidingWindowStrategy;
+use WordPress\InfomaniakAiToolkit\RateLimit\RateLimiter;
+use WordPress\InfomaniakAiToolkit\Usage\UsageTracker;
 
 /**
  * Abstract base class for AI prompt presets.
@@ -182,7 +182,7 @@ abstract class BasePreset
     {
         return [
             'type' => 'string',
-            'description' => __('The generated text.', 'ai-provider-for-infomaniak'),
+            'description' => __('The generated text.', 'infomaniak-ai-toolkit'),
         ];
     }
 
@@ -298,7 +298,7 @@ abstract class BasePreset
         return [
             'conversation_id' => [
                 'type' => 'string',
-                'description' => __('Conversation identifier. Auto-generated if omitted.', 'ai-provider-for-infomaniak'),
+                'description' => __('Conversation identifier. Auto-generated if omitted.', 'infomaniak-ai-toolkit'),
             ],
         ];
     }
@@ -312,7 +312,7 @@ abstract class BasePreset
      *
      * @since 1.0.0
      *
-     * @return \WordPress\InfomaniakAiProvider\Agent\Tool[]
+     * @return \WordPress\InfomaniakAiToolkit\Agent\Tool[]
      */
     protected function tools(): array
     {
@@ -523,7 +523,7 @@ abstract class BasePreset
         if (!class_exists(AiClient::class)) {
             return new \WP_Error(
                 'ai_unavailable',
-                __('AI Client is not available.', 'ai-provider-for-infomaniak')
+                __('AI Client is not available.', 'infomaniak-ai-toolkit')
             );
         }
 
@@ -554,7 +554,7 @@ abstract class BasePreset
             if (empty($promptText)) {
                 return new \WP_Error(
                     'preset_template_error',
-                    __('Failed to render prompt template.', 'ai-provider-for-infomaniak')
+                    __('Failed to render prompt template.', 'infomaniak-ai-toolkit')
                 );
             }
 

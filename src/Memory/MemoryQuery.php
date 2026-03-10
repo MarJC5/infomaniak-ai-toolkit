@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider\Memory;
+namespace WordPress\InfomaniakAiToolkit\Memory;
 
 /**
  * Fluent query builder for conversation memory records.

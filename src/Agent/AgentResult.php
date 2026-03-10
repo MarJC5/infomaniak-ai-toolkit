@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider\Agent;
+namespace WordPress\InfomaniakAiToolkit\Agent;
 
 /**
  * Result of an agent loop execution.

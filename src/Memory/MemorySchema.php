@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider\Memory;
+namespace WordPress\InfomaniakAiToolkit\Memory;
 
 /**
  * Handles database table creation and schema versioning for conversation memory.

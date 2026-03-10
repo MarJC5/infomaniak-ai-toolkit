@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider\Commands;
+namespace WordPress\InfomaniakAiToolkit\Commands;
 
-use WordPress\InfomaniakAiProvider\Presets\BasePreset;
+use WordPress\InfomaniakAiToolkit\Presets\BasePreset;
 
 /**
  * A preset configured from a markdown file with YAML frontmatter.

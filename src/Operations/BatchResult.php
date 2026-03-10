@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider\Operations;
+namespace WordPress\InfomaniakAiToolkit\Operations;
 
 use WordPress\AiClient\Operations\Enums\OperationStateEnum;
 

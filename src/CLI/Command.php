@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider\CLI;
+namespace WordPress\InfomaniakAiToolkit\CLI;
 
 use WP_CLI;
 use WP_CLI_Command;
-use WordPress\InfomaniakAiProvider\Commands\CommandLoader;
-use WordPress\InfomaniakAiProvider\Commands\MarkdownCommand;
-use WordPress\InfomaniakAiProvider\Memory\MemoryRecord;
-use WordPress\InfomaniakAiProvider\Memory\MemoryStore;
-use WordPress\InfomaniakAiProvider\RateLimit\RateLimitConfig;
-use WordPress\InfomaniakAiProvider\Usage\UsageRecord;
-use WordPress\InfomaniakAiProvider\Usage\UsageTracker;
-use function WordPress\InfomaniakAiProvider\get_available_models;
-use function WordPress\InfomaniakAiProvider\refresh_models_cache;
+use WordPress\InfomaniakAiToolkit\Commands\CommandLoader;
+use WordPress\InfomaniakAiToolkit\Commands\MarkdownCommand;
+use WordPress\InfomaniakAiToolkit\Memory\MemoryRecord;
+use WordPress\InfomaniakAiToolkit\Memory\MemoryStore;
+use WordPress\InfomaniakAiToolkit\RateLimit\RateLimitConfig;
+use WordPress\InfomaniakAiToolkit\Usage\UsageRecord;
+use WordPress\InfomaniakAiToolkit\Usage\UsageTracker;
+use function WordPress\InfomaniakAiToolkit\get_available_models;
+use function WordPress\InfomaniakAiToolkit\refresh_models_cache;
 
 /**
  * Manage the Infomaniak AI provider: usage, models, commands, memory, and cache.
@@ -128,7 +128,7 @@ class Command extends WP_CLI_Command
         $records = $query->get();
 
         if (empty($records)) {
-            WP_CLI::warning(__('No usage records found.', 'ai-provider-for-infomaniak'));
+            WP_CLI::warning(__('No usage records found.', 'infomaniak-ai-toolkit'));
             return;
         }
 
@@ -192,13 +192,13 @@ class Command extends WP_CLI_Command
         $force = isset($assoc_args['refresh']);
 
         if ($force) {
-            WP_CLI::log(__('Refreshing models from Infomaniak API...', 'ai-provider-for-infomaniak'));
+            WP_CLI::log(__('Refreshing models from Infomaniak API...', 'infomaniak-ai-toolkit'));
         }
 
         $models = refresh_models_cache($force);
 
         if (empty($models)) {
-            WP_CLI::error(__('No models available. Check your API key and product ID configuration.', 'ai-provider-for-infomaniak'));
+            WP_CLI::error(__('No models available. Check your API key and product ID configuration.', 'infomaniak-ai-toolkit'));
         }
 
         if (isset($assoc_args['type'])) {
@@ -210,7 +210,7 @@ class Command extends WP_CLI_Command
         }
 
         if (empty($models)) {
-            WP_CLI::warning(__('No models match the given filters.', 'ai-provider-for-infomaniak'));
+            WP_CLI::warning(__('No models match the given filters.', 'infomaniak-ai-toolkit'));
             return;
         }
 
@@ -218,7 +218,7 @@ class Command extends WP_CLI_Command
         \WP_CLI\Utils\format_items($format, $models, ['id', 'name', 'type']);
 
         if (!$force) {
-            WP_CLI::log(__('Showing cached data. Use --refresh to fetch from API.', 'ai-provider-for-infomaniak'));
+            WP_CLI::log(__('Showing cached data. Use --refresh to fetch from API.', 'infomaniak-ai-toolkit'));
         }
     }
 
@@ -283,7 +283,7 @@ class Command extends WP_CLI_Command
         WP_CLI::success(
             sprintf(
                 /* translators: %s: comma-separated list of cleared caches */
-                __('Cleared caches: %s.', 'ai-provider-for-infomaniak'),
+                __('Cleared caches: %s.', 'infomaniak-ai-toolkit'),
                 implode(', ', $cleared)
             )
         );
@@ -327,15 +327,15 @@ class Command extends WP_CLI_Command
         $commands = CommandLoader::discover();
 
         if (empty($commands)) {
-            WP_CLI::warning(__('No markdown commands found.', 'ai-provider-for-infomaniak'));
+            WP_CLI::warning(__('No markdown commands found.', 'infomaniak-ai-toolkit'));
 
             $dirs = CommandLoader::getCommandDirs();
             if (empty($dirs)) {
-                WP_CLI::log(__('No command directories exist. Expected locations:', 'ai-provider-for-infomaniak'));
+                WP_CLI::log(__('No command directories exist. Expected locations:', 'infomaniak-ai-toolkit'));
                 WP_CLI::log('  - {plugin}/ai-commands/');
                 WP_CLI::log('  - {theme}/ai-commands/');
             } else {
-                WP_CLI::log(__('Scanned directories:', 'ai-provider-for-infomaniak'));
+                WP_CLI::log(__('Scanned directories:', 'infomaniak-ai-toolkit'));
                 foreach ($dirs as $dir) {
                     WP_CLI::log("  - {$dir}");
                 }
@@ -375,7 +375,7 @@ class Command extends WP_CLI_Command
         $dirs = CommandLoader::getCommandDirs();
         if (!empty($dirs)) {
             WP_CLI::log('');
-            WP_CLI::log(__('Command directories:', 'ai-provider-for-infomaniak'));
+            WP_CLI::log(__('Command directories:', 'infomaniak-ai-toolkit'));
             foreach ($dirs as $dir) {
                 WP_CLI::log("  {$dir}");
             }
@@ -478,7 +478,7 @@ class Command extends WP_CLI_Command
         $records = $query->get();
 
         if (empty($records)) {
-            WP_CLI::warning(__('No memory records found.', 'ai-provider-for-infomaniak'));
+            WP_CLI::warning(__('No memory records found.', 'infomaniak-ai-toolkit'));
             return;
         }
 
@@ -540,7 +540,7 @@ class Command extends WP_CLI_Command
     public function memory_clear($args, $assoc_args): void
     {
         if (!isset($assoc_args['conversation']) && !isset($assoc_args['user']) && !isset($assoc_args['before'])) {
-            WP_CLI::error(__('You must specify at least one of: --conversation, --user, or --before.', 'ai-provider-for-infomaniak'));
+            WP_CLI::error(__('You must specify at least one of: --conversation, --user, or --before.', 'infomaniak-ai-toolkit'));
         }
 
         $query = MemoryStore::query();
@@ -558,20 +558,20 @@ class Command extends WP_CLI_Command
         $count = $query->count();
 
         if ($count === 0) {
-            WP_CLI::warning(__('No matching records found.', 'ai-provider-for-infomaniak'));
+            WP_CLI::warning(__('No matching records found.', 'infomaniak-ai-toolkit'));
             return;
         }
 
         WP_CLI::log(
             sprintf(
                 /* translators: %d: number of records */
-                __('Found %d records to delete.', 'ai-provider-for-infomaniak'),
+                __('Found %d records to delete.', 'infomaniak-ai-toolkit'),
                 $count
             )
         );
 
         if (!isset($assoc_args['yes'])) {
-            WP_CLI::confirm(__('Are you sure you want to delete these records?', 'ai-provider-for-infomaniak'));
+            WP_CLI::confirm(__('Are you sure you want to delete these records?', 'infomaniak-ai-toolkit'));
         }
 
         $deleted = $query->delete();
@@ -579,7 +579,7 @@ class Command extends WP_CLI_Command
         WP_CLI::success(
             sprintf(
                 /* translators: %d: number of deleted records */
-                __('Deleted %d memory records.', 'ai-provider-for-infomaniak'),
+                __('Deleted %d memory records.', 'infomaniak-ai-toolkit'),
                 $deleted
             )
         );
@@ -620,7 +620,7 @@ class Command extends WP_CLI_Command
             $items[] = [
                 'role'   => $role,
                 'limit'  => $config['limit'] === 0
-                    ? __('unlimited', 'ai-provider-for-infomaniak')
+                    ? __('unlimited', 'infomaniak-ai-toolkit')
                     : $config['limit'],
                 'window' => $config['window'],
             ];
@@ -641,18 +641,18 @@ class Command extends WP_CLI_Command
         if ($modelsCache !== false) {
             $modelsStatus = sprintf(
                 /* translators: %d: number of cached models */
-                __('cached (%d models)', 'ai-provider-for-infomaniak'),
+                __('cached (%d models)', 'infomaniak-ai-toolkit'),
                 $modelsCount
             );
         } else {
-            $modelsStatus = __('empty', 'ai-provider-for-infomaniak');
+            $modelsStatus = __('empty', 'infomaniak-ai-toolkit');
         }
 
         $commands = CommandLoader::discover();
         $commandsCount = count($commands);
         $commandsStatus = sprintf(
             /* translators: %d: number of commands */
-            __('%d commands loaded', 'ai-provider-for-infomaniak'),
+            __('%d commands loaded', 'infomaniak-ai-toolkit'),
             $commandsCount
         );
 
@@ -660,12 +660,12 @@ class Command extends WP_CLI_Command
             [
                 'cache'  => 'models',
                 'status' => $modelsStatus,
-                'ttl'    => __('12 hours', 'ai-provider-for-infomaniak'),
+                'ttl'    => __('12 hours', 'infomaniak-ai-toolkit'),
             ],
             [
                 'cache'  => 'commands',
                 'status' => $commandsStatus,
-                'ttl'    => __('per-request', 'ai-provider-for-infomaniak'),
+                'ttl'    => __('per-request', 'infomaniak-ai-toolkit'),
             ],
         ];
 

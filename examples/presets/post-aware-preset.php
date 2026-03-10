@@ -10,14 +10,14 @@
  * Also shows how to override execute() for custom validation
  * before calling the parent.
  *
- * @package WordPress\InfomaniakAiProvider\Examples
+ * @package WordPress\InfomaniakAiToolkit\Examples
  */
 
 declare(strict_types=1);
 
 namespace YourPlugin\Presets;
 
-use WordPress\InfomaniakAiProvider\Presets\BasePreset;
+use WordPress\InfomaniakAiToolkit\Presets\BasePreset;
 
 /**
  * Generates an excerpt for a WordPress post.

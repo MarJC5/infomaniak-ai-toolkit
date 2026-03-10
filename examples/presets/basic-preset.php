@@ -19,14 +19,14 @@
  *           └── system/
  *               └── content-editor.php  <-- system prompt (optional)
  *
- * @package WordPress\InfomaniakAiProvider\Examples
+ * @package WordPress\InfomaniakAiToolkit\Examples
  */
 
 declare(strict_types=1);
 
 namespace YourPlugin\Presets;
 
-use WordPress\InfomaniakAiProvider\Presets\BasePreset;
+use WordPress\InfomaniakAiToolkit\Presets\BasePreset;
 
 /**
  * A simple preset that summarizes text content.
@@ -119,7 +119,7 @@ class SummarizePreset extends BasePreset
  * --------------------------------------------------------------------------
  *
  * add_action('wp_abilities_api_init', function() {
- *     if (!class_exists(\WordPress\InfomaniakAiProvider\Presets\BasePreset::class)) {
+ *     if (!class_exists(\WordPress\InfomaniakAiToolkit\Presets\BasePreset::class)) {
  *         return;
  *     }
  *     $preset = new \YourPlugin\Presets\SummarizePreset();

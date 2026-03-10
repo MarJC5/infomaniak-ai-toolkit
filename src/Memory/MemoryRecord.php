@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider\Memory;
+namespace WordPress\InfomaniakAiToolkit\Memory;
 
 /**
  * Value object representing a single conversation memory entry.

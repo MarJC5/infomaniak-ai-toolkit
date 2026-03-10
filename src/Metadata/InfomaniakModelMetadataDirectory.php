@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WordPress\InfomaniakAiProvider\Metadata;
+namespace WordPress\InfomaniakAiToolkit\Metadata;
 
 use WordPress\AiClient\Files\Enums\FileTypeEnum;
 use WordPress\AiClient\Files\Enums\MediaOrientationEnum;
@@ -16,7 +16,7 @@ use WordPress\AiClient\Providers\Models\DTO\SupportedOption;
 use WordPress\AiClient\Providers\Models\Enums\CapabilityEnum;
 use WordPress\AiClient\Providers\Models\Enums\OptionEnum;
 use WordPress\AiClient\Providers\OpenAiCompatibleImplementation\AbstractOpenAiCompatibleModelMetadataDirectory;
-use WordPress\InfomaniakAiProvider\Provider\InfomaniakProvider;
+use WordPress\InfomaniakAiToolkit\Provider\InfomaniakProvider;
 
 /**
  * Class for the Infomaniak model metadata directory.

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: AI Provider for Infomaniak 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ai-provider-for-infomaniak\n"
+"Project-Id-Version: Infomaniak AI Toolkit 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/infomaniak-ai-toolkit\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
@@ -12,12 +12,12 @@ msgstr ""
 "Language: fr_FR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: WP-CLI 2.12.0\n"
-"X-Domain: ai-provider-for-infomaniak\n"
+"X-Domain: infomaniak-ai-toolkit\n"
 
 #. Plugin Name of the plugin
 #: plugin.php
-msgid "AI Provider for Infomaniak"
-msgstr "Fournisseur IA pour Infomaniak"
+msgid "Infomaniak AI Toolkit"
+msgstr "Infomaniak AI Toolkit"
 
 #. Plugin URI of the plugin
 #: plugin.php
@@ -26,8 +26,8 @@ msgstr "https://www.infomaniak.com/fr/hebergement/ai-services"
 
 #. Description of the plugin
 #: plugin.php
-msgid "AI Provider for Infomaniak for the WordPress AI Client. Provides access to open-source models (Llama, Mistral, DeepSeek, Qwen) hosted in Switzerland."
-msgstr "Fournisseur IA pour Infomaniak pour le client IA WordPress. Fournit l'accès à des modèles open source (Llama, Mistral, DeepSeek, Qwen) hébergés en Suisse."
+msgid "AI toolkit for WordPress powered by Infomaniak. Provides access to open-source models (Llama, Mistral, DeepSeek, Qwen) hosted in Switzerland."
+msgstr "Boîte à outils IA pour WordPress propulsée par Infomaniak. Fournit l'accès à des modèles open source (Llama, Mistral, DeepSeek, Qwen) hébergés en Suisse."
 
 #. Author of the plugin
 #: plugin.php
