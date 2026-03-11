@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-10T14:56:19+00:00\n"
+"POT-Creation-Date: 2026-03-11T15:48:05+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: infomaniak-ai-toolkit\n"
@@ -284,7 +284,7 @@ msgid "LLM (Text)"
 msgstr ""
 
 #: src/Admin/views/tabs/commands/form.php:221
-#: src/Admin/views/tabs/usage.php:112
+#: src/Admin/views/tabs/usage.php:113
 msgid "Model"
 msgstr ""
 
@@ -456,8 +456,8 @@ msgid "Last 30 days"
 msgstr ""
 
 #: src/Admin/views/tabs/usage.php:71
-#: src/Admin/views/tabs/usage.php:114
-#: src/Admin/views/tabs/usage.php:143
+#: src/Admin/views/tabs/usage.php:115
+#: src/Admin/views/tabs/usage.php:145
 msgid "Requests"
 msgstr ""
 
@@ -477,16 +477,20 @@ msgstr[1] ""
 msgid "Top Models"
 msgstr ""
 
-#: src/Admin/views/tabs/usage.php:113
-#: src/Admin/views/tabs/usage.php:142
+#: src/Admin/views/tabs/usage.php:112
+msgid "Provider"
+msgstr ""
+
+#: src/Admin/views/tabs/usage.php:114
+#: src/Admin/views/tabs/usage.php:144
 msgid "Tokens"
 msgstr ""
 
-#: src/Admin/views/tabs/usage.php:134
+#: src/Admin/views/tabs/usage.php:136
 msgid "Top Presets"
 msgstr ""
 
-#: src/Admin/views/tabs/usage.php:141
+#: src/Admin/views/tabs/usage.php:143
 msgid "Preset"
 msgstr ""
 
@@ -624,19 +628,19 @@ msgstr ""
 msgid "Batch \"%s\" download returned empty content."
 msgstr ""
 
-#: src/Presets/BasePreset.php:185
+#: src/Presets/BasePreset.php:201
 msgid "The generated text."
 msgstr ""
 
-#: src/Presets/BasePreset.php:301
+#: src/Presets/BasePreset.php:317
 msgid "Conversation identifier. Auto-generated if omitted."
 msgstr ""
 
-#: src/Presets/BasePreset.php:526
+#: src/Presets/BasePreset.php:542
 msgid "AI Client is not available."
 msgstr ""
 
-#: src/Presets/BasePreset.php:557
+#: src/Presets/BasePreset.php:573
 msgid "Failed to render prompt template."
 msgstr ""
 

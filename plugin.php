@@ -84,11 +84,27 @@ add_action('init', __NAMESPACE__ . '\\init_commands');
  */
 function load_textdomain(): void
 {
-    load_plugin_textdomain(
-        'infomaniak-ai-toolkit',
-        false,
-        dirname(plugin_basename(__FILE__)) . '/languages'
-    );
+    static $loading = false;
+    if ($loading) {
+        return;
+    }
+    $loading = true;
+
+    $domain = 'infomaniak-ai-toolkit';
+    $locale = determine_locale();
+    $dir    = __DIR__ . '/languages';
+
+    // Prefer .l10n.php (WP 6.5+), fall back to .mo.
+    $php_file = "$dir/$domain-$locale.l10n.php";
+    $mo_file  = "$dir/$domain-$locale.mo";
+
+    if (file_exists($php_file)) {
+        \load_textdomain($domain, $php_file);
+    } elseif (file_exists($mo_file)) {
+        \load_textdomain($domain, $mo_file);
+    }
+
+    $loading = false;
 }
 
 add_action('init', __NAMESPACE__ . '\\load_textdomain');

@@ -653,6 +653,10 @@ msgstr "12 heures"
 msgid "per-request"
 msgstr "par requête"
 
+#: src/Admin/views/tabs/usage.php:112
+msgid "Provider"
+msgstr "Fournisseur"
+
 #. translators: 1: limit number, 2: time window
 #: src/RateLimit/RateLimiter.php:90
 #: src/RateLimit/RateLimiter.php:222
