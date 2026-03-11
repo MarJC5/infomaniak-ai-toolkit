@@ -257,6 +257,7 @@ The preset is now available as:
 |---|---|---|
 | `temperature()` | `0.7` | Controls response randomness |
 | `maxTokens()` | `1000` | Maximum response length |
+| `requestTimeout()` | `60.0` | HTTP request timeout in seconds for AI API calls |
 | `outputSchema()` | `null` | JSON Schema for structured output |
 | `provider()` | `'infomaniak'` | AI provider ID |
 | `category()` | `'content'` | Ability category slug |
@@ -385,6 +386,7 @@ Model response
 | `max_tokens` | `4096` | Maximum response tokens |
 | `system` | `null` | System instruction |
 | `max_iterations` | `10` | Maximum tool-calling rounds |
+| `request_timeout` | `60.0` | HTTP request timeout in seconds |
 
 ### Hooks
 
@@ -393,7 +395,7 @@ Model response
 
 ## Conversation Memory
 
-Presets that return `true` from `conversational()` automatically store and load conversation history. Messages are stored in a dedicated database table (`wp_infomaniak_ai_memory`) and injected into subsequent turns via the SDK's `withHistory()`.
+Presets that return `true` from `conversational()` automatically store and load conversation history. Messages are stored in a dedicated database table (`wp_ai_provider_toolkit_memory`) and injected into subsequent turns via the SDK's `withHistory()`.
 
 ### Basic conversational preset
 

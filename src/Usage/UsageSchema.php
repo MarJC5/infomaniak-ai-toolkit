@@ -23,7 +23,7 @@ class UsageSchema
      *
      * @var string
      */
-    private const VERSION_OPTION = 'infomaniak_ai_usage_db_version';
+    private const VERSION_OPTION = 'ai_provider_toolkit_usage_db_version';
 
     /**
      * Returns the full table name including the WordPress prefix.
@@ -35,7 +35,7 @@ class UsageSchema
     public static function tableName(): string
     {
         global $wpdb;
-        return $wpdb->prefix . 'infomaniak_ai_usage';
+        return $wpdb->prefix . 'ai_provider_toolkit_usage';
     }
 
     /**

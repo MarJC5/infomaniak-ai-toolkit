@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WordPress\InfomaniakAiToolkit\Presets;
 
 use WordPress\AiClient\AiClient;
+use WordPress\AiClient\Providers\Http\DTO\RequestOptions;
 use WordPress\InfomaniakAiToolkit\Agent\AgentLoop;
 use WordPress\InfomaniakAiToolkit\Agent\ToolRegistry;
 use WordPress\InfomaniakAiToolkit\Memory\CompactingStrategy;
@@ -119,6 +120,21 @@ abstract class BasePreset
     protected function maxTokens(): int
     {
         return 1000;
+    }
+
+    /**
+     * Returns the HTTP request timeout in seconds for AI API calls.
+     *
+     * Override this to change the timeout. The WordPress default is only 5 seconds,
+     * which is too short for most AI model responses.
+     *
+     * @since 1.3.0
+     *
+     * @return float
+     */
+    protected function requestTimeout(): float
+    {
+        return 60.0;
     }
 
     /**
@@ -583,22 +599,27 @@ abstract class BasePreset
                     }
 
                     $loop = new AgentLoop($registry, [
-                        'provider'       => $this->provider(),
-                        'model'          => $this->modelPreference(),
-                        'temperature'    => $this->temperature(),
-                        'max_tokens'     => $this->maxTokens(),
-                        'system'         => $systemText,
-                        'max_iterations' => $this->maxAgentIterations(),
+                        'provider'        => $this->provider(),
+                        'model'           => $this->modelPreference(),
+                        'temperature'     => $this->temperature(),
+                        'max_tokens'      => $this->maxTokens(),
+                        'system'          => $systemText,
+                        'max_iterations'  => $this->maxAgentIterations(),
+                        'request_timeout' => $this->requestTimeout(),
                     ]);
 
                     $agentResult = $loop->run($promptText, $historyMessages);
                     $result = $agentResult->getText();
                 } else {
                     // Standard mode: single AI call.
+                    $requestOptions = new RequestOptions();
+                    $requestOptions->setTimeout($this->requestTimeout());
+
                     $builder = AiClient::prompt($promptText)
                         ->usingProvider($this->provider())
                         ->usingTemperature($this->temperature())
-                        ->usingMaxTokens($this->maxTokens());
+                        ->usingMaxTokens($this->maxTokens())
+                        ->usingRequestOptions($requestOptions);
 
                     $modelPref = $this->modelPreference();
                     if ($modelPref !== null) {

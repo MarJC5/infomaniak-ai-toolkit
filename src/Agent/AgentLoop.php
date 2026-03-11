@@ -9,6 +9,7 @@ use WordPress\AiClient\Builders\PromptBuilder;
 use WordPress\AiClient\Messages\DTO\Message;
 use WordPress\AiClient\Messages\DTO\MessagePart;
 use WordPress\AiClient\Messages\DTO\UserMessage;
+use WordPress\AiClient\Providers\Http\DTO\RequestOptions;
 use WordPress\AiClient\Results\DTO\GenerativeAiResult;
 use WordPress\AiClient\Tools\DTO\FunctionResponse;
 
@@ -60,6 +61,11 @@ class AgentLoop
     private ?string $systemInstruction;
 
     /**
+     * @var float HTTP request timeout in seconds.
+     */
+    private float $requestTimeout;
+
+    /**
      * @param ToolRegistry $tools   Registry of available tools.
      * @param array        $options Configuration options:
      *                              - max_iterations: int (default 10)
@@ -68,6 +74,7 @@ class AgentLoop
      *                              - temperature: float (default 0.7)
      *                              - max_tokens: int (default 4096)
      *                              - system: string|null (default null)
+     *                              - request_timeout: float (default 60.0)
      */
     public function __construct(ToolRegistry $tools, array $options = [])
     {
@@ -78,6 +85,7 @@ class AgentLoop
         $this->temperature = (float) ($options['temperature'] ?? 0.7);
         $this->maxTokens = (int) ($options['max_tokens'] ?? 4096);
         $this->systemInstruction = $options['system'] ?? null;
+        $this->requestTimeout = (float) ($options['request_timeout'] ?? 60.0);
     }
 
     /**
@@ -218,11 +226,15 @@ class AgentLoop
      */
     private function buildPrompt(string $prompt, array $declarations, array $history): PromptBuilder
     {
+        $requestOptions = new RequestOptions();
+        $requestOptions->setTimeout($this->requestTimeout);
+
         $builder = AiClient::prompt($prompt)
             ->usingProvider($this->provider)
             ->usingTemperature($this->temperature)
             ->usingMaxTokens($this->maxTokens)
-            ->usingFunctionDeclarations(...$declarations);
+            ->usingFunctionDeclarations(...$declarations)
+            ->usingRequestOptions($requestOptions);
 
         if ($this->modelPreference !== null) {
             $builder->usingModelPreference($this->modelPreference);
@@ -249,11 +261,15 @@ class AgentLoop
      */
     private function buildContinuation(array $declarations, array $messages, array $toolResponses): PromptBuilder
     {
+        $requestOptions = new RequestOptions();
+        $requestOptions->setTimeout($this->requestTimeout);
+
         $builder = AiClient::prompt()
             ->usingProvider($this->provider)
             ->usingTemperature($this->temperature)
             ->usingMaxTokens($this->maxTokens)
             ->usingFunctionDeclarations(...$declarations)
+            ->usingRequestOptions($requestOptions)
             ->withHistory(...$messages);
 
         if ($this->modelPreference !== null) {

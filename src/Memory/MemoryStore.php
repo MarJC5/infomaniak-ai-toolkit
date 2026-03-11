@@ -111,6 +111,8 @@ class MemoryStore
         );
 
         if (!$wpdb->rows_affected) {
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+            error_log('[MemoryStore] Insert failed — table: ' . MemorySchema::tableName() . ' | wpdb error: ' . $wpdb->last_error . ' | last query: ' . $wpdb->last_query);
             return null;
         }
 

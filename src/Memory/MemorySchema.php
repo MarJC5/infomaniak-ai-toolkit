@@ -23,7 +23,7 @@ class MemorySchema
      *
      * @var string
      */
-    private const VERSION_OPTION = 'infomaniak_ai_memory_db_version';
+    private const VERSION_OPTION = 'ai_provider_toolkit_memory_db_version';
 
     /**
      * Returns the full table name including the WordPress prefix.
@@ -35,7 +35,7 @@ class MemorySchema
     public static function tableName(): string
     {
         global $wpdb;
-        return $wpdb->prefix . 'infomaniak_ai_memory';
+        return $wpdb->prefix . 'ai_provider_toolkit_memory';
     }
 
     /**

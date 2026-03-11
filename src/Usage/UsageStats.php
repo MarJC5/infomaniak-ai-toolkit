@@ -127,7 +127,7 @@ class UsageStats
      * @param int    $limit Max models to return.
      * @param string $from  Start date (Y-m-d).
      * @param string $to    End date (Y-m-d).
-     * @return array<int, array{model_name: string, total_tokens: int, request_count: int}>
+     * @return array<int, array{provider_id: string, model_name: string, total_tokens: int, request_count: int}>
      */
     public static function topModels(int $limit = 5, string $from = '', string $to = ''): array
     {
@@ -148,12 +148,13 @@ class UsageStats
 
         $where = $wheres ? 'WHERE ' . implode(' AND ', $wheres) : '';
 
-        $sql = "SELECT model_name,
+        $sql = "SELECT provider_id,
+                       model_name,
                        SUM(total_tokens) AS total_tokens,
                        COUNT(*) AS request_count
                 FROM {$table}
                 {$where}
-                GROUP BY model_name
+                GROUP BY provider_id, model_name
                 ORDER BY total_tokens DESC
                 LIMIT %d";
 
@@ -167,6 +168,7 @@ class UsageStats
         }
 
         return array_map(static fn(array $row) => [
+            'provider_id'   => $row['provider_id'],
             'model_name'    => $row['model_name'],
             'total_tokens'  => (int) $row['total_tokens'],
             'request_count' => (int) $row['request_count'],

@@ -7,6 +7,7 @@ namespace WordPress\InfomaniakAiToolkit\Memory;
 use WordPress\AiClient\AiClient;
 use WordPress\AiClient\Builders\MessageBuilder;
 use WordPress\AiClient\Messages\DTO\Message;
+use WordPress\AiClient\Providers\Http\DTO\RequestOptions;
 use WordPress\InfomaniakAiToolkit\Usage\UsageTracker;
 
 /**
@@ -373,10 +374,14 @@ class CompactingStrategy implements MemoryStrategy
         }
 
         try {
+            $requestOptions = new RequestOptions();
+            $requestOptions->setTimeout(60.0);
+
             $builder = AiClient::prompt($prompt)
                 ->usingProvider('infomaniak')
                 ->usingTemperature(0.3)
                 ->usingMaxTokens($summaryMaxTokens)
+                ->usingRequestOptions($requestOptions)
                 ->usingSystemInstruction(
                     'You are a conversation summarizer. Produce a concise summary of the conversation. '
                     . 'Preserve key facts, decisions, user preferences, and important context. '

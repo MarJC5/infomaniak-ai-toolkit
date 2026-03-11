@@ -9,7 +9,7 @@
  *   $data['totalRequests']  int     Total request count.
  *   $data['tokensToday']    int     Tokens used today.
  *   $data['requestsToday']  int     Requests made today.
- *   $data['topModels']      array   Top models [{model_name, total_tokens, request_count}].
+ *   $data['topModels']      array   Top models [{provider_id, model_name, total_tokens, request_count}].
  *   $data['topPresets']     array   Top presets [{preset_name, total_tokens, request_count}].
  *   $data['sparklineData']  int[]   Array of daily token values for sparkline.
  *
@@ -109,6 +109,7 @@ if (empty($data['hasData'])) : ?>
 	<table class="ik-table">
 		<thead>
 			<tr>
+				<th><?php esc_html_e('Provider', 'infomaniak-ai-toolkit'); ?></th>
 				<th><?php esc_html_e('Model', 'infomaniak-ai-toolkit'); ?></th>
 				<th><?php esc_html_e('Tokens', 'infomaniak-ai-toolkit'); ?></th>
 				<th><?php esc_html_e('Requests', 'infomaniak-ai-toolkit'); ?></th>
@@ -117,7 +118,8 @@ if (empty($data['hasData'])) : ?>
 		<tbody>
 			<?php foreach ($data['topModels'] as $model) : ?>
 				<tr>
-					<td><?php echo esc_html($model['model_name'] ?: $model['model_id'] ?? '—'); ?></td>
+					<td><?php echo esc_html(ucfirst($model['provider_id'] ?: '—')); ?></td>
+					<td><?php echo esc_html($model['model_name'] ?: '—'); ?></td>
 					<td><?php echo esc_html(number_format_i18n($model['total_tokens'])); ?></td>
 					<td><?php echo esc_html(number_format_i18n($model['request_count'])); ?></td>
 				</tr>
