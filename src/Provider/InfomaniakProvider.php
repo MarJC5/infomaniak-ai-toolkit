@@ -80,6 +80,27 @@ class InfomaniakProvider extends AbstractApiProvider implements ProviderWithOper
     }
 
     /**
+     * Returns the API key for the Infomaniak AI service.
+     *
+     * Reads from the connectors setting, temporarily unmasking it.
+     *
+     * @since 1.0.0
+     *
+     * @return string The API key, or empty string if not configured.
+     */
+    public static function getApiKey(): string
+    {
+        try {
+            remove_filter('option_connectors_ai_infomaniak_api_key', '_wp_connectors_mask_api_key');
+            $apiKey = (string) get_option('connectors_ai_infomaniak_api_key', '');
+        } finally {
+            add_filter('option_connectors_ai_infomaniak_api_key', '_wp_connectors_mask_api_key');
+        }
+
+        return $apiKey;
+    }
+
+    /**
      * Sanitizes a product ID to prevent path injection.
      *
      * Only allows alphanumeric characters, dashes, and underscores.

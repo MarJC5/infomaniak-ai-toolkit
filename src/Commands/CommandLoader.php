@@ -167,7 +167,7 @@ class CommandLoader
      * Used by the admin UI to display source badges and enable/disable actions.
      * File-based commands are read-only; database commands are editable.
      *
-     * @since 1.2.0
+     * @since 1.0.0
      *
      * @return array<string, array{command: MarkdownCommand, source: 'file'|'db'}>
      */

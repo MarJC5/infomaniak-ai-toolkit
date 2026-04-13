@@ -7,14 +7,14 @@ namespace WordPress\InfomaniakAiToolkit\Commands;
 /**
  * CRUD operations for admin-created commands stored in the database.
  *
- * @since 1.2.0
+ * @since 1.0.0
  */
 class CommandStore
 {
     /**
      * Returns all stored commands keyed by slug.
      *
-     * @since 1.2.0
+     * @since 1.0.0
      *
      * @return array<string, array<string, mixed>>
      */
@@ -42,7 +42,7 @@ class CommandStore
     /**
      * Returns a single command by slug.
      *
-     * @since 1.2.0
+     * @since 1.0.0
      *
      * @param string $slug Command slug.
      * @return array<string, mixed>|null Null if not found.
@@ -65,7 +65,7 @@ class CommandStore
     /**
      * Saves a command (insert or update).
      *
-     * @since 1.2.0
+     * @since 1.0.0
      *
      * @param string               $slug Command slug.
      * @param array<string, mixed> $data Command data.
@@ -123,7 +123,7 @@ class CommandStore
     /**
      * Deletes a command by slug.
      *
-     * @since 1.2.0
+     * @since 1.0.0
      *
      * @param string $slug Command slug.
      * @return bool True if the row was deleted.
@@ -143,7 +143,7 @@ class CommandStore
     /**
      * Checks if a command exists in the database.
      *
-     * @since 1.2.0
+     * @since 1.0.0
      *
      * @param string $slug Command slug.
      * @return bool
@@ -158,7 +158,7 @@ class CommandStore
      *
      * Uses the same regex as CommandLoader: lowercase alphanumerics and hyphens.
      *
-     * @since 1.2.0
+     * @since 1.0.0
      *
      * @param string $input Raw input.
      * @return string Sanitized slug.
@@ -172,7 +172,7 @@ class CommandStore
     /**
      * Sanitizes a full command data array.
      *
-     * @since 1.2.0
+     * @since 1.0.0
      *
      * @param array<string, mixed> $data Raw input.
      * @return array<string, mixed> Sanitized data.

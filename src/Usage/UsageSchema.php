@@ -62,6 +62,7 @@ class UsageSchema
             prompt_tokens int unsigned NOT NULL DEFAULT 0,
             completion_tokens int unsigned NOT NULL DEFAULT 0,
             total_tokens int unsigned NOT NULL DEFAULT 0,
+            thought_tokens int unsigned NOT NULL DEFAULT 0,
             capability varchar(100) NOT NULL DEFAULT '',
             created_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
             PRIMARY KEY  (id),

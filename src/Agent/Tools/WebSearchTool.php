@@ -17,7 +17,7 @@ use WordPress\InfomaniakAiToolkit\Agent\Tool;
  *       return [ WebSearchTool::create() ];
  *   }
  *
- * @since 1.5.0
+ * @since 1.0.0
  */
 class WebSearchTool
 {
@@ -34,7 +34,7 @@ class WebSearchTool
     /**
      * Creates a web search Tool instance.
      *
-     * @since 1.5.0
+     * @since 1.0.0
      *
      * @param bool $requireConfirmation When true, the first call returns a preview
      *                                  and the model must call again with confirm_action=true
@@ -82,7 +82,7 @@ class WebSearchTool
     /**
      * Handles the web search tool call with a two-step confirmation flow.
      *
-     * @since 1.5.0
+     * @since 1.0.0
      *
      * @param array $args Tool arguments from the model.
      * @return array Preview, search results, or error.
@@ -114,7 +114,7 @@ class WebSearchTool
     /**
      * Handles the web search tool call.
      *
-     * @since 1.5.0
+     * @since 1.0.0
      *
      * @param array $args Tool arguments from the model.
      * @return array Search results or error.
@@ -137,7 +137,7 @@ class WebSearchTool
          *
          * Expected format: array of ['title' => string, 'url' => string, 'snippet' => string]
          *
-         * @since 1.5.0
+         * @since 1.0.0
          *
          * @param array|null $results    Null to use default, or array of results.
          * @param string     $query      The search query.
@@ -161,7 +161,7 @@ class WebSearchTool
     /**
      * Searches DuckDuckGo HTML and parses the results.
      *
-     * @since 1.5.0
+     * @since 1.0.0
      *
      * @param string $query      The search query.
      * @param int    $maxResults Maximum number of results.
@@ -198,7 +198,7 @@ class WebSearchTool
     /**
      * Parses DuckDuckGo HTML search results page.
      *
-     * @since 1.5.0
+     * @since 1.0.0
      *
      * @param string $html       The HTML content.
      * @param int    $maxResults Maximum number of results to extract.
@@ -268,7 +268,7 @@ class WebSearchTool
      * DuckDuckGo HTML wraps result URLs in redirects like:
      * //duckduckgo.com/l/?uddg=https%3A%2F%2Fexample.com&rut=...
      *
-     * @since 1.5.0
+     * @since 1.0.0
      *
      * @param string $href The href attribute from the result link.
      * @return string The extracted URL, or the original href if extraction fails.

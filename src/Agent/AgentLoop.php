@@ -113,7 +113,7 @@ class AgentLoop
     public function run(string $prompt, array $history = []): AgentResult
     {
         $steps = [];
-        $totalTokens = ['prompt_tokens' => 0, 'completion_tokens' => 0, 'total_tokens' => 0];
+        $totalTokens = ['prompt_tokens' => 0, 'completion_tokens' => 0, 'total_tokens' => 0, 'thought_tokens' => 0];
         $declarations = $this->tools->getFunctionDeclarations();
 
         // Accumulated messages for conversational context.
@@ -367,7 +367,7 @@ class AgentLoop
      * Sends the actual image files in a user message so the vision
      * model can analyze them visually.
      *
-     * @since 1.1.0
+     * @since 1.0.0
      *
      * @param File[]                $files        Image files to send.
      * @param FunctionDeclaration[] $declarations Tool declarations.
@@ -469,5 +469,6 @@ class AgentLoop
         $totals['prompt_tokens'] += $usage->getPromptTokens();
         $totals['completion_tokens'] += $usage->getCompletionTokens();
         $totals['total_tokens'] += $usage->getTotalTokens();
+        $totals['thought_tokens'] += $usage->getThoughtTokens() ?? 0;
     }
 }

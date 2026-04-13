@@ -10,7 +10,7 @@ namespace WordPress\InfomaniakAiToolkit\Usage;
  * Runs GROUP BY queries against the usage table to produce
  * daily totals, top models, and top presets breakdowns.
  *
- * @since 1.1.0
+ * @since 1.0.0
  */
 class UsageStats
 {
@@ -21,7 +21,7 @@ class UsageStats
      * Days without usage are filled with zeros to ensure a consistent
      * number of data points for sparkline rendering.
      *
-     * @since 1.1.0
+     * @since 1.0.0
      *
      * @param int $days Number of days to look back.
      * @return array<int, array{date: string, total_tokens: int, request_count: int}>
@@ -74,7 +74,7 @@ class UsageStats
     /**
      * Returns total tokens for a date range.
      *
-     * @since 1.1.0
+     * @since 1.0.0
      *
      * @param string $from Start date (Y-m-d).
      * @param string $to   End date (Y-m-d).
@@ -98,7 +98,7 @@ class UsageStats
     /**
      * Returns total request count for a date range.
      *
-     * @since 1.1.0
+     * @since 1.0.0
      *
      * @param string $from Start date (Y-m-d).
      * @param string $to   End date (Y-m-d).
@@ -122,7 +122,7 @@ class UsageStats
     /**
      * Returns top models by total tokens consumed.
      *
-     * @since 1.1.0
+     * @since 1.0.0
      *
      * @param int    $limit Max models to return.
      * @param string $from  Start date (Y-m-d).
@@ -180,7 +180,7 @@ class UsageStats
      *
      * Excludes direct API calls (NULL preset_name).
      *
-     * @since 1.1.0
+     * @since 1.0.0
      *
      * @param int    $limit Max presets to return.
      * @param string $from  Start date (Y-m-d).
@@ -234,7 +234,7 @@ class UsageStats
     /**
      * Returns tokens used today (UTC).
      *
-     * @since 1.1.0
+     * @since 1.0.0
      *
      * @return int
      */
@@ -247,7 +247,7 @@ class UsageStats
     /**
      * Returns request count for today (UTC).
      *
-     * @since 1.1.0
+     * @since 1.0.0
      *
      * @return int
      */
@@ -260,7 +260,7 @@ class UsageStats
     /**
      * Checks whether any usage data exists.
      *
-     * @since 1.1.0
+     * @since 1.0.0
      *
      * @return bool
      */

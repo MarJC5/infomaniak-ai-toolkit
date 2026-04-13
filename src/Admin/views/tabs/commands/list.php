@@ -5,7 +5,7 @@
  * Variables available from $data:
  *   $data['commands'] array<string, array{command: MarkdownCommand, source: 'file'|'db'}>
  *
- * @since 1.2.0
+ * @since 1.0.0
  *
  * @package WordPress\InfomaniakAiToolkit
  */

@@ -173,6 +173,26 @@ class MarkdownCommand extends BasePreset
      *
      * @since 1.0.0
      */
+    protected function outputMediaOrientation(): ?string
+    {
+        return $this->config['orientation'] ?? null;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1.0.0
+     */
+    protected function outputMediaAspectRatio(): ?string
+    {
+        return $this->config['aspect_ratio'] ?? null;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1.0.0
+     */
     protected function category(): string
     {
         return (string) ($this->config['category'] ?? 'content');
@@ -270,7 +290,7 @@ class MarkdownCommand extends BasePreset
     /**
      * Returns the raw prompt template string.
      *
-     * @since 1.2.0
+     * @since 1.0.0
      *
      * @return string
      */

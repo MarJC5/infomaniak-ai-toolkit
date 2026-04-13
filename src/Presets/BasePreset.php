@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace WordPress\InfomaniakAiToolkit\Presets;
 
 use WordPress\AiClient\AiClient;
+use WordPress\AiClient\Files\Enums\MediaOrientationEnum;
 use WordPress\AiClient\Providers\Http\DTO\RequestOptions;
+use WordPress\AiClient\Providers\Models\DTO\ModelConfig;
 use WordPress\InfomaniakAiToolkit\Agent\AgentLoop;
 use WordPress\InfomaniakAiToolkit\Agent\ToolRegistry;
 use WordPress\InfomaniakAiToolkit\Memory\CompactingStrategy;
@@ -128,7 +130,7 @@ abstract class BasePreset
      * Override this to change the timeout. The WordPress default is only 5 seconds,
      * which is too short for most AI model responses.
      *
-     * @since 1.3.0
+     * @since 1.0.0
      *
      * @return float
      */
@@ -143,7 +145,7 @@ abstract class BasePreset
      * Override this to inject provider-specific parameters such as
      * `tool_choice`, `parallel_tool_calls`, etc.
      *
-     * @since 1.4.0
+     * @since 1.0.0
      *
      * @return array<string, mixed>
      */
@@ -229,6 +231,34 @@ abstract class BasePreset
     public function modelType(): string
     {
         return 'llm';
+    }
+
+    /**
+     * Returns the media orientation for image generation.
+     *
+     * Override in child presets: 'square', 'landscape', or 'portrait'.
+     *
+     * @since 1.0.0
+     *
+     * @return string|null Orientation string, or null for provider default.
+     */
+    protected function outputMediaOrientation(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * Returns the media aspect ratio for image generation.
+     *
+     * Override in child presets: '1:1', '3:2', '2:3', etc.
+     *
+     * @since 1.0.0
+     *
+     * @return string|null Aspect ratio string, or null for provider default.
+     */
+    protected function outputMediaAspectRatio(): ?string
+    {
+        return null;
     }
 
     /**
@@ -592,6 +622,11 @@ abstract class BasePreset
             // Add system instruction if defined.
             $systemText = $this->buildSystemText($data);
 
+            // Image generation: separate path, no conversation or tools.
+            if ($this->modelType() === 'image') {
+                return $this->executeImageGeneration($promptText);
+            }
+
             // Inject conversation history.
             $historyMessages = [];
             if ($isConversational && $conversationId !== null) {
@@ -719,6 +754,202 @@ abstract class BasePreset
             }
 
             return $result;
+        } finally {
+            $this->clearTrackingContext();
+        }
+    }
+
+    /**
+     * Executes image generation with orientation/aspect ratio configuration.
+     *
+     * Called automatically by execute() when modelType() returns 'image'.
+     * Image presets no longer need to override execute() — just set
+     * modelType(), outputMediaOrientation(), and outputMediaAspectRatio().
+     *
+     * @since 1.0.0
+     *
+     * @param string $promptText The rendered prompt text.
+     * @return array|\WP_Error Image data or error.
+     */
+    protected function executeImageGeneration(string $promptText)
+    {
+        $config = new ModelConfig();
+
+        $orientation = $this->outputMediaOrientation();
+        if ($orientation !== null) {
+            $orientationEnum = match ($orientation) {
+                'landscape' => MediaOrientationEnum::landscape(),
+                'portrait' => MediaOrientationEnum::portrait(),
+                default => MediaOrientationEnum::square(),
+            };
+            $config->setOutputMediaOrientation($orientationEnum);
+        }
+
+        $aspectRatio = $this->outputMediaAspectRatio();
+        if ($aspectRatio !== null) {
+            $config->setOutputMediaAspectRatio($aspectRatio);
+        }
+
+        $requestOptions = new RequestOptions();
+        $requestOptions->setTimeout($this->requestTimeout());
+
+        $builder = AiClient::prompt($promptText)
+            ->usingProvider($this->provider())
+            ->usingModelConfig($config)
+            ->usingRequestOptions($requestOptions);
+
+        $modelPref = $this->modelPreference();
+        if ($modelPref !== null) {
+            $builder->usingModelPreference($modelPref);
+        }
+
+        try {
+            $file = $builder->generateImage();
+        } catch (\Throwable $e) {
+            return new \WP_Error(
+                'ai_generation_error',
+                $e->getMessage()
+            );
+        }
+
+        return [
+            'data_uri' => $file->getDataUri(),
+            'mime_type' => $file->getMimeType(),
+        ];
+    }
+
+    /**
+     * Executes the preset with streaming output.
+     *
+     * Bypasses the library's synchronous generateText() and makes a direct
+     * HTTP call with stream: true to the Infomaniak API. Each text chunk
+     * is passed to the $onChunk callback as it arrives.
+     *
+     * Only works with the Infomaniak provider and text generation presets.
+     * Image presets and agent mode are not supported for streaming.
+     *
+     * @since 1.0.0
+     *
+     * @param array    $input   Input parameters matching the inputSchema.
+     * @param callable $onChunk Callback for each event: ['type' => 'text', 'content' => string]
+     * @return \WordPress\InfomaniakAiToolkit\Streaming\StreamingResult|\WP_Error
+     */
+    public function executeStream(array $input, callable $onChunk)
+    {
+        if ($this->modelType() === 'image') {
+            return new \WP_Error('streaming_unsupported', 'Streaming is not supported for image generation.');
+        }
+
+        $rateLimitError = RateLimiter::check($this->name());
+        if ($rateLimitError !== null) {
+            return $rateLimitError;
+        }
+
+        $this->setTrackingContext();
+
+        try {
+            $data = $this->templateData($input);
+            $promptText = $this->buildPromptText($data);
+
+            if (empty($promptText)) {
+                return new \WP_Error('preset_template_error', 'Failed to render prompt template.');
+            }
+
+            $systemText = $this->buildSystemText($data);
+
+            // Build messages in OpenAI format.
+            $messages = [];
+
+            // Load conversation history if conversational.
+            $isConversational = $this->conversational();
+            $conversationId = null;
+
+            if ($isConversational) {
+                $conversationId = !empty($input['conversation_id'])
+                    ? sanitize_text_field($input['conversation_id'])
+                    : MemoryStore::generateId();
+
+                $historyMessages = $this->memoryStrategy()->loadMessages(
+                    $conversationId,
+                    $this->historySize(),
+                    get_current_user_id()
+                );
+
+                // Convert SDK Message objects to OpenAI format.
+                foreach ($historyMessages as $msg) {
+                    $role = $msg->getRole()->isUser() ? 'user' : 'assistant';
+                    $text = '';
+                    foreach ($msg->getParts() as $part) {
+                        if ($part->getText() !== null) {
+                            $text .= $part->getText();
+                        }
+                    }
+                    $messages[] = ['role' => $role, 'content' => $text];
+                }
+            }
+
+            $messages[] = ['role' => 'user', 'content' => $promptText];
+
+            // Resolve model.
+            $modelPref = $this->modelPreference();
+            if ($modelPref === null) {
+                return new \WP_Error('streaming_no_model', 'Streaming requires an explicit model preference.');
+            }
+
+            $requestData = \WordPress\InfomaniakAiToolkit\Streaming\RequestBuilder::build([
+                'model' => $modelPref,
+                'messages' => $messages,
+                'temperature' => $this->temperature(),
+                'max_tokens' => $this->maxTokens(),
+                'system' => $systemText,
+                'custom_options' => $this->customOptions(),
+            ]);
+
+            try {
+                $streamResult = \WordPress\InfomaniakAiToolkit\Streaming\StreamingClient::stream(
+                    $requestData['url'],
+                    $requestData['params'],
+                    $requestData['headers'],
+                    $onChunk,
+                    $this->requestTimeout()
+                );
+            } catch (\Throwable $e) {
+                return new \WP_Error('ai_streaming_error', $e->getMessage());
+            }
+
+            // Store conversation turn.
+            if ($isConversational && $conversationId !== null) {
+                $memoryContext = [
+                    'user_id' => get_current_user_id(),
+                    'preset_name' => $this->name(),
+                    'token_count' => MemoryStore::estimateTokens($promptText),
+                ];
+                MemoryStore::storeMessage($conversationId, 'user', $promptText, $memoryContext);
+
+                $resultText = $streamResult->getFullText();
+                $memoryContext['token_count'] = MemoryStore::estimateTokens($resultText);
+                MemoryStore::storeMessage($conversationId, 'model', $resultText, $memoryContext);
+
+                $strategy = $this->memoryStrategy();
+                if ($strategy instanceof CompactingStrategy) {
+                    $strategy->maybeScheduleCompaction($conversationId, get_current_user_id());
+                }
+            }
+
+            // Track usage manually (library events don't fire for streaming).
+            $usage = $streamResult->getTokenUsage();
+            if (class_exists(UsageTracker::class) && !empty($usage['total_tokens'])) {
+                UsageTracker::trackManualUsage([
+                    'preset_name' => $this->name(),
+                    'prompt_tokens' => $usage['prompt_tokens'] ?? 0,
+                    'completion_tokens' => $usage['completion_tokens'] ?? 0,
+                    'total_tokens' => $usage['total_tokens'] ?? 0,
+                    'model_id' => $modelPref,
+                    'provider_id' => $this->provider(),
+                ]);
+            }
+
+            return $streamResult;
         } finally {
             $this->clearTrackingContext();
         }

@@ -168,7 +168,7 @@ class SettingsPage
     /**
      * Handles the AJAX test connection request.
      *
-     * @since 1.1.0
+     * @since 1.0.0
      */
     public static function ajaxTestConnection(): void
     {
@@ -295,7 +295,7 @@ class SettingsPage
     /**
      * Returns template data for the Usage tab.
      *
-     * @since 1.1.0
+     * @since 1.0.0
      *
      * @return array
      */
@@ -351,7 +351,7 @@ class SettingsPage
      *
      * Routes to list, new, or edit view based on query parameters.
      *
-     * @since 1.2.0
+     * @since 1.0.0
      *
      * @return array
      */
@@ -396,7 +396,7 @@ class SettingsPage
     /**
      * Handles AJAX save command request (create or update).
      *
-     * @since 1.2.0
+     * @since 1.0.0
      */
     public static function ajaxSaveCommand(): void
     {
@@ -457,7 +457,7 @@ class SettingsPage
     /**
      * Handles AJAX delete command request.
      *
-     * @since 1.2.0
+     * @since 1.0.0
      */
     public static function ajaxDeleteCommand(): void
     {

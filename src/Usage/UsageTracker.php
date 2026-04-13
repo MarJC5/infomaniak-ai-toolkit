@@ -140,6 +140,7 @@ class UsageTracker
             'prompt_tokens'     => $tokenUsage->getPromptTokens(),
             'completion_tokens' => $tokenUsage->getCompletionTokens(),
             'total_tokens'      => $tokenUsage->getTotalTokens(),
+            'thought_tokens'    => $tokenUsage->getThoughtTokens() ?? 0,
         ];
 
         $data = [
@@ -152,6 +153,7 @@ class UsageTracker
             'prompt_tokens' => $tokenUsage->getPromptTokens(),
             'completion_tokens' => $tokenUsage->getCompletionTokens(),
             'total_tokens' => $tokenUsage->getTotalTokens(),
+            'thought_tokens' => $tokenUsage->getThoughtTokens() ?? 0,
             'capability' => $capability !== null ? $capability->value : '',
             'created_at' => current_time('mysql', true),
         ];
@@ -203,6 +205,7 @@ class UsageTracker
                 '%d', // prompt_tokens
                 '%d', // completion_tokens
                 '%d', // total_tokens
+                '%d', // thought_tokens
                 '%s', // capability
                 '%s', // created_at
             ]
@@ -224,6 +227,50 @@ class UsageTracker
              */
             do_action('infomaniak_ai_usage_logged', $record, $data, $event);
         }
+    }
+
+    /**
+     * Tracks usage manually for calls that bypass the library.
+     *
+     * Used by streaming and other direct API calls where the library's
+     * AfterGenerateResultEvent does not fire.
+     *
+     * @since 1.0.0
+     *
+     * @param array $data Usage data:
+     *   - preset_name: string
+     *   - prompt_tokens: int
+     *   - completion_tokens: int
+     *   - total_tokens: int
+     *   - thought_tokens: int (optional)
+     *   - model_id: string
+     *   - provider_id: string
+     *   - capability: string (optional, default 'text_generation')
+     */
+    public static function trackManualUsage(array $data): void
+    {
+        global $wpdb;
+
+        $record = [
+            'id' => wp_generate_uuid4(),
+            'user_id' => get_current_user_id(),
+            'provider_id' => $data['provider_id'] ?? '',
+            'model_id' => $data['model_id'] ?? '',
+            'model_name' => $data['model_id'] ?? '',
+            'preset_name' => $data['preset_name'] ?? self::getCurrentPreset(),
+            'prompt_tokens' => $data['prompt_tokens'] ?? 0,
+            'completion_tokens' => $data['completion_tokens'] ?? 0,
+            'total_tokens' => $data['total_tokens'] ?? 0,
+            'thought_tokens' => $data['thought_tokens'] ?? 0,
+            'capability' => $data['capability'] ?? 'text_generation',
+            'created_at' => current_time('mysql', true),
+        ];
+
+        $wpdb->insert(
+            UsageSchema::tableName(),
+            $record,
+            ['%s', '%d', '%s', '%s', '%s', '%s', '%d', '%d', '%d', '%d', '%s', '%s']
+        );
     }
 
     /**

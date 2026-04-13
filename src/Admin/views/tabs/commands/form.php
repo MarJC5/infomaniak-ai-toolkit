@@ -8,7 +8,7 @@
  *   $data['command'] array   Command data from DB (edit only).
  *   $data['models']  array   Available models list.
  *
- * @since 1.2.0
+ * @since 1.0.0
  *
  * @package WordPress\InfomaniakAiToolkit
  */

@@ -10,14 +10,14 @@ namespace WordPress\InfomaniakAiToolkit\Admin;
  * Takes an array of numeric values and produces an inline SVG
  * with a polyline and a translucent fill area beneath it.
  *
- * @since 1.1.0
+ * @since 1.0.0
  */
 class SvgSparkline
 {
     /**
      * Renders an SVG sparkline from data points.
      *
-     * @since 1.1.0
+     * @since 1.0.0
      *
      * @param array  $data        Array of numeric values.
      * @param int    $width       SVG width in pixels.

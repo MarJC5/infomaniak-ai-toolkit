@@ -9,7 +9,7 @@
  *   $data['command']  array   Command row data (edit view).
  *   $data['models']   array   Available models (form views).
  *
- * @since 1.2.0
+ * @since 1.0.0
  *
  * @package WordPress\InfomaniakAiToolkit
  */

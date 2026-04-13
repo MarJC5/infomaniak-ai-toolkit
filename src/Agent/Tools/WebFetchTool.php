@@ -18,7 +18,7 @@ use WordPress\InfomaniakAiToolkit\Agent\Tool;
  *       return [ WebSearchTool::create(), WebFetchTool::create() ];
  *   }
  *
- * @since 1.5.0
+ * @since 1.0.0
  */
 class WebFetchTool
 {
@@ -35,7 +35,7 @@ class WebFetchTool
     /**
      * Creates a URL fetch Tool instance.
      *
-     * @since 1.5.0
+     * @since 1.0.0
      *
      * @return Tool
      */
@@ -61,7 +61,7 @@ class WebFetchTool
     /**
      * Handles the fetch URL tool call.
      *
-     * @since 1.5.0
+     * @since 1.0.0
      *
      * @param array $args Tool arguments from the model.
      * @return array Extracted content or error.
@@ -117,7 +117,7 @@ class WebFetchTool
         /**
          * Filters the extracted text content from a fetched URL.
          *
-         * @since 1.5.0
+         * @since 1.0.0
          *
          * @param string $text The extracted text content.
          * @param string $url  The URL that was fetched.
@@ -141,7 +141,7 @@ class WebFetchTool
      * Removes scripts, styles, navigation, and other non-content elements,
      * then strips remaining tags and normalizes whitespace.
      *
-     * @since 1.5.0
+     * @since 1.0.0
      *
      * @param string $html The raw HTML content.
      * @return string The extracted plain text, truncated to MAX_CONTENT_LENGTH.

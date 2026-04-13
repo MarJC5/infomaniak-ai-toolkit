@@ -7,7 +7,7 @@ namespace WordPress\InfomaniakAiToolkit\Commands;
 /**
  * Handles database table creation and schema versioning for custom commands.
  *
- * @since 1.2.0
+ * @since 1.0.0
  */
 class CommandSchema
 {
@@ -28,7 +28,7 @@ class CommandSchema
     /**
      * Returns the full table name including the WordPress prefix.
      *
-     * @since 1.2.0
+     * @since 1.0.0
      *
      * @return string
      */
@@ -43,7 +43,7 @@ class CommandSchema
      *
      * Called on plugin activation.
      *
-     * @since 1.2.0
+     * @since 1.0.0
      */
     public static function install(): void
     {
@@ -83,7 +83,7 @@ class CommandSchema
      *
      * Called on init to handle upgrades after plugin updates.
      *
-     * @since 1.2.0
+     * @since 1.0.0
      */
     public static function maybeUpgrade(): void
     {

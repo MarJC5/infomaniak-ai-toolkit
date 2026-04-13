@@ -13,7 +13,7 @@
  *   $data['topPresets']     array   Top presets [{preset_name, total_tokens, request_count}].
  *   $data['sparklineData']  int[]   Array of daily token values for sparkline.
  *
- * @since 1.1.0
+ * @since 1.0.0
  *
  * @package WordPress\InfomaniakAiToolkit
  */
