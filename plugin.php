@@ -68,7 +68,7 @@ add_action('init', __NAMESPACE__ . '\\init_memory');
 /**
  * Upgrades the commands table schema if needed.
  *
- * @since 1.2.0
+ * @since 1.0.0
  */
 function init_commands(): void
 {
