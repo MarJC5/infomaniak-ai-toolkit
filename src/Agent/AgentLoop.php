@@ -10,6 +10,7 @@ use WordPress\AiClient\Messages\DTO\Message;
 use WordPress\AiClient\Messages\DTO\MessagePart;
 use WordPress\AiClient\Messages\DTO\UserMessage;
 use WordPress\AiClient\Providers\Http\DTO\RequestOptions;
+use WordPress\AiClient\Providers\Models\DTO\ModelConfig;
 use WordPress\AiClient\Results\DTO\GenerativeAiResult;
 use WordPress\AiClient\Files\DTO\File;
 use WordPress\AiClient\Tools\DTO\FunctionResponse;
@@ -67,6 +68,11 @@ class AgentLoop
     private float $requestTimeout;
 
     /**
+     * @var array<string, mixed> Extra options passed as custom options on the ModelConfig.
+     */
+    private array $customOptions;
+
+    /**
      * @param ToolRegistry $tools   Registry of available tools.
      * @param array        $options Configuration options:
      *                              - max_iterations: int (default 10)
@@ -76,6 +82,7 @@ class AgentLoop
      *                              - max_tokens: int (default 4096)
      *                              - system: string|null (default null)
      *                              - request_timeout: float (default 60.0)
+     *                              - custom_options: array (default []) — passed to ModelConfig
      */
     public function __construct(ToolRegistry $tools, array $options = [])
     {
@@ -87,6 +94,7 @@ class AgentLoop
         $this->maxTokens = (int) ($options['max_tokens'] ?? 4096);
         $this->systemInstruction = $options['system'] ?? null;
         $this->requestTimeout = (float) ($options['request_timeout'] ?? 60.0);
+        $this->customOptions = (array) ($options['custom_options'] ?? []);
     }
 
     /**
@@ -149,28 +157,34 @@ class AgentLoop
              */
             do_action('infomaniak_ai_agent_step', $steps, $messages, $this);
 
-            // 3. Continue the conversation with tool results.
-            $builder = $this->buildContinuation($declarations, $messages, $toolResponses);
+            // 3. Add tool responses to message history so subsequent
+            //    iterations see the complete sequence.
+            if ($this->provider === 'anthropic') {
+                $responseParts = array_map(
+                    static fn(FunctionResponse $r) => new MessagePart($r),
+                    $toolResponses
+                );
+                $messages[] = new UserMessage($responseParts);
+            } else {
+                foreach ($toolResponses as $response) {
+                    $messages[] = new UserMessage([new MessagePart($response)]);
+                }
+            }
+
+            // 4. Continue the conversation with tool results.
+            $builder = $this->buildContinuationFromHistory($declarations, $messages);
             $result = $builder->generateTextResult();
             $this->accumulateTokens($totalTokens, $result);
 
-            // 4. If the model finished and tools returned images, send them
+            // 5. If the model finished and tools returned images, send them
             //    in a follow-up user message for visual analysis.
-            //    The API requires: tool → assistant → user (no user after tool).
-            //    If the follow-up fails (model doesn't support vision, image
-            //    too large, etc.), the text-based response is kept as fallback.
             if (
                 !empty($collectedFiles)
                 && !$result->getCandidates()[0]->getFinishReason()->isToolCalls()
                 && $iteration < $this->maxIterations
             ) {
                 try {
-                    // Add tool responses to history so the follow-up sees the
-                    // complete sequence: assistant(tool_calls) → tool(results) → assistant(text).
                     $imageMessages = $messages;
-                    foreach ($toolResponses as $response) {
-                        $imageMessages[] = new UserMessage([new MessagePart($response)]);
-                    }
                     $imageMessages[] = $result->toMessage();
 
                     $builder = $this->buildImageFollowUp($collectedFiles, $declarations, $imageMessages);
@@ -308,6 +322,8 @@ class AgentLoop
             $builder->withHistory(...$history);
         }
 
+        $this->applyCustomOptions($builder);
+
         return $builder;
     }
 
@@ -316,10 +332,9 @@ class AgentLoop
      *
      * @param FunctionDeclaration[] $declarations  Tool declarations.
      * @param Message[]             $messages      Full conversation history.
-     * @param FunctionResponse[]    $toolResponses Tool results to send back.
      * @return PromptBuilder
      */
-    private function buildContinuation(array $declarations, array $messages, array $toolResponses): PromptBuilder
+    private function buildContinuationFromHistory(array $declarations, array $messages): PromptBuilder
     {
         $requestOptions = new RequestOptions();
         $requestOptions->setTimeout($this->requestTimeout);
@@ -340,9 +355,7 @@ class AgentLoop
             $builder->usingSystemInstruction($this->systemInstruction);
         }
 
-        foreach ($toolResponses as $response) {
-            $builder->withFunctionResponse($response);
-        }
+        $this->applyCustomOptions($builder, true);
 
         return $builder;
     }
@@ -386,7 +399,61 @@ class AgentLoop
             $builder->withFile($file);
         }
 
+        $this->applyCustomOptions($builder, true);
+
         return $builder;
+    }
+
+    /**
+     * Applies custom options to a PromptBuilder via a ModelConfig.
+     *
+     * When $isContinuation is true and tool_choice was "required",
+     * it is downgraded to "auto" so the model can produce a final
+     * text answer after processing tool results.
+     *
+     * @param PromptBuilder $builder        The builder to configure.
+     * @param bool          $isContinuation Whether this is a continuation call (after tool results).
+     */
+    private function applyCustomOptions(PromptBuilder $builder, bool $isContinuation = false): void
+    {
+        if (empty($this->customOptions)) {
+            return;
+        }
+
+        $options = $this->customOptions;
+
+        // Normalize tool_choice to the correct provider format.
+        // Anthropic uses objects: {"type": "any"}, {"type": "auto"}
+        // OpenAI uses strings: "required", "auto"
+        if (isset($options['tool_choice'])) {
+            $tc = $options['tool_choice'];
+            $isForced = $tc === 'required'
+                || (is_array($tc) && isset($tc['type']) && $tc['type'] === 'any');
+
+            // On continuation calls, downgrade to auto so the model
+            // can finish with a text response after processing tool results.
+            if ($isContinuation && $isForced) {
+                $options['tool_choice'] = $this->provider === 'anthropic'
+                    ? ['type' => 'auto']
+                    : 'auto';
+            } elseif ($this->provider === 'anthropic') {
+                // Ensure Anthropic always gets object format.
+                if ($tc === 'required') {
+                    $options['tool_choice'] = ['type' => 'any'];
+                } elseif ($tc === 'auto') {
+                    $options['tool_choice'] = ['type' => 'auto'];
+                }
+            } else {
+                // Ensure OpenAI-compatible APIs always get string format.
+                if (is_array($tc) && isset($tc['type'])) {
+                    $options['tool_choice'] = $tc['type'] === 'any' ? 'required' : $tc['type'];
+                }
+            }
+        }
+
+        $config = new ModelConfig();
+        $config->setCustomOptions($options);
+        $builder->usingModelConfig($config);
     }
 
     /**

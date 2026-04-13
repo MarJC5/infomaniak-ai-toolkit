@@ -138,6 +138,21 @@ abstract class BasePreset
     }
 
     /**
+     * Returns custom options to pass to the AI model via ModelConfig.
+     *
+     * Override this to inject provider-specific parameters such as
+     * `tool_choice`, `parallel_tool_calls`, etc.
+     *
+     * @since 1.4.0
+     *
+     * @return array<string, mixed>
+     */
+    protected function customOptions(): array
+    {
+        return [];
+    }
+
+    /**
      * Model preference override set at runtime.
      *
      * @since 1.0.0
@@ -606,6 +621,7 @@ abstract class BasePreset
                         'system'          => $systemText,
                         'max_iterations'  => $this->maxAgentIterations(),
                         'request_timeout' => $this->requestTimeout(),
+                        'custom_options'  => $this->customOptions(),
                     ]);
 
                     $agentResult = $loop->run($promptText, $historyMessages);
@@ -659,18 +675,22 @@ abstract class BasePreset
                 ? UsageTracker::getLastTokenUsage()
                 : null;
 
-            // Store conversation turn with real token counts.
+            // Store conversation turn with content-based token estimates.
+            // We use content length estimates (not API prompt_tokens) because
+            // prompt_tokens includes system prompt + tools + full history on
+            // every turn, making the cumulative sum meaningless for budget tracking.
             if ($isConversational && $conversationId !== null) {
                 $memoryContext = [
                     'user_id' => get_current_user_id(),
                     'preset_name' => $this->name(),
-                    'token_count' => $lastUsage['prompt_tokens'] ?? 0,
+                    'token_count' => MemoryStore::estimateTokens($promptText),
                 ];
 
                 MemoryStore::storeMessage($conversationId, 'user', $promptText, $memoryContext);
 
-                $memoryContext['token_count'] = $lastUsage['completion_tokens'] ?? 0;
-                MemoryStore::storeMessage($conversationId, 'model', (string) $result, $memoryContext);
+                $resultText = (string) $result;
+                $memoryContext['token_count'] = MemoryStore::estimateTokens($resultText);
+                MemoryStore::storeMessage($conversationId, 'model', $resultText, $memoryContext);
 
                 // Let strategy decide if compaction should be scheduled.
                 $strategy = $this->memoryStrategy();
